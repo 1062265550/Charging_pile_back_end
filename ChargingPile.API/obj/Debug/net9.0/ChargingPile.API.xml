@@ -1,0 +1,362 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ChargingPile.API</name>
+    </assembly>
+    <members>
+        <member name="T:ChargingPile.API.Controllers.ChargingStationController">
+            <summary>
+            充电站管理控制器
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.ChargingStationController.CreateStation(ChargingPile.API.Models.DTOs.CreateChargingStationDTO)">
+            <summary>
+            创建新的充电站
+            </summary>
+            <param name="dto">充电站创建信息</param>
+            <remarks>
+            请求示例:
+            
+                POST /api/ChargingStation
+                {
+                    "name": "示例充电站",
+                    "latitude": 30.123456,
+                    "longitude": 120.123456,
+                    "address": "示例地址",
+                    "totalPorts": 10,
+                    "availablePorts": 10
+                }
+            </remarks>
+            <response code="201">充电站创建成功</response>
+            <response code="400">输入数据验证失败或该位置已存在充电站</response>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.ChargingStationController.GetNearbyStations(System.Decimal,System.Decimal,System.Int32)">
+            <summary>
+            获取指定范围内的附近充电站
+            </summary>
+            <param name="latitude">纬度</param>
+            <param name="longitude">经度</param>
+            <param name="radius">搜索半径（米），默认5000米</param>
+            <remarks>
+            请求示例:
+            
+                GET /api/ChargingStation/nearby?latitude=30.123456&amp;longitude=120.123456&amp;radius=5000
+            </remarks>
+            <response code="200">返回符合条件的充电站列表</response>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.ChargingStationController.GetNearbySpatialStations(System.Decimal,System.Decimal,System.Int32)">
+            <summary>
+            使用空间索引获取指定范围内的附近充电站
+            </summary>
+            <param name="latitude">纬度</param>
+            <param name="longitude">经度</param>
+            <param name="radius">搜索半径（米），默认5000米</param>
+            <remarks>
+            请求示例:
+            
+                GET /api/ChargingStation/spatial-nearby?latitude=30.123456&amp;longitude=120.123456&amp;radius=5000
+            </remarks>
+            <response code="200">返回符合条件的充电站列表</response>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.ChargingStationController.CalculateDistance(System.Decimal,System.Decimal,System.Decimal,System.Decimal)">
+            <summary>
+            计算两个经纬度点之间的距离（米）
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.ChargingStationController.GetStation(System.String)">
+            <summary>
+            获取指定ID的充电站详情
+            </summary>
+            <param name="id">充电站ID</param>
+            <remarks>
+            请求示例:
+            
+                GET /api/ChargingStation/123e4567-e89b-12d3-a456-426614174000
+            </remarks>
+            <response code="200">返回充电站详情</response>
+            <response code="404">指定ID的充电站不存在</response>
+        </member>
+        <member name="T:ChargingPile.API.Controllers.UserController">
+            <summary>
+            用户管理控制器
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.UserController.GetProfile(System.String)">
+            <summary>
+            获取用户个人资料
+            </summary>
+            <param name="openId">微信OpenID</param>
+            <remarks>
+            请求示例:
+            
+                GET /api/User/profile?openId=wx123456789
+            </remarks>
+            <response code="200">返回用户信息和当前充电状态</response>
+            <response code="404">用户不存在</response>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.UserController.Login(System.String)">
+            <summary>
+            用户登录或注册
+            </summary>
+            <param name="openId">微信OpenID</param>
+            <remarks>
+            请求示例:
+            
+                POST /api/User/login
+                "wx123456789"
+            
+            说明：
+            - 如果用户不存在，将自动注册新用户
+            - 如果用户已存在，将更新最后登录时间
+            </remarks>
+            <response code="200">返回用户信息</response>
+        </member>
+        <member name="T:ChargingPile.API.Models.DTOs.CreateChargingStationDTO">
+            <summary>
+            创建充电站的数据传输对象
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.CreateChargingStationDTO.Name">
+            <summary>
+            充电站名称
+            </summary>
+            <example>示例充电站</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.CreateChargingStationDTO.Latitude">
+            <summary>
+            纬度
+            </summary>
+            <example>30.123456</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.CreateChargingStationDTO.Longitude">
+            <summary>
+            经度
+            </summary>
+            <example>120.123456</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.CreateChargingStationDTO.Address">
+            <summary>
+            详细地址
+            </summary>
+            <example>四川省成都市武侯区某某路123号</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.CreateChargingStationDTO.TotalPorts">
+            <summary>
+            充电端口总数
+            </summary>
+            <example>10</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.CreateChargingStationDTO.AvailablePorts">
+            <summary>
+            当前可用端口数
+            </summary>
+            <example>10</example>
+        </member>
+        <member name="T:ChargingPile.API.Models.Entities.ChargingStation">
+            <summary>
+            充电站实体
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingStation.Id">
+            <summary>
+            充电站ID
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingStation.Name">
+            <summary>
+            充电站名称
+            </summary>
+            <example>示例充电站</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingStation.Latitude">
+            <summary>
+            纬度
+            </summary>
+            <example>30.123456</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingStation.Longitude">
+            <summary>
+            经度
+            </summary>
+            <example>120.123456</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingStation.Address">
+            <summary>
+            详细地址
+            </summary>
+            <example>四川省成都市武侯区某某路123号</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingStation.TotalPorts">
+            <summary>
+            充电端口总数
+            </summary>
+            <example>10</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingStation.AvailablePorts">
+            <summary>
+            当前可用端口数
+            </summary>
+            <example>5</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingStation.Status">
+            <summary>
+            充电站状态
+            </summary>
+            <remarks>
+            - 0: 正常运营
+            - 1: 维护中
+            - 2: 故障
+            </remarks>
+            <example>0</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingStation.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingStation.UpdateTime">
+            <summary>
+            最后更新时间
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingStation.Location">
+            <summary>
+            地理位置点
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Models.Entities.ChargingStation.UpdateLocation">
+            <summary>
+            更新Location字段以匹配经纬度
+            </summary>
+        </member>
+        <member name="T:ChargingPile.API.Models.Entities.Order">
+            <summary>
+            充电订单实体
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.Order.Id">
+            <summary>
+            订单ID
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.Order.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.Order.StationId">
+            <summary>
+            充电站ID
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.Order.StartTime">
+            <summary>
+            充电开始时间
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.Order.EndTime">
+            <summary>
+            充电结束时间
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.Order.Amount">
+            <summary>
+            订单金额（元）
+            </summary>
+            <example>50.00</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.Order.Status">
+            <summary>
+            订单状态
+            </summary>
+            <remarks>
+            - 0: 进行中
+            - 1: 已完成
+            - 2: 已取消
+            </remarks>
+            <example>0</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.Order.PaymentStatus">
+            <summary>
+            支付状态
+            </summary>
+            <remarks>
+            - 0: 未支付
+            - 1: 已支付
+            - 2: 退款中
+            - 3: 已退款
+            </remarks>
+            <example>0</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.Order.User">
+            <summary>
+            关联的用户信息
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.Order.ChargingStation">
+            <summary>
+            关联的充电站信息
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.Order.CreateTime">
+            <summary>
+            订单创建时间
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.Order.UpdateTime">
+            <summary>
+            订单最后更新时间
+            </summary>
+        </member>
+        <member name="T:ChargingPile.API.Models.Entities.User">
+            <summary>
+            用户实体
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.User.Id">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.User.OpenId">
+            <summary>
+            微信OpenID
+            </summary>
+            <example>wx123456789</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.User.Nickname">
+            <summary>
+            用户昵称
+            </summary>
+            <example>张三</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.User.Avatar">
+            <summary>
+            用户头像URL
+            </summary>
+            <example>https://thirdwx.qlogo.cn/mmopen/xxx/132</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.User.Balance">
+            <summary>
+            账户余额（元）
+            </summary>
+            <example>100.00</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.User.Points">
+            <summary>
+            积分
+            </summary>
+            <example>500</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.User.CreateTime">
+            <summary>
+            账户创建时间
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.User.LastLoginTime">
+            <summary>
+            最后登录时间
+            </summary>
+        </member>
+    </members>
+</doc>

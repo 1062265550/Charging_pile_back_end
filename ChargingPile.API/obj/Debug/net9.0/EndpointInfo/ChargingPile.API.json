@@ -1,0 +1,617 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "充电桩管理系统 API",
+    "description": "充电桩管理系统的后端 API 接口文档",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/ChargingStation": {
+      "post": {
+        "tags": [
+          "ChargingStation"
+        ],
+        "summary": "创建新的充电站",
+        "description": "请求示例:\r\n\r\n    POST /api/ChargingStation\r\n    {\r\n        \"name\": \"示例充电站\",\r\n        \"latitude\": 30.123456,\r\n        \"longitude\": 120.123456,\r\n        \"address\": \"示例地址\",\r\n        \"totalPorts\": 10,\r\n        \"availablePorts\": 10\r\n    }",
+        "requestBody": {
+          "description": "充电站创建信息",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateChargingStationDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateChargingStationDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateChargingStationDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "充电站创建成功",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChargingStation"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChargingStation"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChargingStation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "输入数据验证失败或该位置已存在充电站",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ChargingStation/nearby": {
+      "get": {
+        "tags": [
+          "ChargingStation"
+        ],
+        "summary": "获取指定范围内的附近充电站",
+        "description": "请求示例:\r\n\r\n    GET /api/ChargingStation/nearby?latitude=30.123456&longitude=120.123456&radius=5000",
+        "parameters": [
+          {
+            "name": "latitude",
+            "in": "query",
+            "description": "纬度",
+            "style": "form",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "longitude",
+            "in": "query",
+            "description": "经度",
+            "style": "form",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "radius",
+            "in": "query",
+            "description": "搜索半径（米），默认5000米",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 5000
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回符合条件的充电站列表",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChargingStation"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChargingStation"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChargingStation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ChargingStation/spatial-nearby": {
+      "get": {
+        "tags": [
+          "ChargingStation"
+        ],
+        "summary": "使用空间索引获取指定范围内的附近充电站",
+        "description": "请求示例:\r\n\r\n    GET /api/ChargingStation/spatial-nearby?latitude=30.123456&longitude=120.123456&radius=5000",
+        "parameters": [
+          {
+            "name": "latitude",
+            "in": "query",
+            "description": "纬度",
+            "style": "form",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "longitude",
+            "in": "query",
+            "description": "经度",
+            "style": "form",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "radius",
+            "in": "query",
+            "description": "搜索半径（米），默认5000米",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 5000
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回符合条件的充电站列表",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChargingStation"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChargingStation"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChargingStation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ChargingStation/{id}": {
+      "get": {
+        "tags": [
+          "ChargingStation"
+        ],
+        "summary": "获取指定ID的充电站详情",
+        "description": "请求示例:\r\n\r\n    GET /api/ChargingStation/123e4567-e89b-12d3-a456-426614174000",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "充电站ID",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回充电站详情",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChargingStation"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChargingStation"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChargingStation"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "指定ID的充电站不存在",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/User/profile": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "获取用户个人资料",
+        "description": "请求示例:\r\n\r\n    GET /api/User/profile?openId=wx123456789",
+        "parameters": [
+          {
+            "name": "openId",
+            "in": "query",
+            "description": "微信OpenID",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回用户信息和当前充电状态",
+            "content": {
+              "text/plain": {
+                "schema": { }
+              },
+              "application/json": {
+                "schema": { }
+              },
+              "text/json": {
+                "schema": { }
+              }
+            }
+          },
+          "404": {
+            "description": "用户不存在",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/User/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "用户登录或注册",
+        "description": "请求示例:\r\n\r\n    POST /api/User/login\r\n    \"wx123456789\"\r\n\r\n说明：\r\n- 如果用户不存在，将自动注册新用户\r\n- 如果用户已存在，将更新最后登录时间",
+        "requestBody": {
+          "description": "微信OpenID",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "返回用户信息",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ChargingStation": {
+        "required": [
+          "latitude",
+          "longitude",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "充电站ID",
+            "nullable": true
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string",
+            "description": "充电站名称",
+            "example": "示例充电站"
+          },
+          "latitude": {
+            "type": "number",
+            "description": "纬度",
+            "format": "double",
+            "example": 30.123455
+          },
+          "longitude": {
+            "type": "number",
+            "description": "经度",
+            "format": "double",
+            "example": 120.12346
+          },
+          "address": {
+            "maxLength": 200,
+            "type": "string",
+            "description": "详细地址",
+            "nullable": true,
+            "example": "四川省成都市武侯区某某路123号"
+          },
+          "totalPorts": {
+            "type": "integer",
+            "description": "充电端口总数",
+            "format": "int32",
+            "example": 10
+          },
+          "availablePorts": {
+            "type": "integer",
+            "description": "当前可用端口数",
+            "format": "int32",
+            "example": 5
+          },
+          "status": {
+            "type": "integer",
+            "description": "充电站状态",
+            "format": "int32",
+            "example": 0
+          },
+          "createTime": {
+            "type": "string",
+            "description": "创建时间",
+            "format": "date-time"
+          },
+          "updateTime": {
+            "type": "string",
+            "description": "最后更新时间",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "充电站实体"
+      },
+      "CreateChargingStationDTO": {
+        "required": [
+          "latitude",
+          "longitude",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string",
+            "description": "充电站名称",
+            "example": "示例充电站"
+          },
+          "latitude": {
+            "maximum": 90,
+            "minimum": -90,
+            "type": "number",
+            "description": "纬度",
+            "format": "double",
+            "example": 30.123455
+          },
+          "longitude": {
+            "maximum": 180,
+            "minimum": -180,
+            "type": "number",
+            "description": "经度",
+            "format": "double",
+            "example": 120.12346
+          },
+          "address": {
+            "maxLength": 200,
+            "type": "string",
+            "description": "详细地址",
+            "nullable": true,
+            "example": "四川省成都市武侯区某某路123号"
+          },
+          "totalPorts": {
+            "maximum": 2147483647,
+            "minimum": 0,
+            "type": "integer",
+            "description": "充电端口总数",
+            "format": "int32",
+            "example": 10
+          },
+          "availablePorts": {
+            "maximum": 2147483647,
+            "minimum": 0,
+            "type": "integer",
+            "description": "当前可用端口数",
+            "format": "int32",
+            "example": 10
+          }
+        },
+        "additionalProperties": false,
+        "description": "创建充电站的数据传输对象"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "User": {
+        "required": [
+          "openId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "用户ID",
+            "format": "int32"
+          },
+          "openId": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string",
+            "description": "微信OpenID",
+            "example": "wx123456789"
+          },
+          "nickname": {
+            "maxLength": 50,
+            "type": "string",
+            "description": "用户昵称",
+            "nullable": true,
+            "example": "张三"
+          },
+          "avatar": {
+            "maxLength": 200,
+            "type": "string",
+            "description": "用户头像URL",
+            "nullable": true,
+            "example": "https://thirdwx.qlogo.cn/mmopen/xxx/132"
+          },
+          "balance": {
+            "type": "number",
+            "description": "账户余额（元）",
+            "format": "double",
+            "example": 100
+          },
+          "points": {
+            "type": "integer",
+            "description": "积分",
+            "format": "int32",
+            "example": 500
+          },
+          "createTime": {
+            "type": "string",
+            "description": "账户创建时间",
+            "format": "date-time"
+          },
+          "lastLoginTime": {
+            "type": "string",
+            "description": "最后登录时间",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "用户实体"
+      }
+    }
+  }
+}
