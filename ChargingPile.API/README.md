@@ -6,14 +6,19 @@
 
 ## 技术栈
 
-- **后端框架**：.NET 9.0
-- **数据库**：MySQL 8.0+（支持空间索引）
-- **ORM框架**：Entity Framework Core
-- **空间数据**：NetTopologySuite
+- **后端框架**：.NET 8.0
+- **数据库**：MySQL 8.0+
+- **ORM框架**：Entity Framework Core 8.0
+- **日志框架**：Serilog
+- **API文档**：Swagger/OpenAPI
 - **前端**：微信小程序
 
 ## 项目特点
 
+- **智能计费系统**：支持分时段计费，自动计算充电费用
+- **实时监控**：支持实时查询充电状态、费用和电量
+- **自动化处理**：订单完成时自动计算费用和更新充电口状态
+- **完整的异常处理**：包含事务管理和重试机制
 - **地理位置服务**：使用空间索引实现高效的附近充电站查询
 - **微信登录集成**：通过OpenID实现无缝的微信用户登录
 - **实时状态更新**：充电站可用端口实时更新
@@ -23,30 +28,38 @@
 
 ```
 ChargingPile.API/
-├── Controllers/                     # 控制器
-│   ├── ChargingStationController.cs # 充电站相关接口
-│   ├── UserController.cs            # 用户相关接口
-│   └── OrderController.cs           # 订单相关接口
+├── Controllers/                 
+│   ├── ChargingStationController.cs
+│   ├── ChargingPileController.cs    # 充电桩管理
+│   ├── ChargingPortController.cs     # 充电口管理
+│   ├── UserController.cs
+│   └── OrderController.cs
 │
 ├── Models/
-│   ├── Entities/                    # 数据库实体
-│   │   ├── ChargingStation.cs       # 充电站实体
-│   │   ├── User.cs                  # 用户实体
-│   │   └── Order.cs                 # 订单实体
+│   ├── Entities/              
+│   │   ├── ChargingStation.cs
+│   │   ├── ChargingPile.cs         # 充电桩实体
+│   │   ├── ChargingPort.cs         # 充电口实体
+│   │   ├── User.cs
+│   │   └── Order.cs
 │   │
-│   └── DTOs/                        # 数据传输对象
-│       ├── ChargingStationDTO.cs    # 充电站DTO
-│       ├── UserDTO.cs               # 用户DTO
-│       └── OrderDTO.cs              # 订单DTO
+│   └── DTOs/                  
+│       ├── ChargingStationDTO.cs
+│       ├── ChargingPileDTO.cs      # 充电桩DTO
+│       ├── ChargingPortDTO.cs      # 充电口DTO
+│       ├── UserDTO.cs
+│       ├── OrderDTO.cs
+│       ├── CreateOrderDTO.cs       # 创建订单DTO
+│       ├── UpdateOrderDTO.cs       # 更新订单DTO
+│       └── OrderStatusDTO.cs       # 订单状态DTO
 │
-├── Services/                        # 服务层
+├── Services/                    
+│   └── RateCalculationService.cs   # 费率计算服务
 │
 ├── Data/
-│   ├── ApplicationDbContext.cs      # 数据库上下文
+│   └── ApplicationDbContext.cs
 │
-├── Utils/                           # 工具类
-│
-└── DatabaseSetup.sql                # 数据库初始化脚本
+└── Utils/                      
 ```
 
 ## 数据库设计
@@ -58,56 +71,23 @@ ChargingPile.API/
    - 包含经纬度信息和POINT类型的位置字段
    - 使用空间索引优化地理位置查询
 
-2. **用户表(users)**
+2. **充电桩表(charging_piles)**
+   - 记录充电桩基本信息
+   - 包含功率等计费相关参数
+   - 关联充电站
+
+3. **充电口表(charging_ports)**
+   - 记录充电口状态和统计信息
+   - 关联充电桩和当前订单
+
+4. **用户表(users)**
    - 存储微信用户OpenID和基本信息
    - 管理用户余额和积分
 
-3. **订单表(orders)**
+5. **订单表(orders)**
    - 记录充电订单信息
-   - 关联用户和充电站
-
-## 数据库初始化
-
-1. 确保MySQL 8.0+已安装并支持空间索引
-2. 使用MySQL客户端登录到你的MySQL服务器：
-   ```bash
-   mysql -u root -p
-   ```
-
-3. 在MySQL命令行中执行SQL文件：
-   ```sql
-   SOURCE /path/to/ChargingPile.API/DatabaseSetup.sql;
-   ```
-   请将 `/path/to/` 替换为 `DatabaseSetup.sql` 文件的实际路径。
-
-## 配置项目
-
-1. 在`appsettings.json`中配置数据库连接字符串：
-   ```json
-   {
-     "ConnectionStrings": {
-       "DefaultConnection": "server=localhost;port=3306;database=charging_pile_db;user=root;password=yourpassword"
-     }
-   }
-   ```
-
-2. 确保已安装所需NuGet包：
-   - Microsoft.EntityFrameworkCore
-   - Pomelo.EntityFrameworkCore.MySql
-   - NetTopologySuite
-   - Pomelo.EntityFrameworkCore.MySql.NetTopologySuite
-
-## 运行项目
-
-1. 确保已安装 .NET 9.0 SDK。
-2. 在项目根目录下运行以下命令：
-   ```bash
-   dotnet restore
-   dotnet build
-   dotnet run
-   ```
-3. 项目将运行在 `https://localhost:5001`。
-4. 可通过 `https://localhost:5001/swagger` 访问API文档。
+   - 自动计算充电量和费用
+   - 关联用户和充电口
 
 ## API接口详情
 
@@ -144,19 +124,46 @@ ChargingPile.API/
 ### 订单相关
 
 - **创建充电订单**
-  - 请求：`POST /api/Order`
-  - 请求体：包含用户ID和充电站ID的订单信息
+  ```http
+  POST /api/Order
+  ```
+  请求体：
+  ```json
+  {
+    "userId": 1,
+    "stationId": "550e8400-e29b-41d4-a716-446655440000",
+    "portId": "550e8400-e29b-41d4-a716-446655440001"
+  }
+  ```
 
-- **获取用户订单列表**
-  - 请求：`GET /api/Order?userId={userId}&status={status}`
-  - 参数：
-    - userId: 用户ID
-    - status: 订单状态(可选)
-  - 响应：订单列表
+- **获取订单实时状态**
+  ```http
+  GET /api/Order/{id}/current-status
+  ```
+  响应：
+  ```json
+  {
+    "id": 1,
+    "orderNo": "uuid",
+    "status": 0,
+    "startTime": "2024-01-01T10:00:00",
+    "endTime": null,
+    "currentPowerConsumption": 2.28,
+    "currentAmount": 2.41
+  }
+  ```
 
-- **结束充电**
-  - 请求：`PUT /api/Order/{id}/end`
-  - 响应：更新后的订单信息
+- **更新订单状态**
+  ```http
+  PUT /api/Order/{id}
+  ```
+  请求体：
+  ```json
+  {
+    "status": 1,
+    "paymentStatus": 1
+  }
+  ```
 
 ## 性能优化
 
@@ -186,19 +193,19 @@ ChargingPile.API/
 
 ## 常见问题
 
-1. **空间查询不返回结果**：
-   - 检查坐标系统是否一致(SRID 4326)
-   - 确认搜索半径是否合适
-   - 验证数据库中是否有符合条件的数据
+1. **订单费用计算问题**：
+   - 检查充电桩功率配置是否正确
+   - 确认计费时段设置
+   - 验证订单开始和结束时间的准确性
 
-2. **微信登录失败**：
-   - 确认OpenID格式正确
-   - 检查数据库连接
+2. **订单状态更新失败**：
+   - 检查订单当前状态是否允许更新
+   - 确认充电口状态是否正常
+   - 验证数据库连接
 
 ## 贡献指南
 
 欢迎提交问题和贡献代码！请确保在提交PR之前运行所有测试并通过。
-
 
 ---
 

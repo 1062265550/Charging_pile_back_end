@@ -32,31 +32,42 @@
         </member>
         <member name="M:ChargingPile.API.Controllers.ChargingStationController.GetNearbyStations(System.Decimal,System.Decimal,System.Int32)">
             <summary>
-            获取指定范围内的附近充电站
+            获取附近的充电站
             </summary>
             <param name="latitude">纬度</param>
             <param name="longitude">经度</param>
-            <param name="radius">搜索半径（米），默认5000米</param>
+            <param name="radius">搜索半径 (米)，默认5000米，最大10000米</param>
             <remarks>
             请求示例:
             
-                GET /api/ChargingStation/nearby?latitude=30.123456&amp;longitude=120.123456&amp;radius=5000
+                GET /api/ChargingStation/nearby?latitude=30.5&amp;longitude=104.1&amp;radius=5000
+            
+            说明：
+            - 搜索半径不能超过10000米(10公里)
+            - 返回指定坐标点半径范围内的所有充电站
             </remarks>
-            <response code="200">返回符合条件的充电站列表</response>
+            <response code="200">返回附近充电站列表</response>
+            <response code="400">搜索半径超过最大限制</response>
         </member>
-        <member name="M:ChargingPile.API.Controllers.ChargingStationController.GetNearbySpatialStations(System.Decimal,System.Decimal,System.Int32)">
+        <member name="M:ChargingPile.API.Controllers.ChargingStationController.GetSpatialNearbyStations(System.Decimal,System.Decimal,System.Int32)">
             <summary>
-            使用空间索引获取指定范围内的附近充电站
+            使用空间索引获取附近的充电站
             </summary>
             <param name="latitude">纬度</param>
             <param name="longitude">经度</param>
-            <param name="radius">搜索半径（米），默认5000米</param>
+            <param name="radius">搜索半径 (米)，默认5000米，最大10000米</param>
             <remarks>
             请求示例:
             
-                GET /api/ChargingStation/spatial-nearby?latitude=30.123456&amp;longitude=120.123456&amp;radius=5000
+                GET /api/ChargingStation/spatial-nearby?latitude=30.5&amp;longitude=104.1&amp;radius=5000
+            
+            说明：
+            - 搜索半径不能超过10000米(10公里)
+            - 使用空间索引优化查询性能
+            - 返回指定坐标点半径范围内的所有充电站
             </remarks>
-            <response code="200">返回符合条件的充电站列表</response>
+            <response code="200">返回附近充电站列表</response>
+            <response code="400">搜索半径超过最大限制</response>
         </member>
         <member name="M:ChargingPile.API.Controllers.ChargingStationController.CalculateDistance(System.Decimal,System.Decimal,System.Decimal,System.Decimal)">
             <summary>
@@ -75,6 +86,153 @@
             </remarks>
             <response code="200">返回充电站详情</response>
             <response code="404">指定ID的充电站不存在</response>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.ChargingStationController.UpdateStation(System.String,ChargingPile.API.Models.DTOs.UpdateChargingStationDTO)">
+            <summary>
+            更新充电站信息
+            </summary>
+            <param name="id">充电站ID</param>
+            <param name="dto">充电站更新信息</param>
+            <remarks>
+            请求示例:
+            
+                PUT /api/ChargingStation/123e4567-e89b-12d3-a456-426614174000
+                {
+                    "name": "更新后的充电站名称",
+                    "address": "更新后的地址信息",
+                    "totalPorts": 12,
+                    "availablePorts": 8,
+                    "status": 0
+                }
+            
+            状态码说明:
+            - 0: 正常运营
+            - 1: 维护中
+            - 2: 故障
+            </remarks>
+            <response code="200">返回更新后的充电站信息</response>
+            <response code="400">请求数据无效</response>
+            <response code="404">指定ID的充电站不存在</response>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.ChargingStationController.DeleteStation(System.String)">
+            <summary>
+            删除充电站
+            </summary>
+            <param name="id">充电站ID</param>
+            <remarks>
+            请求示例:
+            
+                DELETE /api/ChargingStation/123e4567-e89b-12d3-a456-426614174000
+            
+            说明：
+            - 如果充电站有关联的订单，则无法删除
+            - 删除成功后将返回204 No Content
+            </remarks>
+            <response code="204">充电站删除成功</response>
+            <response code="400">充电站有关联订单，无法删除</response>
+            <response code="404">指定ID的充电站不存在</response>
+        </member>
+        <member name="T:ChargingPile.API.Controllers.OrderController">
+            <summary>
+            订单管理控制器
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.OrderController.CreateOrder(ChargingPile.API.Models.DTOs.CreateOrderDTO)">
+            <summary>
+            创建新订单
+            </summary>
+            <param name="dto">订单创建信息</param>
+            <remarks>
+            请求示例:
+            
+                POST /api/Order
+                {
+                    "userId": 1,
+                    "stationId": "550e8400-e29b-41d4-a716-446655440000"
+                }
+            </remarks>
+            <response code="201">返回新创建的订单</response>
+            <response code="400">请求数据无效</response>
+            <response code="404">用户或充电站不存在</response>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.OrderController.GetOrder(System.Int32)">
+            <summary>
+            获取订单详情
+            </summary>
+            <param name="id">订单ID</param>
+            <remarks>
+            请求示例:
+            
+                GET /api/Order/5
+            </remarks>
+            <response code="200">返回订单详情</response>
+            <response code="404">订单不存在</response>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.OrderController.GetOrderByOrderNo(System.String)">
+            <summary>
+            根据订单号获取订单详情
+            </summary>
+            <param name="orderNo">订单号</param>
+            <remarks>
+            请求示例:
+            
+                GET /api/Order/no/550e8400-e29b-41d4-a716-446655440000
+            </remarks>
+            <response code="200">返回订单详情</response>
+            <response code="404">订单不存在</response>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.OrderController.GetUserOrders(System.Int32,System.Nullable{System.Int32})">
+            <summary>
+            获取用户的订单列表
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="status">订单状态（可选）</param>
+            <remarks>
+            请求示例:
+            
+                GET /api/Order/user/1?status=0
+            </remarks>
+            <response code="200">返回用户的订单列表</response>
+            <response code="404">用户不存在</response>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.OrderController.GetOrderCurrentStatus(System.Int32)">
+            <summary>
+            获取订单当前状态（包括实时充电量和费用）
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.OrderController.UpdateOrder(System.Int32,ChargingPile.API.Models.DTOs.UpdateOrderDTO)">
+            <summary>
+            更新订单信息
+            </summary>
+            <param name="id">订单ID</param>
+            <param name="dto">更新的订单信息</param>
+            <remarks>
+            请求示例:
+            
+                PUT /api/Order/5
+                {
+                    "amount": 50.00,
+                    "status": 1,
+                    "paymentStatus": 1
+                }
+            </remarks>
+            <response code="200">返回更新后的订单</response>
+            <response code="400">请求数据无效</response>
+            <response code="404">订单不存在</response>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.OrderController.DeleteOrder(System.Int32)">
+            <summary>
+            删除订单
+            </summary>
+            <param name="id">订单ID</param>
+            <remarks>
+            请求示例:
+            
+                DELETE /api/Order/5
+            </remarks>
+            <response code="204">订单删除成功</response>
+            <response code="400">无法删除进行中的订单</response>
+            <response code="404">订单不存在</response>
         </member>
         <member name="T:ChargingPile.API.Controllers.UserController">
             <summary>
@@ -151,6 +309,362 @@
             当前可用端口数
             </summary>
             <example>10</example>
+        </member>
+        <member name="T:ChargingPile.API.Models.DTOs.CreateOrderDTO">
+            <summary>
+            创建订单的数据传输对象
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.CreateOrderDTO.UserId">
+            <summary>
+            用户ID
+            </summary>
+            <example>1</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.CreateOrderDTO.StationId">
+            <summary>
+            充电站ID
+            </summary>
+            <example>550e8400-e29b-41d4-a716-446655440000</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.CreateOrderDTO.PortId">
+            <summary>
+            充电口ID
+            </summary>
+            <example>550e8400-e29b-41d4-a716-446655440001</example>
+        </member>
+        <member name="T:ChargingPile.API.Models.DTOs.OrderDTO">
+            <summary>
+            订单数据传输对象
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.OrderDTO.Id">
+            <summary>
+            订单ID
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.OrderDTO.OrderNo">
+            <summary>
+            订单号 (UUID)
+            </summary>
+            <example>550e8400-e29b-41d4-a716-446655440000</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.OrderDTO.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.OrderDTO.UserName">
+            <summary>
+            用户昵称
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.OrderDTO.StationId">
+            <summary>
+            充电站ID
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.OrderDTO.StationName">
+            <summary>
+            充电站名称
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.OrderDTO.PortId">
+            <summary>
+            充电口ID
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.OrderDTO.PortNo">
+            <summary>
+            充电口编号
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.OrderDTO.PileNo">
+            <summary>
+            充电桩编号
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.OrderDTO.StartTime">
+            <summary>
+            充电开始时间
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.OrderDTO.EndTime">
+            <summary>
+            充电结束时间
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.OrderDTO.Amount">
+            <summary>
+            订单金额（元）
+            </summary>
+            <example>50.00</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.OrderDTO.PowerConsumption">
+            <summary>
+            充电量（度）
+            </summary>
+            <example>3.61</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.OrderDTO.Status">
+            <summary>
+            订单状态
+            </summary>
+            <remarks>
+            - 0: 进行中
+            - 1: 已完成
+            - 2: 已取消
+            </remarks>
+            <example>0</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.OrderDTO.PaymentStatus">
+            <summary>
+            支付状态
+            </summary>
+            <remarks>
+            - 0: 未支付
+            - 1: 已支付
+            - 2: 退款中
+            - 3: 已退款
+            </remarks>
+            <example>0</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.OrderDTO.CreateTime">
+            <summary>
+            订单创建时间
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.OrderDTO.UpdateTime">
+            <summary>
+            订单更新时间
+            </summary>
+        </member>
+        <member name="T:ChargingPile.API.Models.DTOs.UpdateChargingStationDTO">
+            <summary>
+            充电站更新数据传输对象
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.UpdateChargingStationDTO.Name">
+            <summary>
+            充电站名称
+            </summary>
+            <example>某某充电站</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.UpdateChargingStationDTO.Address">
+            <summary>
+            详细地址
+            </summary>
+            <example>四川省成都市武侯区某某路123号</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.UpdateChargingStationDTO.TotalPorts">
+            <summary>
+            充电端口总数
+            </summary>
+            <example>10</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.UpdateChargingStationDTO.AvailablePorts">
+            <summary>
+            当前可用端口数
+            </summary>
+            <example>5</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.UpdateChargingStationDTO.Status">
+            <summary>
+            充电站状态
+            </summary>
+            <remarks>
+            - 0: 正常运营
+            - 1: 维护中
+            - 2: 故障
+            </remarks>
+            <example>0</example>
+        </member>
+        <member name="T:ChargingPile.API.Models.DTOs.UpdateOrderDTO">
+            <summary>
+            更新订单的DTO
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.UpdateOrderDTO.Status">
+            <summary>
+            订单状态（0：进行中，1：已完成，2：已取消）
+            </summary>
+            <example>1</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.DTOs.UpdateOrderDTO.PaymentStatus">
+            <summary>
+            支付状态（0：未支付，1：已支付）
+            </summary>
+            <example>1</example>
+        </member>
+        <member name="T:ChargingPile.API.Models.Entities.ChargingPile">
+            <summary>
+            充电桩实体
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPile.Id">
+            <summary>
+            充电桩ID
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPile.StationId">
+            <summary>
+            所属充电站ID
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPile.PileNo">
+            <summary>
+            充电桩编号
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPile.PileType">
+            <summary>
+            充电桩类型 (0: 快充, 1: 慢充)
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPile.Status">
+            <summary>
+            状态 (0: 正常, 1: 故障, 2: 维护中)
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPile.PowerRate">
+            <summary>
+            额定功率（kW）
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPile.Voltage">
+            <summary>
+            电压等级
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPile.Current">
+            <summary>
+            电流规格
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPile.Manufacturer">
+            <summary>
+            制造商
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPile.ModelNumber">
+            <summary>
+            型号
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPile.InstallationDate">
+            <summary>
+            安装日期
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPile.LastMaintenanceDate">
+            <summary>
+            最后维护日期
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPile.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPile.UpdateTime">
+            <summary>
+            更新时间
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPile.ChargingStation">
+            <summary>
+            所属充电站
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPile.ChargingPorts">
+            <summary>
+            充电口列表
+            </summary>
+        </member>
+        <member name="T:ChargingPile.API.Models.Entities.ChargingPort">
+            <summary>
+            充电口实体
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPort.Id">
+            <summary>
+            充电口ID
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPort.PileId">
+            <summary>
+            所属充电桩ID
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPort.PortNo">
+            <summary>
+            充电口编号
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPort.PortType">
+            <summary>
+            接口类型 (0: 国标, 1: 特斯拉, 2: 其他)
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPort.Status">
+            <summary>
+            状态 (0: 空闲, 1: 使用中, 2: 故障, 3: 维护中)
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPort.CurrentOrderId">
+            <summary>
+            当前正在进行的订单ID
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPort.LastOrderId">
+            <summary>
+            最后一个完成的订单ID
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPort.TotalChargingTimes">
+            <summary>
+            总充电次数
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPort.TotalChargingDuration">
+            <summary>
+            总充电时长（分钟）
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPort.TotalPowerConsumption">
+            <summary>
+            总耗电量（度）
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPort.LastCheckTime">
+            <summary>
+            最后检查时间
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPort.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPort.UpdateTime">
+            <summary>
+            更新时间
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPort.ChargingPile">
+            <summary>
+            所属充电桩
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPort.CurrentOrder">
+            <summary>
+            当前订单
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingPort.LastOrder">
+            <summary>
+            最后完成的订单
+            </summary>
         </member>
         <member name="T:ChargingPile.API.Models.Entities.ChargingStation">
             <summary>
@@ -229,6 +743,11 @@
             更新Location字段以匹配经纬度
             </summary>
         </member>
+        <member name="P:ChargingPile.API.Models.Entities.ChargingStation.ChargingPiles">
+            <summary>
+            充电桩列表
+            </summary>
+        </member>
         <member name="T:ChargingPile.API.Models.Entities.Order">
             <summary>
             充电订单实体
@@ -238,6 +757,12 @@
             <summary>
             订单ID
             </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.Order.OrderNo">
+            <summary>
+            订单号 (UUID)
+            </summary>
+            <example>550e8400-e29b-41d4-a716-446655440000</example>
         </member>
         <member name="P:ChargingPile.API.Models.Entities.Order.UserId">
             <summary>
@@ -264,6 +789,12 @@
             订单金额（元）
             </summary>
             <example>50.00</example>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.Order.PowerConsumption">
+            <summary>
+            充电量（度）
+            </summary>
+            <example>3.61</example>
         </member>
         <member name="P:ChargingPile.API.Models.Entities.Order.Status">
             <summary>
@@ -298,6 +829,16 @@
             关联的充电站信息
             </summary>
         </member>
+        <member name="P:ChargingPile.API.Models.Entities.Order.PortId">
+            <summary>
+            充电口ID
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.Order.ChargingPort">
+            <summary>
+            充电口
+            </summary>
+        </member>
         <member name="P:ChargingPile.API.Models.Entities.Order.CreateTime">
             <summary>
             订单创建时间
@@ -305,7 +846,27 @@
         </member>
         <member name="P:ChargingPile.API.Models.Entities.Order.UpdateTime">
             <summary>
-            订单最后更新时间
+            订单更新时间
+            </summary>
+        </member>
+        <member name="T:ChargingPile.API.Models.Entities.TimeRateConfig">
+            <summary>
+            时间段费率配置
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.TimeRateConfig.StartTime">
+            <summary>
+            开始时间（格式：HH:mm）
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.TimeRateConfig.EndTime">
+            <summary>
+            结束时间（格式：HH:mm）
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Models.Entities.TimeRateConfig.Rate">
+            <summary>
+            费率（元/度）
             </summary>
         </member>
         <member name="T:ChargingPile.API.Models.Entities.User">
@@ -356,6 +917,20 @@
         <member name="P:ChargingPile.API.Models.Entities.User.LastLoginTime">
             <summary>
             最后登录时间
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Services.RateCalculationService.CalculateChargingFee(System.DateTime,System.DateTime,System.Decimal)">
+            <summary>
+            计算指定时间段内的充电费用
+            </summary>
+            <param name="startTime">开始时间</param>
+            <param name="endTime">结束时间</param>
+            <param name="powerRate">充电功率</param>
+            <returns>(充电量, 费用)</returns>
+        </member>
+        <member name="M:ChargingPile.API.Services.RateCalculationService.CalculateCurrentChargingFee(System.DateTime,System.Decimal)">
+            <summary>
+            实时计算当前充电费用
             </summary>
         </member>
     </members>

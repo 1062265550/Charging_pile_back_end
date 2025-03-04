@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
@@ -108,5 +109,10 @@ namespace ChargingPile.API.Models.Entities
             // 确保使用WGS84坐标系统 (SRID=4326)
             Location = new Point((double)Longitude, (double)Latitude) { SRID = 4326 };
         }
+
+        /// <summary>
+        /// 充电桩列表
+        /// </summary>
+        public virtual ICollection<ChargingPile> ChargingPiles { get; set; } = new List<ChargingPile>();
     }
 } 

@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using ChargingPile.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,6 +62,9 @@ builder.Services.AddCors(options =>
                .AllowAnyHeader();
     });
 });
+
+// 注册费率计算服务
+builder.Services.AddScoped<RateCalculationService>();
 
 var app = builder.Build();
 
