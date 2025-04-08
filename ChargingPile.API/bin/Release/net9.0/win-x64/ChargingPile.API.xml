@@ -1,0 +1,676 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ChargingPile.API</name>
+    </assembly>
+    <members>
+        <member name="T:ChargingPile.API.Communication.TcpPacket">
+            <summary>
+            TCP数据包格式
+            </summary>
+        </member>
+        <member name="T:ChargingPile.API.Communication.TcpPacket.ControlCodes">
+            <summary>
+            控制码定义
+            </summary>
+        </member>
+        <member name="F:ChargingPile.API.Communication.TcpPacket.ControlCodes.DEVICE_LOGIN">
+            <summary>
+            设备登录
+            </summary>
+        </member>
+        <member name="F:ChargingPile.API.Communication.TcpPacket.ControlCodes.HEARTBEAT">
+            <summary>
+            心跳数据
+            </summary>
+        </member>
+        <member name="F:ChargingPile.API.Communication.TcpPacket.ControlCodes.START_CHARGING">
+            <summary>
+            远程启动充电
+            </summary>
+        </member>
+        <member name="F:ChargingPile.API.Communication.TcpPacket.ControlCodes.STOP_CHARGING">
+            <summary>
+            远程停止充电
+            </summary>
+        </member>
+        <member name="F:ChargingPile.API.Communication.TcpPacket.ControlCodes.SUBMIT_CHARGING_END">
+            <summary>
+            提交充电结束状态
+            </summary>
+        </member>
+        <member name="F:ChargingPile.API.Communication.TcpPacket.ControlCodes.LOCAL_START_REPORT">
+            <summary>
+            本地启动上报
+            </summary>
+        </member>
+        <member name="F:ChargingPile.API.Communication.TcpPacket.ControlCodes.UPLOAD_DATA">
+            <summary>
+            数据上传
+            </summary>
+        </member>
+        <member name="F:ChargingPile.API.Communication.TcpPacket.ControlCodes.REPORT_IMEI">
+            <summary>
+            主动上报IMEI身份 (M2.1及以上版本支持)
+            </summary>
+        </member>
+        <member name="T:ChargingPile.API.Communication.TcpPacket.HeartbeatInfo">
+            <summary>
+            心跳数据信息
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpPacket.HeartbeatInfo.FromPacket(ChargingPile.API.Communication.TcpPacket)">
+            <summary>
+            创建心跳信息对象
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpPacket.HeartbeatInfo.GetPortStatusText(System.Int32)">
+            <summary>
+            获取端口状态的描述文本
+            </summary>
+        </member>
+        <member name="T:ChargingPile.API.Communication.TcpPacket.DeviceLoginInfo">
+            <summary>
+            设备登录信息
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpPacket.DeviceLoginInfo.FromPacket(ChargingPile.API.Communication.TcpPacket)">
+            <summary>
+            从登录包解析设备登录信息
+            </summary>
+        </member>
+        <member name="T:ChargingPile.API.Communication.TcpPacket.ImeiReportInfo">
+            <summary>
+            IMEI上报信息 (对应0xC0命令)
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpPacket.ImeiReportInfo.FromPacket(ChargingPile.API.Communication.TcpPacket)">
+            <summary>
+            从IMEI上报数据包解析信息
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpPacket.CreateLoginResponse(System.String,System.Byte,System.Byte)">
+            <summary>
+            创建登录响应包
+            </summary>
+            <param name="imei">设备IMEI</param>
+            <param name="heartbeatInterval">心跳间隔（秒）</param>
+            <param name="loginResult">登录结果（0x00:成功, 0x01:非法模块, 0xF0:登录成功且切换新协议）</param>
+            <returns>响应数据包</returns>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpPacket.CreateHeartbeatResponse(System.String)">
+            <summary>
+            创建心跳响应包
+            </summary>
+            <param name="imei">设备IMEI</param>
+            <returns>响应数据包</returns>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpPacket.CreateStartChargingResponse(System.String,System.Byte,System.UInt32,System.Byte,System.Byte)">
+            <summary>
+            创建远程启动充电响应包
+            </summary>
+            <param name="imei">设备IMEI</param>
+            <param name="port">端口号</param>
+            <param name="orderId">订单号</param>
+            <param name="startMode">启动方式</param>
+            <param name="startResult">启动结果</param>
+            <returns>响应数据包</returns>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpPacket.ToBytes">
+            <summary>
+            将数据包转换为字节数组
+            </summary>
+            <returns>字节数组格式的数据包</returns>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpPacket.CalculateChecksum">
+            <summary>
+            计算数据包校验和
+            </summary>
+            <returns>计算出的校验和字节</returns>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpPacket.FromBytes(System.Byte[])">
+            <summary>
+            从字节数组转换为数据包
+            </summary>
+            <param name="buffer">原始字节数组</param>
+            <returns>解析后的数据包</returns>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpPacket.CreateImeiReportResponse(System.String)">
+            <summary>
+            创建IMEI上报响应包
+            </summary>
+        </member>
+        <member name="T:ChargingPile.API.Communication.TcpServer">
+            <summary>
+            TCP服务器类
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.StartAsync(System.Threading.CancellationToken)">
+            <summary>
+            启动TCP服务器
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.Stop">
+            <summary>
+            停止TCP服务器
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.HandleClientAsync(System.Net.Sockets.TcpClient,System.Threading.CancellationToken)">
+            <summary>
+            处理客户端连接
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.SendMessageAsync(System.Net.Sockets.TcpClient,ChargingPile.API.Communication.TcpPacket)">
+            <summary>
+            发送数据包
+            </summary>
+            <param name="client">客户端连接</param>
+            <param name="packet">要发送的数据包</param>
+            <returns>发送结果</returns>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.HandleDeviceLoginAsync(System.Net.Sockets.TcpClient,System.String,ChargingPile.API.Communication.TcpPacket)">
+            <summary>
+            处理设备登录请求
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.UpdateDeviceStatusAsync(System.String,System.Byte,System.Byte,System.Byte[])">
+            <summary>
+            更新设备状态
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.HandleDataUploadAsync(System.Net.Sockets.TcpClient,System.String,ChargingPile.API.Communication.TcpPacket)">
+            <summary>
+            处理数据上传请求
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.SendStartChargingCommandAsync(System.String,System.Byte,System.UInt32,System.Byte,System.UInt32,System.Byte,System.UInt32,System.UInt32)">
+            <summary>
+            发送远程启动充电命令
+            </summary>
+            <param name="imei">设备IMEI</param>
+            <param name="port">充电端口号</param>
+            <param name="orderId">订单号</param>
+            <param name="startMode">启动方式：0x01手机APP，0x02后台，0x03刷卡器</param>
+            <param name="cardId">卡号</param>
+            <param name="chargingMode">充电方式：0x01按时间，0x02按金额，0x03按电量</param>
+            <param name="chargingParam">充电参数：按时间(秒)，按金额(分)，按电量(度*100)</param>
+            <param name="availableAmount">可用金额(分)</param>
+            <returns>操作结果，包含是否成功和消息</returns>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.SendStopChargingCommandAsync(System.String,System.Byte,System.UInt32)">
+            <summary>
+            发送远程停止充电命令
+            </summary>
+            <param name="imei">设备IMEI</param>
+            <param name="port">充电端口号</param>
+            <param name="orderId">订单号</param>
+            <returns>操作结果，包含是否成功和消息</returns>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.GetDeviceEndPoint(System.String)">
+            <summary>
+            获取设备端点
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.GetClient(System.String)">
+            <summary>
+            获取客户端连接
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.GetConnectedDevices">
+            <summary>
+            获取已连接的设备列表
+            </summary>
+            <returns>设备列表</returns>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.ExecuteWithRetryAsync(System.Func{System.Threading.Tasks.Task},System.String)">
+            <summary>
+            执行不返回结果的带有重试机制的数据库操作
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.ExecuteWithRetryAsync``1(System.Func{System.Threading.Tasks.Task{``0}},System.String)">
+            <summary>
+            执行有返回结果的带有重试机制的数据库操作
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.ExecuteOperationWithConnectionAsync(System.Data.IDbConnection,System.Func{System.Threading.Tasks.Task})">
+            <summary>
+            使用指定连接执行无返回值操作
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.ExecuteOperationWithConnectionAsync``1(System.Data.IDbConnection,System.Func{System.Threading.Tasks.Task{``0}})">
+            <summary>
+            使用指定连接执行有返回值操作
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.CheckPortStatusAsync(System.String,System.Byte)">
+            <summary>
+            检查充电端口状态
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.CheckOrderStatusAsync(System.UInt32)">
+            <summary>
+            检查订单状态
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.SyncOrderAndPortStatusAsync">
+            <summary>
+            同步订单状态和端口状态，确保数据一致性
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.FixOrderPortStatusConsistencyAsync(System.String,System.Byte,System.UInt32)">
+            <summary>
+            检查并修复订单状态与端口状态不一致的问题
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Communication.TcpServer.HandleImeiReportAsync(System.Net.Sockets.TcpClient,System.String,ChargingPile.API.Communication.TcpPacket)">
+            <summary>
+            处理设备IMEI上报命令
+            </summary>
+        </member>
+        <member name="T:ChargingPile.API.Communication.DeviceConnectionInfo">
+            <summary>
+            设备连接信息
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Communication.DeviceConnectionInfo.IMEI">
+            <summary>
+            设备IMEI
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Communication.DeviceConnectionInfo.EndPoint">
+            <summary>
+            客户端连接端点
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Communication.DeviceConnectionInfo.IsConnected">
+            <summary>
+            是否连接
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Communication.DeviceConnectionInfo.LastActiveTime">
+            <summary>
+            最后活动时间
+            </summary>
+        </member>
+        <member name="T:ChargingPile.API.Controllers.ChargingPileController">
+            <summary>
+            充电桩控制器
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.ChargingPileController.StartCharging(System.String,ChargingPile.API.Controllers.StartChargingRequest)">
+            <summary>
+            启动充电
+            </summary>
+            <param name="deviceAddress">设备地址</param>
+            <param name="request">启动充电请求</param>
+            <returns>操作结果</returns>
+            <response code="200">启动充电命令已发送</response>
+            <response code="400">请求参数无效</response>
+            <response code="404">设备未连接</response>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.ChargingPileController.StopCharging(System.String,ChargingPile.API.Controllers.StopChargingRequest)">
+            <summary>
+            停止充电
+            </summary>
+            <param name="deviceAddress">设备地址</param>
+            <param name="request">停止充电请求</param>
+            <returns>操作结果</returns>
+            <response code="200">停止充电命令已发送</response>
+            <response code="400">请求参数无效</response>
+            <response code="404">设备未连接</response>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.ChargingPileController.GetChargingStatus(System.String,System.Byte)">
+            <summary>
+            查询充电状态
+            </summary>
+            <param name="deviceAddress">设备地址</param>
+            <param name="port">充电端口号</param>
+            <returns>操作结果</returns>
+            <response code="200">查询命令已发送</response>
+            <response code="400">请求参数无效</response>
+            <response code="404">设备未连接</response>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.ChargingPileController.ConfigureChargingPile(System.String,System.Byte[])">
+            <summary>
+            配置充电桩
+            </summary>
+        </member>
+        <member name="T:ChargingPile.API.Controllers.StartChargingRequest">
+            <summary>
+            启动充电请求
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Controllers.StartChargingRequest.Port">
+            <summary>
+            端口号 (1-N)
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Controllers.StartChargingRequest.OrderId">
+            <summary>
+            订单号
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Controllers.StartChargingRequest.StartMode">
+            <summary>
+            启动方式 (1:扫码支付 2:刷卡支付 3:管理员启动)
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Controllers.StartChargingRequest.CardId">
+            <summary>
+            卡号 (非IC卡启动时为0)
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Controllers.StartChargingRequest.ChargingMode">
+            <summary>
+            充电方式 (1:充满自停 2:按金额 3:按时间 4:按电量 5:其它)
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Controllers.StartChargingRequest.ChargingParam">
+            <summary>
+            充电参数 (秒/0.01元/0.01度)
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Controllers.StartChargingRequest.AvailableAmount">
+            <summary>
+            可用金额 (0.01元)
+            </summary>
+        </member>
+        <member name="T:ChargingPile.API.Controllers.StopChargingRequest">
+            <summary>
+            停止充电请求
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Controllers.StopChargingRequest.Port">
+            <summary>
+            端口号 (1-N)
+            </summary>
+        </member>
+        <member name="P:ChargingPile.API.Controllers.StopChargingRequest.OrderId">
+            <summary>
+            订单号
+            </summary>
+        </member>
+        <member name="T:ChargingPile.API.Controllers.DevicesController">
+            <summary>
+            设备控制器
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.DevicesController.GetConnectedDevices">
+            <summary>
+            获取当前已连接的设备列表
+            </summary>
+            <returns>设备列表</returns>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.DevicesController.GetDeviceStatus(System.String)">
+            <summary>
+            获取设备连接状态
+            </summary>
+            <param name="imei">设备IMEI</param>
+            <returns>设备连接状态</returns>
+        </member>
+        <member name="M:ChargingPile.API.Controllers.HomeController.Get">
+            <summary>
+            获取API信息
+            </summary>
+        </member>
+        <member name="T:ChargingPile.API.Data.ApplicationDbContext">
+            <summary>
+            应用程序数据库上下文
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Data.ApplicationDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{ChargingPile.API.Data.ApplicationDbContext})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="options">数据库上下文选项</param>
+        </member>
+        <member name="M:ChargingPile.API.Data.ApplicationDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            配置模型
+            </summary>
+            <param name="modelBuilder">模型构建器</param>
+        </member>
+        <member name="T:ChargingPile.API.Data.SpatialExtensions">
+            <summary>
+            空间扩展类，提供地理位置相关的扩展方法
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Data.SpatialExtensions.CreatePoint(System.Double,System.Double)">
+            <summary>
+            创建点
+            </summary>
+            <param name="longitude">经度</param>
+            <param name="latitude">纬度</param>
+            <returns>点对象</returns>
+        </member>
+        <member name="T:ChargingPile.API.Extensions.LoggingExtensions">
+            <summary>
+            日志扩展方法，解决动态参数调用问题
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Extensions.LoggingExtensions.SafeLogInformation(Microsoft.Extensions.Logging.ILogger,System.String,System.Object[])">
+            <summary>
+            记录信息日志，解决动态参数调用问题
+            </summary>
+        </member>
+        <member name="T:ChargingPile.API.Services.ChargingPileService">
+            <summary>
+            充电桩服务类
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Services.ChargingPileService.GetChargingPileImeiAsync(System.String)">
+            <summary>
+            获取充电桩IMEI
+            </summary>
+            <returns>结果对象，包含是否成功、IMEI和错误消息</returns>
+        </member>
+        <member name="M:ChargingPile.API.Services.ChargingPileService.ExecuteCommandAsync(System.String,System.Func{System.String,System.Threading.Tasks.Task{System.ValueTuple{System.Boolean,System.String}}})">
+            <summary>
+            统一的命令执行方法，用于处理异常和IMEI查询
+            </summary>
+            <param name="deviceIdentifier">设备标识（可能是ID、编号或IMEI）</param>
+            <param name="commandFunc">具体命令执行函数</param>
+            <returns>执行结果</returns>
+        </member>
+        <member name="M:ChargingPile.API.Services.ChargingPileService.StartChargingAsync(System.String,System.Byte,System.UInt32,System.Byte,System.UInt32,System.Byte,System.UInt32,System.UInt32)">
+            <summary>
+            远程启动充电
+            </summary>
+            <returns>操作结果，包含是否成功和消息</returns>
+        </member>
+        <member name="M:ChargingPile.API.Services.ChargingPileService.StopChargingAsync(System.String,System.Byte,System.UInt32)">
+            <summary>
+            远程停止充电
+            </summary>
+            <returns>操作结果，包含是否成功和消息</returns>
+        </member>
+        <member name="M:ChargingPile.API.Services.ChargingPileService.QueryChargingStatusAsync(System.String,System.Byte)">
+            <summary>
+            查询充电状态
+            </summary>
+            <returns>操作结果，包含是否成功和消息</returns>
+        </member>
+        <member name="M:ChargingPile.API.Services.ChargingPileService.ConfigureChargingPileAsync(System.String,System.Byte[])">
+            <summary>
+            配置充电桩参数
+            </summary>
+            <returns>操作结果，包含是否成功和消息</returns>
+        </member>
+        <member name="T:ChargingPile.API.Tests.EnhancedTestClient">
+            <summary>
+            增强版充电桩测试客户端 - 集成协议验证功能
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.EnhancedTestClient.ConnectAsync">
+            <summary>
+            连接到服务器
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.EnhancedTestClient.SendLoginRequestAsync">
+            <summary>
+            发送设备登录请求
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.EnhancedTestClient.SendHeartbeatAsync">
+            <summary>
+            发送心跳数据
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.EnhancedTestClient.SendChargingEndStatusAsync(System.Byte,System.UInt32)">
+            <summary>
+            发送充电结束状态
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.EnhancedTestClient.StartReceiveLoopAsync(System.Threading.CancellationToken)">
+            <summary>
+            启动接收循环
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.EnhancedTestClient.ProcessReceivedPacketAsync(ChargingPile.API.Communication.TcpPacket)">
+            <summary>
+            处理接收到的数据包
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.EnhancedTestClient.ProcessLoginResponse(ChargingPile.API.Communication.TcpPacket)">
+            <summary>
+            处理登录响应
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.EnhancedTestClient.StartHeartbeat(System.Byte)">
+            <summary>
+            启动定时心跳发送
+            </summary>
+            <param name="interval">心跳间隔（秒）</param>
+        </member>
+        <member name="M:ChargingPile.API.Tests.EnhancedTestClient.StopHeartbeatTask">
+            <summary>
+            停止心跳任务
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.EnhancedTestClient.ProcessHeartbeatResponse(ChargingPile.API.Communication.TcpPacket)">
+            <summary>
+            处理心跳响应
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.EnhancedTestClient.ProcessStartChargingCommandAsync(ChargingPile.API.Communication.TcpPacket)">
+            <summary>
+            处理远程启动充电命令
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.EnhancedTestClient.ProcessStopChargingCommandAsync(ChargingPile.API.Communication.TcpPacket)">
+            <summary>
+            处理远程停止充电命令
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.EnhancedTestClient.ProcessChargingEndResponse(ChargingPile.API.Communication.TcpPacket)">
+            <summary>
+            处理充电结束响应
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.EnhancedTestClient.Close">
+            <summary>
+            关闭客户端
+            </summary>
+        </member>
+        <member name="T:ChargingPile.API.Tests.TestModule">
+            <summary>
+            测试模块入口类
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.TestModule.RunAsync">
+            <summary>
+            运行测试模块
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.TestModule.RunEnhancedClientAsync">
+            <summary>
+            运行增强版测试客户端
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.TestModule.ShowHelp">
+            <summary>
+            显示帮助信息
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.TestModule.HasArgument(System.String)">
+            <summary>
+            检查是否存在指定参数
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.TestModule.GetArgumentValue``1(System.String,``0)">
+            <summary>
+            获取参数值
+            </summary>
+        </member>
+        <member name="T:ChargingPile.API.Tests.Tools.ProtocolValidator">
+            <summary>
+            协议验证工具 - 用于验证数据包是否符合WH设备通信协议规范
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.Tools.ProtocolValidator.ValidateRawPacket(System.Byte[])">
+            <summary>
+            验证原始字节数组是否符合协议规范
+            </summary>
+            <param name="bytes">原始字节数组</param>
+            <returns>验证结果，包含是否通过和详细信息</returns>
+        </member>
+        <member name="M:ChargingPile.API.Tests.Tools.ProtocolValidator.ParseLoginResponseData(System.Byte[],ChargingPile.API.Tests.Tools.ValidationResult)">
+            <summary>
+            解析登录响应数据
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.Tools.ProtocolValidator.IsValidIMEI(System.String)">
+            <summary>
+            验证IMEI是否合法
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.Tools.ProtocolValidator.ValidatePacket(ChargingPile.API.Communication.TcpPacket)">
+            <summary>
+            验证TcpPacket对象是否符合协议规范
+            </summary>
+            <param name="packet">TcpPacket对象</param>
+            <returns>验证结果</returns>
+        </member>
+        <member name="M:ChargingPile.API.Tests.Tools.ProtocolValidator.ValidateStartChargingCommand(System.Byte[],System.UInt16,ChargingPile.API.Tests.Tools.ValidationResult)">
+            <summary>
+            验证远程启动充电命令数据包
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.Tools.ProtocolValidator.ValidateStopChargingCommand(System.Byte[],System.UInt16,ChargingPile.API.Tests.Tools.ValidationResult)">
+            <summary>
+            验证远程停止充电命令数据包
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.Tools.ProtocolValidator.ValidateStartChargingPacket(ChargingPile.API.Communication.TcpPacket,ChargingPile.API.Tests.Tools.ValidationResult)">
+            <summary>
+            验证远程启动充电TcpPacket
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.Tools.ProtocolValidator.ValidateStopChargingPacket(ChargingPile.API.Communication.TcpPacket,ChargingPile.API.Tests.Tools.ValidationResult)">
+            <summary>
+            验证远程停止充电TcpPacket
+            </summary>
+        </member>
+        <member name="M:ChargingPile.API.Tests.Tools.ProtocolValidator.CalculateChecksum(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            计算校验和
+            </summary>
+            <param name="data">数据数组</param>
+            <param name="startIndex">起始索引</param>
+            <param name="length">长度</param>
+            <returns>校验和（1字节）</returns>
+        </member>
+        <member name="M:ChargingPile.API.Tests.Tools.ProtocolValidator.GetCommandName(System.Byte)">
+            <summary>
+            获取命令名称
+            </summary>
+            <param name="cmd">命令码</param>
+            <returns>命令名称</returns>
+        </member>
+        <member name="T:ChargingPile.API.Tests.Tools.ValidationResult">
+            <summary>
+            协议验证结果
+            </summary>
+        </member>
+    </members>
+</doc>

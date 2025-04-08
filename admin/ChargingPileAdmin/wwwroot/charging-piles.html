@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>充电桩管理 - 充电桩后台管理平台</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 自定义CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/sidebar.css" rel="stylesheet">
+    <!-- Font Awesome 图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- 解决无障碍性问题的样式 -->
+    <style>
+        /* 防止模态框背景元素接收到焦点 */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1050;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        /* 模态框显示时样式 */
+        .modal.show {
+            display: block !important;
+        }
+        
+        /* 隐藏模态框时不显示 */
+        .modal:not(.show) {
+            display: none !important;
+        }
+        
+        /* 使用inert属性的元素样式 */
+        [inert] {
+            pointer-events: none;
+            cursor: default;
+        }
+        
+        /* 错误提示模态框样式 */
+        #errorModal {
+            z-index: 1100; /* 确保错误模态框显示在其他模态框之上 */
+        }
+        
+        /* 成功提示模态框样式 */
+        #successModal {
+            z-index: 1100; /* 确保成功模态框显示在其他模态框之上 */
+        }
+        
+        /* 表单内错误提示区域样式 */
+        #portFormError {
+            border-left: 4px solid #dc3545;
+            background-color: rgba(220, 53, 69, 0.1);
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏容器 -->
+    <div id="header-container"></div>
+
+    <!-- 主要内容区域 -->
+    <div class="d-flex flex-column flex-lg-row">
+        <!-- 左侧边栏容器 -->
+        <div id="sidebar-container" class="flex-shrink-0"></div>
+
+        <!-- 主内容区 -->
+        <div class="flex-grow-1 ps-0 pe-0">
+            <div class="bg-white p-0">
+                <!-- 标题栏 -->
+                <div class="bg-primary text-white p-3 d-flex justify-content-between align-items-center">
+                    <h5 class="m-0"><i class="fas fa-bolt me-2"></i> 充电桩管理</h5>
+                    <button type="button" class="btn btn-light btn-sm" id="addPileBtn">
+                        <i class="fas fa-plus me-1"></i>添加充电桩
+                    </button>
+                </div>
+                
+                <div class="p-3">
+                    <!-- 搜索和筛选区域 -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="搜索充电桩..." id="searchInput">
+                                <button class="btn btn-outline-primary" type="button" id="searchBtn">
+                                    <i class="fas fa-search me-1"></i>搜索
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <div class="btn-group">
+                                <select class="form-select me-2" id="stationFilter">
+                                    <option value="">所有充电站</option>
+                                </select>
+                                <select class="form-select me-2" id="statusFilter">
+                                    <option value="">所有状态</option>
+                                    <option value="0">离线</option>
+                                    <option value="1">空闲</option>
+                                    <option value="2">使用中</option>
+                                    <option value="3">故障</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-outline-secondary ms-2" id="refreshBtn">
+                                <i class="fas fa-sync-alt me-1"></i>刷新
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 充电桩表格 -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover mb-0" id="pilesTable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>编号</th>
+                                    <th>所属充电站</th>
+                                    <th>类型</th>
+                                    <th>额定功率</th>
+                                    <th>状态</th>
+                                    <th>端口数</th>
+                                    <th>在线状态</th>
+                                    <th>最后心跳时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="9" class="text-center">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">加载中...</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 分页 -->
+                    <nav aria-label="Page navigation" class="mt-4">
+                        <ul class="pagination justify-content-center" id="pagination">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">首页</a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">下一页</a>
+                            </li>
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">末页</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚容器 -->
+    <div id="footer-container"></div>
+
+    <!-- 添加/编辑充电桩模态框 -->
+    <div class="modal fade" id="pileModal" tabindex="-1" aria-labelledby="pileModalLabel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pileModalLabel">添加充电桩</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="pileForm">
+                        <input type="hidden" id="pileId">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="stationId" class="form-label">所属充电站</label>
+                                    <select class="form-select" id="stationId" required>
+                                        <option value="">请选择充电站</option>
+                                        <!-- 充电站选项将通过JavaScript动态加载 -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="pileNo" class="form-label">充电桩编号</label>
+                                    <input type="text" class="form-control" id="pileNo" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="pileType" class="form-label">充电桩类型</label>
+                                    <select class="form-select" id="pileType" required>
+                                        <option value="1">直流快充</option>
+                                        <option value="2">交流慢充</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="powerRate" class="form-label">额定功率(kW)</label>
+                                    <input type="number" class="form-control" id="powerRate" min="0" step="0.1" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="totalPorts" class="form-label">端口数量</label>
+                                    <input type="number" class="form-control" id="totalPorts" min="1" max="10" value="1" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="manufacturer" class="form-label">制造商</label>
+                                    <input type="text" class="form-control" id="manufacturer">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="imei" class="form-label">IMEI号</label>
+                                    <input type="text" class="form-control" id="imei">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="protocolVersion" class="form-label">协议版本</label>
+                                    <input type="text" class="form-control" id="protocolVersion">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="softwareVersion" class="form-label">软件版本</label>
+                                    <input type="text" class="form-control" id="softwareVersion">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="hardwareVersion" class="form-label">硬件版本</label>
+                                    <input type="text" class="form-control" id="hardwareVersion">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="installationDate" class="form-label">安装日期</label>
+                                    <input type="date" class="form-control" id="installationDate">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="status" class="form-label">状态</label>
+                                    <select class="form-select" id="status" required>
+                                        <option value="1">空闲</option>
+                                        <option value="0">离线</option>
+                                        <option value="2">使用中</option>
+                                        <option value="3">故障</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="savePileBtn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 查看充电桩详情模态框 -->
+    <div class="modal fade" id="pileDetailModal" tabindex="-1" aria-labelledby="pileDetailModalLabel">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pileDetailModalLabel">充电桩详情</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-light">
+                                    <h6 class="card-title mb-0">基本信息</h6>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th width="30%">充电桩编号</th>
+                                            <td id="detail-pileNo"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>所属充电站</th>
+                                            <td id="detail-stationName"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>充电桩类型</th>
+                                            <td id="detail-pileTypeDescription"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>额定功率</th>
+                                            <td id="detail-powerRate"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>制造商</th>
+                                            <td id="detail-manufacturer"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>IMEI号</th>
+                                            <td id="detail-imei"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>总端口数</th>
+                                            <td id="detail-totalPorts"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-light">
+                                    <h6 class="card-title mb-0">状态信息</h6>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th width="30%">状态</th>
+                                            <td id="detail-statusDescription"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>在线状态</th>
+                                            <td id="detail-onlineStatusDescription"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>信号强度</th>
+                                            <td id="detail-signalStrength"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>温度</th>
+                                            <td id="detail-temperature"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>最后心跳时间</th>
+                                            <td id="detail-lastHeartbeatTime"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>安装日期</th>
+                                            <td id="detail-installationDate"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>最后维护日期</th>
+                                            <td id="detail-lastMaintenanceDate"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                            <h6 class="card-title mb-0">充电端口信息</h6>
+                            <button type="button" class="btn btn-sm btn-primary" id="addPortBtn">
+                                <i class="fas fa-plus me-1"></i>添加充电端口
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover" id="portsTable">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>端口编号</th>
+                                            <th>端口类型</th>
+                                            <th>状态</th>
+                                            <th>电压(V)</th>
+                                            <th>电流(A)</th>
+                                            <th>功率(kW)</th>
+                                            <th>温度(℃)</th>
+                                            <th>总充电次数</th>
+                                            <th>总耗电量(kWh)</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="10" class="text-center">暂无端口数据</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 确认删除模态框 -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">确认删除</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    确定要删除这个充电桩吗？此操作不可撤销。
+                    <input type="hidden" id="deletePileId">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 错误提示模态框 -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="errorModalLabel">
+                        <i class="fas fa-exclamation-circle me-2"></i>操作失败
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-times-circle text-danger" style="font-size: 3rem;"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3" id="errorMessage">
+                            发生错误，请重试。
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 成功提示模态框 -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="successModalLabel">
+                        <i class="fas fa-check-circle me-2"></i>操作成功
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-check-circle text-success" style="font-size: 3rem;"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3" id="successMessage">
+                            操作已成功完成。
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 充电端口模态框 -->
+    <div class="modal fade" id="portModal" tabindex="-1" aria-labelledby="portModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="portModalLabel">添加充电端口</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="portForm">
+                        <input type="hidden" id="portId">
+                        <input type="hidden" id="portPileId">
+                        
+                        <!-- 错误提示区域 -->
+                        <div id="portFormError" class="alert alert-danger mb-3" style="display: none;">
+                            <i class="fas fa-exclamation-circle me-2"></i>
+                            <span id="portFormErrorMessage"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="portNo" class="form-label">端口编号</label>
+                            <input type="number" class="form-control" id="portNo" min="1" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="portType" class="form-label">端口类型</label>
+                            <select class="form-select" id="portType" required>
+                                <option value="1">Type-1</option>
+                                <option value="2">Type-2</option>
+                                <option value="3">GB/T</option>
+                                <option value="4">CHAdeMO</option>
+                                <option value="5">CCS</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="portStatus" class="form-label">状态</label>
+                            <select class="form-select" id="portStatus" required>
+                                <option value="1">空闲</option>
+                                <option value="0">离线</option>
+                                <option value="2">使用中</option>
+                                <option value="3">故障</option>
+                            </select>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="voltage" class="form-label">电压(V)</label>
+                                    <input type="number" class="form-control" id="voltage" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="currentAmpere" class="form-label">电流(A)</label>
+                                    <input type="number" class="form-control" id="currentAmpere" min="0">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="power" class="form-label">功率(kW)</label>
+                                    <input type="number" class="form-control" id="power" min="0" step="0.1">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="temperature" class="form-label">温度(℃)</label>
+                                    <input type="number" class="form-control" id="temperature" min="-50" max="200" step="0.1" placeholder="允许范围: -50°C 到 200°C">
+                                    <div class="form-text text-muted">设备温度应在正常工作范围内</div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="savePortBtn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 确认删除充电端口模态框 -->
+    <div class="modal fade" id="deletePortModal" tabindex="-1" aria-labelledby="deletePortModalLabel">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deletePortModalLabel">确认删除</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    确定要删除这个充电端口吗？此操作不可撤销。
+                    <input type="hidden" id="deletePortId">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeletePortBtn">删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- 公共API配置 -->
+    <script src="js/config.js"></script>
+    <!-- 公共组件管理 -->
+    <script src="js/common.js"></script>
+    <!-- 充电桩管理JS -->
+    <script src="js/piles.js"></script>
+
+    <!-- 解决无障碍性问题的脚本 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 处理模态框打开事件
+            const modalOpenHandler = function(event) {
+                // 使用inert属性禁用主要内容区域
+                document.querySelectorAll('body > *:not(.modal):not(.modal-backdrop)').forEach(el => {
+                    if (!el.hasAttribute('inert')) {
+                        el.setAttribute('inert', '');
+                    }
+                });
+            };
+            
+            // 处理模态框关闭事件
+            const modalCloseHandler = function(event) {
+                // 移除inert属性，恢复主要内容区域
+                document.querySelectorAll('body > *[inert]').forEach(el => {
+                    el.removeAttribute('inert');
+                });
+            };
+            
+            // 为模态框添加事件监听器
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('shown.bs.modal', modalOpenHandler);
+                modal.addEventListener('hidden.bs.modal', modalCloseHandler);
+            });
+            
+            // 使用MutationObserver监听动态添加的模态框
+            const observer = new MutationObserver(mutations => {
+                mutations.forEach(mutation => {
+                    if (mutation.addedNodes && mutation.addedNodes.length) {
+                        mutation.addedNodes.forEach(node => {
+                            if (node.classList && node.classList.contains('modal')) {
+                                node.addEventListener('shown.bs.modal', modalOpenHandler);
+                                node.addEventListener('hidden.bs.modal', modalCloseHandler);
+                            }
+                        });
+                    }
+                });
+            });
+            
+            // 启动观察器
+            observer.observe(document.body, { childList: true, subtree: true });
+        });
+    </script>
+</body>
+</html>

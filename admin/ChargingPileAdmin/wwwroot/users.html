@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>充电桩管理平台 - 用户管理</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 自定义CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/sidebar.css" rel="stylesheet">
+    <!-- Font Awesome 图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 顶部导航栏容器 -->
+    <div id="header-container"></div>
+
+    <!-- 主要内容区域 -->
+    <div class="d-flex flex-column flex-lg-row">
+        <!-- 左侧边栏容器 -->
+        <div id="sidebar-container" class="flex-shrink-0"></div>
+
+        <!-- 主内容区 -->
+        <div class="flex-grow-1 ps-0 pe-0">
+            <div class="bg-white p-0">
+                <div class="bg-primary text-white p-3 d-flex justify-content-between align-items-center">
+                    <h5 class="m-0"><i class="fas fa-users me-2"></i> 用户管理</h5>
+                    <button type="button" class="btn btn-light btn-sm" id="addUserBtn">
+                        <i class="fas fa-user-plus me-1"></i>新增用户
+                    </button>
+                </div>
+                <div class="p-3">
+                    <!-- 搜索和筛选区域 -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="搜索用户名、手机号..." id="searchInput">
+                                <button class="btn btn-outline-primary" type="button" id="searchBtn">
+                                    <i class="fas fa-search me-1"></i>搜索
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <select class="form-select d-inline-block w-auto me-2" id="roleFilter">
+                                <option value="">所有角色</option>
+                                <option value="admin">管理员</option>
+                                <option value="user">普通用户</option>
+                            </select>
+                            <button class="btn btn-outline-secondary" id="refreshBtn">
+                                <i class="fas fa-sync-alt me-1"></i>刷新
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 用户统计卡片 -->
+                    <div class="row">
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">总用户数</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalUsers">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">活跃用户</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="activeUsers">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-user-check fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-danger shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">禁用用户</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="inactiveUsers">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-user-slash fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">今日新增</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="newUsersToday">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-user-plus fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 用户管理工具栏 -->
+                    <div class="card mb-4">
+                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                            <h6 class="m-0 font-weight-bold text-primary">用户列表</h6>
+                            <div>
+                                <button class="btn btn-success btn-sm" id="createUserBtn">
+                                    <i class="fas fa-plus-circle me-1"></i>新增用户
+                                </button>
+                                <button class="btn btn-primary btn-sm" id="refreshData">
+                                    <i class="fas fa-sync-alt me-1"></i>刷新
+                                </button>
+                                <button class="btn btn-secondary btn-sm" id="exportData">
+                                    <i class="fas fa-file-export me-1"></i>导出
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!-- 搜索表单 -->
+                            <div class="row mb-3">
+                                <div class="col-md-10">
+                                    <div class="row g-3">
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" id="keyword" placeholder="搜索用户名/手机/邮箱">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-select" id="status">
+                                                <option value="">所有状态</option>
+                                                <option value="1">正常</option>
+                                                <option value="0">禁用</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="btn btn-primary w-100" id="searchButton">
+                                                <i class="fas fa-search me-1"></i>搜索
+                                            </button>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="btn btn-secondary w-100" id="resetSearch">
+                                                <i class="fas fa-redo me-1"></i>重置
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 用户列表表格 -->
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>用户ID</th>
+                                            <th>头像</th>
+                                            <th>昵称</th>
+                                            <th>手机号</th>
+                                            <th>邮箱</th>
+                                            <th>账户余额</th>
+                                            <th>注册时间</th>
+                                            <th>最后登录</th>
+                                            <th>状态</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="userTableBody">
+                                        <!-- 用户数据将通过JavaScript动态加载 -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- 分页控件 -->
+                            <nav aria-label="用户列表分页" class="mt-3">
+                                <ul class="pagination justify-content-center" id="pagination">
+                                    <!-- 分页链接将通过JavaScript动态生成 -->
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 用户详情模态框 -->
+    <div class="modal fade" id="userDetailModal" tabindex="-1" aria-labelledby="userDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="userDetailModalLabel">用户详情</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="关闭"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <img id="detailAvatar" src="images/avatar-placeholder.png" alt="用户头像" class="img-fluid rounded-circle" style="width: 100px; height: 100px; object-fit: cover;">
+                        <h4 id="detailNickname" class="mt-2">用户昵称</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="fw-bold">用户ID:</label>
+                                <p id="detailId">1</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="fw-bold">手机号码:</label>
+                                <p id="detailPhone">13800138000</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="fw-bold">电子邮箱:</label>
+                                <p id="detailEmail">user@example.com</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="fw-bold">账户余额:</label>
+                                <p id="detailBalance">¥100.00</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="fw-bold">用户状态:</label>
+                                <p id="detailStatus"><span class="badge bg-success">正常</span></p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="fw-bold">注册时间:</label>
+                                <p id="detailRegisterTime">2023-01-01 12:00:00</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="fw-bold">最后登录:</label>
+                                <p id="detailLastLoginTime">2023-01-01 12:00:00</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="fw-bold">微信OpenID:</label>
+                                <p id="detailOpenId">wx_open_id_example</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" id="rechargeBalanceBtn">充值余额</button>
+                    <button type="button" class="btn btn-info" id="updateUserBtn">编辑信息</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 创建用户模态框 -->
+    <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="createUserModalLabel">新增用户</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="关闭"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createUserForm">
+                        <div class="mb-3">
+                            <label for="createNickname" class="form-label">用户昵称</label>
+                            <input type="text" class="form-control" id="createNickname" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="createPhone" class="form-label">手机号码</label>
+                            <input type="tel" class="form-control" id="createPhone" required pattern="[0-9]{11}">
+                            <div class="form-text">请输入11位手机号码</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="createEmail" class="form-label">电子邮箱</label>
+                            <input type="email" class="form-control" id="createEmail">
+                        </div>
+                        <div class="mb-3">
+                            <label for="createAvatar" class="form-label">头像URL</label>
+                            <input type="url" class="form-control" id="createAvatar">
+                        </div>
+                        <div class="mb-3">
+                            <label for="createPassword" class="form-label">密码</label>
+                            <input type="password" class="form-control" id="createPassword" required>
+                            <div class="form-text">密码长度至少为6位</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="createConfirmPassword" class="form-label">确认密码</label>
+                            <input type="password" class="form-control" id="createConfirmPassword" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-success" id="confirmCreateUser">创建</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 编辑用户模态框 -->
+    <div class="modal fade" id="updateUserModal" tabindex="-1" aria-labelledby="updateUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title" id="updateUserModalLabel">编辑用户</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="关闭"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateUserForm">
+                        <input type="hidden" id="updateUserId">
+                        <div class="mb-3">
+                            <label for="updateNickname" class="form-label">用户昵称</label>
+                            <input type="text" class="form-control" id="updateNickname" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="updatePhone" class="form-label">手机号码</label>
+                            <input type="tel" class="form-control" id="updatePhone" required pattern="[0-9]{11}">
+                            <div class="form-text">请输入11位手机号码</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="updateEmail" class="form-label">电子邮箱</label>
+                            <input type="email" class="form-control" id="updateEmail">
+                        </div>
+                        <div class="mb-3">
+                            <label for="updateAvatar" class="form-label">头像URL</label>
+                            <input type="url" class="form-control" id="updateAvatar">
+                        </div>
+                        <div class="mb-3">
+                            <label for="updateStatus" class="form-label">用户状态</label>
+                            <select class="form-select" id="updateStatus" required>
+                                <option value="1">正常</option>
+                                <option value="0">禁用</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-info" id="confirmUpdateUser">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 充值余额模态框 -->
+    <div class="modal fade" id="rechargeModal" tabindex="-1" aria-labelledby="rechargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title" id="rechargeModalLabel">账户充值</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="rechargeForm">
+                        <input type="hidden" id="rechargeUserId">
+                        <div class="mb-3">
+                            <label for="rechargeAmount" class="form-label">充值金额</label>
+                            <div class="input-group">
+                                <span class="input-group-text">¥</span>
+                                <input type="number" class="form-control" id="rechargeAmount" min="1" step="0.01" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rechargeMethod" class="form-label">支付方式</label>
+                            <select class="form-select" id="rechargeMethod" required>
+                                <option value="1">微信支付</option>
+                                <option value="2">支付宝支付</option>
+                                <option value="3">银行卡支付</option>
+                                <option value="0">其他方式</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rechargeTransactionId" class="form-label">交易流水号</label>
+                            <input type="text" class="form-control" id="rechargeTransactionId" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rechargeRemark" class="form-label">备注</label>
+                            <textarea class="form-control" id="rechargeRemark" rows="2"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-warning" id="confirmRecharge">确认充值</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 删除确认模态框 -->
+    <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">删除用户</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="关闭"></button>
+                </div>
+                <div class="modal-body">
+                    <p>您确定要删除用户 <strong id="deleteUserName"></strong> 吗？</p>
+                    <p class="text-danger">此操作不可逆，用户的所有数据将被永久删除！</p>
+                    <input type="hidden" id="deleteUserId">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteUser">确认删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 成功提示模态框 -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">成功</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="关闭"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="successMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 错误提示模态框 -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">错误</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="关闭"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="errorMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚容器 -->
+    <div id="footer-container"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- 公共组件管理 -->
+    <script src="js/common.js"></script>
+    <!-- 用户管理JS -->
+    <script src="js/users.js"></script>
+</body>
+</html>

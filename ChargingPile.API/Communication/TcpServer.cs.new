@@ -1,0 +1,746 @@
+using System;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Dapper;
+using Microsoft.Extensions.Logging;
+using Polly;
+using Polly.Retry;
+using ChargingPile.API.Extensions;
+
+namespace ChargingPile.API.Communication
+{
+    /// <summary>
+    /// TCP服务器类 - 仅包含设备登录和心跳功能
+    /// </summary>
+    public class TcpServer
+    {
+        private readonly ILogger<TcpServer> _logger;
+        private readonly TcpListener _listener;
+        private readonly CancellationTokenSource _cancellationTokenSource;
+        private readonly ConcurrentDictionary<string, TcpClient> _connectedClients;
+        private readonly ConcurrentDictionary<string, string> _deviceImeis; // 存储设备地址和IMEI的映射
+        private readonly ConcurrentDictionary<string, DateTimeOffset> _deviceLastActiveTime; // 存储设备IMEI与最后活动时间的映射
+        private readonly IDbConnection _dbConnection;
+        private readonly AsyncRetryPolicy _retryPolicy;
+
+        // 添加一个辅助方法，通过控制台记录日志，避开扩展方法问题
+        private void Log(string message, params object[] args)
+        {
+            string formattedMessage = message;
+            try
+            {
+                // 使用正则表达式查找所有命名参数占位符
+                var regex = new System.Text.RegularExpressions.Regex(@"\{([^{}]+)\}");
+                var matches = regex.Matches(message);
+                
+                // 创建参数字典，键为参数名，值为参数值
+                var namedParameters = new Dictionary<string, object>();
+                for (int i = 0; i < Math.Min(args.Length, matches.Count); i++)
+                {
+                    var paramName = matches[i].Groups[1].Value;
+                    namedParameters[paramName] = args[i] ?? "null";
+                }
+                
+                // 替换所有占位符
+                formattedMessage = regex.Replace(message, match => {
+                    string paramName = match.Groups[1].Value;
+                    if (namedParameters.TryGetValue(paramName, out var value))
+                    {
+                        return value?.ToString() ?? "null";
+                    }
+                    return match.Value; // 保留未匹配的占位符
+                });
+            }
+            catch (Exception)
+            {
+                // 简单备用方案
+                formattedMessage = string.Format(message.Replace("{", "{{").Replace("}", "}}"), args);
+            }
+            
+            Console.WriteLine($"[INFO] {DateTime.Now:yyyy-MM-dd HH:mm:ss.fff} - {formattedMessage}");
+        }
+
+        public TcpServer(ILogger<TcpServer> logger, int port, IDbConnection dbConnection)
+        {
+            _logger = logger;
+            _listener = new TcpListener(IPAddress.Any, port);
+            _cancellationTokenSource = new CancellationTokenSource();
+            _connectedClients = new ConcurrentDictionary<string, TcpClient>();
+            _deviceImeis = new ConcurrentDictionary<string, string>();
+            _deviceLastActiveTime = new ConcurrentDictionary<string, DateTimeOffset>();
+            _dbConnection = dbConnection;
+            
+            // 配置重试策略
+            _retryPolicy = Policy
+                .Handle<SqlException>()
+                .Or<TimeoutException>()
+                .Or<SocketException>()
+                .Or<IOException>()
+                .WaitAndRetryAsync(
+                    3, // 重试3次
+                    retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), // 指数退避策略
+                    (exception, timeSpan, retryCount, context) =>
+                    {
+                        _logger.LogWarning(exception, 
+                            "数据库操作失败，{RetryCount}/3次重试，将在{RetryAfter}秒后重试",
+                            retryCount, timeSpan.TotalSeconds);
+                    });
+        }
+
+        /// <summary>
+        /// 启动TCP服务器
+        /// </summary>
+        public async Task StartAsync(CancellationToken cancellationToken)
+        {
+            try
+            {
+                _listener.Start();
+                _logger.LogInformation("TCP服务器已启动，正在监听端口 {Port}", ((IPEndPoint)_listener.LocalEndpoint).Port);
+
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    var client = await _listener.AcceptTcpClientAsync();
+                    string clientEndPoint = ((IPEndPoint)client.Client.RemoteEndPoint!).ToString();
+                    _logger.LogInformation("收到客户端连接: {ClientEndPoint}", clientEndPoint);
+
+                    // 添加到连接列表
+                    _connectedClients.TryAdd(clientEndPoint, client);
+                    
+                    // 为每个客户端启动一个独立的处理任务
+                    _ = Task.Run(() => HandleClientAsync(client, cancellationToken));
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                _logger.LogInformation("TCP服务器接收任务已取消");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "TCP服务器异常");
+            }
+            finally
+            {
+                _listener.Stop();
+                _logger.LogInformation("TCP服务器已停止");
+            }
+        }
+        
+        /// <summary>
+        /// 停止TCP服务器
+        /// </summary>
+        public void Stop()
+        {
+            _cancellationTokenSource.Cancel();
+            foreach (var client in _connectedClients.Values)
+            {
+                client.Close();
+            }
+            _connectedClients.Clear();
+            _deviceImeis.Clear();
+            _deviceLastActiveTime.Clear();
+            _listener.Stop();
+            _logger.LogInformation("TCP服务器已停止");
+        }
+
+        /// <summary>
+        /// 处理客户端连接
+        /// </summary>
+        private async Task HandleClientAsync(TcpClient client, CancellationToken cancellationToken)
+        {
+            string clientEndPoint = ((IPEndPoint)client.Client.RemoteEndPoint!).ToString();
+            _logger.LogInformation("开始处理客户端连接: {ClientEndPoint}", clientEndPoint);
+            
+            try
+            {
+                NetworkStream stream = client.GetStream();
+                var buffer = new byte[4096];
+
+                while (!cancellationToken.IsCancellationRequested && client.Connected)
+                {
+                    try
+                    {
+                        // 检查是否有数据可读
+                        if (client.Available > 0 || stream.DataAvailable)
+                        {
+                            int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationToken);
+                            if (bytesRead > 0)
+                            {
+                                // 复制接收到的数据
+                                byte[] receivedData = new byte[bytesRead];
+                                Array.Copy(buffer, receivedData, bytesRead);
+
+                                _logger.LogInformation("从客户端 {ClientEndPoint} 接收到 {BytesRead} 字节数据", 
+                                    clientEndPoint, bytesRead);
+                                
+                                // 解析并处理数据包
+                                var packet = TcpPacket.FromBytes(receivedData);
+                                if (packet != null)
+                                {
+                                    // 记录接收到的数据包信息
+                                    _logger.LogInformation("解析数据包: 控制码=0x{ControlCode:X2}, 结果=0x{Result:X2}, IMEI={IMEI}",
+                                        packet.ControlCode, packet.Result, packet.IMEI);
+
+                                    // 根据控制码分发处理
+                                    switch (packet.ControlCode)
+                                    {
+                                        case TcpPacket.ControlCodes.DEVICE_LOGIN:
+                                            // 处理设备登录请求
+                                            await HandleDeviceLoginAsync(client, clientEndPoint, packet);
+                                            break;
+
+                                        case TcpPacket.ControlCodes.HEARTBEAT:
+                                            // 处理心跳请求
+                                            await HandleHeartbeatAsync(client, clientEndPoint, packet);
+                                            break;
+
+                                        default:
+                                            _logger.LogWarning("收到未知控制码: 0x{ControlCode:X2}", packet.ControlCode);
+                                            break;
+                                    }
+                                }
+                                else
+                                {
+                                    _logger.LogWarning("从客户端 {ClientEndPoint} 收到无效数据包", clientEndPoint);
+                                }
+                            }
+                            else
+                            {
+                                // 客户端已关闭连接
+                                _logger.LogInformation("客户端 {ClientEndPoint} 已断开连接", clientEndPoint);
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            // 等待一段时间，避免CPU使用率过高
+                            await Task.Delay(100, cancellationToken);
+                        }
+                    }
+                    catch (IOException ex)
+                    {
+                        _logger.LogWarning(ex, "客户端 {ClientEndPoint} 连接异常", clientEndPoint);
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "处理客户端 {ClientEndPoint} 数据时发生错误", clientEndPoint);
+                        // 继续处理，不中断循环
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "处理客户端 {ClientEndPoint} 连接时发生错误", clientEndPoint);
+            }
+            finally
+            {
+                // 清理连接
+                _logger.LogInformation("客户端 {ClientEndPoint} 连接已关闭", clientEndPoint);
+                
+                // 移除客户端连接
+                if (_connectedClients.TryRemove(clientEndPoint, out _))
+                {
+                    _logger.LogInformation("已从连接列表中移除客户端: {ClientEndPoint}", clientEndPoint);
+                }
+                
+                // 如果有关联的IMEI，记录设备断开连接
+                if (_deviceImeis.TryGetValue(clientEndPoint, out string imei) && !string.IsNullOrEmpty(imei))
+                {
+                    _logger.LogInformation("设备 {IMEI} (客户端 {ClientEndPoint}) 已断开连接", 
+                        imei, clientEndPoint);
+                    
+                    // 从映射中移除
+                    _deviceImeis.TryRemove(clientEndPoint, out _);
+                    _deviceLastActiveTime.TryRemove(imei, out _);
+                }
+                
+                // 关闭客户端连接
+                client.Close();
+            }
+        }
+
+        /// <summary>
+        /// 发送数据包
+        /// </summary>
+        /// <param name="client">客户端连接</param>
+        /// <param name="packet">要发送的数据包</param>
+        /// <returns>发送结果</returns>
+        public async Task<bool> SendMessageAsync(TcpClient client, TcpPacket packet)
+        {
+            try
+            {
+                // 确保客户端连接有效
+                if (client == null || !client.Connected)
+                {
+                    _logger.LogWarning("尝试向断开的客户端发送数据");
+                    return false;
+                }
+                
+                // 将数据包转换为字节数组
+                if (packet == null)
+                {
+                    _logger.LogWarning("数据包为null，无法发送");
+                    return false;
+                }
+                
+                byte[] data = packet.ToBytes();
+                if (data == null || data.Length == 0)
+                {
+                    _logger.LogWarning("数据包转换为字节数组失败");
+                    return false;
+                }
+                
+                // 记录将要发送的数据包内容
+                _logger.LogInformation("发送数据包：控制码 0x{ControlCode:X2}, 结果 0x{Result:X2}, IMEI {IMEI}, 数据长度 {DataLength}字节", 
+                    packet.ControlCode, packet.Result, packet.IMEI ?? "", packet.Data?.Length ?? 0);
+                _logger.LogInformation("发送数据包原始内容: {PacketData}", BitConverter.ToString(data));
+                
+                // 验证数据包至少有最小长度
+                if (data.Length < 7) // 帧头(2)+长度(2)+控制码(1)+结果(1)+校验和(1)
+                {
+                    _logger.LogError("数据包长度不足：{Length}字节，最小需要7字节", data.Length);
+                    return false;
+                }
+                
+                // 获取客户端网络流
+                NetworkStream stream = client.GetStream();
+                
+                // 发送数据包
+                await stream.WriteAsync(data, 0, data.Length);
+                await stream.FlushAsync();
+                
+                // 记录校验和信息
+                byte checksum = data[data.Length - 1];
+                _logger.LogInformation("发送的校验和: 0x{Checksum:X2}", checksum);
+                
+                // 根据设备特性文档要求，两个数据包之间需要间隔至少100ms
+                // 这里在发送完成后等待100ms，以确保下一个数据包发送时有足够的间隔
+                await Task.Delay(100);
+                _logger.LogDebug("已等待100ms以确保设备稳定处理数据");
+                
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "发送数据包时发生错误");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 使用重试策略执行数据库操作
+        /// </summary>
+        private async Task ExecuteWithRetryAsync(Func<Task> action, string operationName = "数据库操作")
+        {
+            try
+            {
+                // 使用配置的重试策略执行操作
+                await _retryPolicy.ExecuteAsync(async () =>
+                {
+                    await action();
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "{OperationName}失败，已重试多次", operationName);
+                throw; // 重新抛出异常，由调用者处理
+            }
+        }
+
+        /// <summary>
+        /// 处理设备登录请求
+        /// </summary>
+        private async Task HandleDeviceLoginAsync(TcpClient client, string clientEndPoint, TcpPacket packet)
+        {
+            try
+            {
+                // 解析设备登录信息
+                var deviceInfo = TcpPacket.DeviceLoginInfo.FromPacket(packet);
+                string imei = deviceInfo.IMEI;
+                
+                _logger.LogInformation("设备IMEI: {IMEI} 正在登录, 客户端地址: {ClientEndPoint}", imei, clientEndPoint);
+                _logger.LogInformation("设备信息: 端口数={PortCount}, 协议版本=0x{ProtocolVersion:X2}, 登录原因={LoginReason}", 
+                    deviceInfo.PortCount, deviceInfo.ProtocolVersion, deviceInfo.LoginReason);
+
+                // 检查是否已存在相同IMEI的连接
+                var existingEndpoint = _deviceImeis.FirstOrDefault(x => x.Value == imei).Key;
+                if (!string.IsNullOrEmpty(existingEndpoint) && existingEndpoint != clientEndPoint)
+                {
+                    _logger.LogWarning("设备 {IMEI} 已存在连接 {ExistingEndpoint}，将替换为新连接 {ClientEndPoint}", 
+                        imei, existingEndpoint, clientEndPoint);
+                    
+                    // 从映射中移除旧连接
+                    _deviceImeis.TryRemove(existingEndpoint, out _);
+                    
+                    // 关闭旧连接
+                    if (_connectedClients.TryGetValue(existingEndpoint, out var oldClient))
+                    {
+                        try
+                        {
+                            oldClient.Close();
+                            _connectedClients.TryRemove(existingEndpoint, out _);
+                            _logger.LogInformation("已关闭设备 {IMEI} 的旧连接 {ExistingEndpoint}", 
+                                imei, existingEndpoint);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex, "关闭设备 {IMEI} 的旧连接 {ExistingEndpoint} 时发生错误", 
+                                imei, existingEndpoint);
+                        }
+                    }
+                }
+
+                // 将设备端点与IMEI关联
+                _deviceImeis[clientEndPoint] = imei;
+                _deviceLastActiveTime[imei] = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(8));
+                _logger.LogInformation("已将设备 {IMEI} 与客户端 {ClientEndPoint} 关联", imei, clientEndPoint);
+
+                // 创建登录响应包
+                byte heartbeatInterval = 60; // 心跳间隔60秒，符合文档推荐的60-120秒
+                
+                // 验证心跳间隔在协议规定的范围内（10-250秒）
+                if (heartbeatInterval < 10)
+                {
+                    _logger.LogWarning("心跳间隔小于最小值10秒，已调整为10秒");
+                    heartbeatInterval = 10;
+                }
+                else if (heartbeatInterval > 250)
+                {
+                    _logger.LogWarning("心跳间隔大于最大值250秒，已调整为250秒");
+                    heartbeatInterval = 250;
+                }
+                
+                // 判断是否支持新协议 (协议版本>=0x64)
+                byte loginResult = 0x00; // 默认为正常登录成功
+                
+                if (deviceInfo.ProtocolVersion >= TcpPacket.PROTOCOL_VERSION)
+                {
+                    _logger.LogInformation("设备 {IMEI} 支持新协议格式(协议版本:0x{ProtocolVersion:X2})，将返回0xF0使其切换到新协议", 
+                        imei, deviceInfo.ProtocolVersion);
+                    loginResult = 0xF0; // 登录成功且切换到新协议格式
+                }
+                
+                var response = TcpPacket.CreateLoginResponse(imei, heartbeatInterval, loginResult);
+
+                // 记录将要发送的登录响应数据
+                byte[] responseData = response.Data;
+                _logger.LogInformation("登录响应数据[{Length}字节]: {Data}, 登录结果:0x{LoginResult:X2}", 
+                    responseData.Length, BitConverter.ToString(responseData), loginResult);
+
+                // 验证响应数据长度
+                if (responseData.Length != 9)
+                {
+                    _logger.LogError("登录响应数据长度错误: {Length}字节，应为9字节", responseData.Length);
+                }
+
+                // 发送响应，确保设备收到响应（加入重试机制）
+                bool sendResult = false;
+                int retryCount = 0;
+                int maxRetries = 3;
+                
+                while (!sendResult && retryCount < maxRetries)
+                {
+                    sendResult = await SendMessageAsync(client, response);
+                    
+                    if (!sendResult)
+                    {
+                        retryCount++;
+                        _logger.LogWarning("发送登录响应失败，正在重试 ({RetryCount}/{MaxRetries})...", retryCount, maxRetries);
+                        
+                        // 重试前等待一段时间
+                        await Task.Delay(200);
+                    }
+                }
+                
+                if (!sendResult)
+                {
+                    _logger.LogError("发送登录响应失败，已重试{RetryCount}次", retryCount);
+                    return;
+                }
+
+                _logger.LogInformation(
+                    "设备 {IMEI} 登录成功, 登录响应已发送，心跳间隔 {HeartbeatInterval} 秒，登录结果 0x{LoginResult:X2}",
+                    imei, heartbeatInterval, loginResult);
+                
+                // 将设备标记为在线
+                try
+                {
+                    _logger.LogInformation("设备登录信息: IMEI={IMEI}, 端口数={PortCount}, 硬件版本={HardwareVersion}, 软件版本={SoftwareVersion}, CCID={CCID}, 协议版本={ProtocolVersion}, 登录原因={LoginReason}",
+                        deviceInfo.IMEI, deviceInfo.PortCount, deviceInfo.HardwareVersion, deviceInfo.SoftwareVersion, 
+                        deviceInfo.CCID, deviceInfo.ProtocolVersion, deviceInfo.LoginReason);
+                    
+                    // 在数据库中更新设备信息
+                    await ExecuteWithRetryAsync(async () => 
+                    {
+                        // 1. 检查设备是否已存在
+                        var checkSql = @"SELECT id FROM charging_piles WHERE imei = @imei";
+                        var pileId = await _dbConnection.QueryFirstOrDefaultAsync<string>(checkSql, new { imei });
+                        
+                        if (string.IsNullOrEmpty(pileId))
+                        {
+                            // 设备不存在，创建新记录
+                            _logger.LogInformation("设备 {IMEI} 首次登录，创建新记录", imei);
+                            
+                            // 生成新的UUID作为ID
+                            pileId = Guid.NewGuid().ToString();
+                            var uniquePileNo = $"P{DateTime.Now:yyMMddHHmmss}"; // 生成桩编号
+                            var defaultPowerRate = 7.0m; // 默认额定功率
+                            var defaultStationId = "default"; // 默认站点
+                            
+                            // 插入充电桩记录
+                            var insertSql = @"
+                                INSERT INTO charging_piles 
+                                (id, station_id, pile_no, pile_type, status, power_rate, imei, create_time)
+                                VALUES 
+                                (@id, @stationId, @pileNo, 0, 0, @powerRate, @imei, 
+                                 GETDATE());
+                            ";
+                            
+                            await _dbConnection.ExecuteAsync(insertSql, new { 
+                                id = pileId, 
+                                stationId = defaultStationId, 
+                                pileNo = uniquePileNo, 
+                                powerRate = defaultPowerRate,
+                                imei = imei 
+                            });
+                            
+                            // 为每个端口创建记录
+                            for (int i = 0; i < deviceInfo.PortCount; i++)
+                            {
+                                int portNo = i + 1;
+                                string portId = Guid.NewGuid().ToString();
+                                
+                                var insertPortSql = @"
+                                    INSERT INTO charging_ports 
+                                    (id, pile_id, port_no, status, create_time)
+                                    VALUES 
+                                    (@id, @pileId, @portNo, 0, GETDATE());
+                                ";
+                                
+                                await _dbConnection.ExecuteAsync(insertPortSql, new { 
+                                    id = portId, 
+                                    pileId = pileId, 
+                                    portNo = portNo 
+                                });
+                                
+                                _logger.LogInformation("已为设备 {IMEI} 创建端口 {PortNo}", imei, portNo);
+                            }
+                            
+                            // 创建设备状态记录
+                            var insertStatusSql = @"
+                                INSERT INTO charging_pile_status 
+                                (pile_id, online_status, heartbeat_interval, update_time)
+                                VALUES 
+                                (@pileId, 1, @heartbeatInterval, GETDATE())
+                            ";
+                            
+                            await _dbConnection.ExecuteAsync(insertStatusSql, new {
+                                pileId = pileId,
+                                heartbeatInterval = heartbeatInterval
+                            });
+                        }
+                        else
+                        {
+                            // 设备已存在，更新在线状态
+                            _logger.LogInformation("设备 {IMEI} 已存在，更新状态", imei);
+                            
+                            // 更新设备状态
+                            var updateStatusSql = @"
+                                UPDATE charging_pile_status
+                                SET online_status = 1, 
+                                    update_time = GETDATE(),
+                                    heartbeat_interval = @heartbeatInterval
+                                WHERE pile_id = @pileId;
+                                
+                                -- 如果没有状态记录，则创建一个
+                                IF @@ROWCOUNT = 0
+                                BEGIN
+                                    INSERT INTO charging_pile_status 
+                                    (pile_id, online_status, heartbeat_interval, update_time)
+                                    VALUES 
+                                    (@pileId, 1, @heartbeatInterval, GETDATE())
+                                END
+                            ";
+                            
+                            await _dbConnection.ExecuteAsync(updateStatusSql, new { 
+                                pileId = pileId,
+                                heartbeatInterval = heartbeatInterval
+                            });
+                        }
+                        
+                        _logger.LogInformation("设备 {IMEI} 记录已更新", imei);
+                    }, "更新设备登录信息");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "将设备 {IMEI} 标记为在线时发生错误", imei);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "处理设备登录失败");
+            }
+        }
+
+        /// <summary>
+        /// 处理设备心跳
+        /// </summary>
+        private async Task HandleHeartbeatAsync(TcpClient client, string clientEndPoint, TcpPacket packet)
+        {
+            try
+            {
+                // 使用辅助类解析心跳数据
+                var heartbeatInfo = TcpPacket.HeartbeatInfo.FromPacket(packet);
+
+                _logger.LogInformation("收到心跳数据：IMEI={IMEI}, 信号强度={SignalStrength}, 温度={Temperature}°C, 端口数={PortCount}",
+                    packet.IMEI, heartbeatInfo.SignalStrength, heartbeatInfo.Temperature, heartbeatInfo.PortCount);
+
+                // 记录每个端口的状态
+                for (int i = 0; i < heartbeatInfo.PortStatus.Length; i++)
+                {
+                    _logger.LogInformation("端口{PortNo}状态: {Status}", i + 1, heartbeatInfo.GetPortStatusText(i));
+                }
+
+                // 更新设备最后活跃时间
+                if (!string.IsNullOrEmpty(packet.IMEI))
+                {
+                    _deviceLastActiveTime[packet.IMEI] = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(8));
+                }
+
+                // 更新设备状态
+                await UpdateDeviceStatusAsync(packet.IMEI, heartbeatInfo);
+
+                // 创建心跳响应
+                var response = TcpPacket.CreateHeartbeatResponse(packet.IMEI);
+
+                // 发送心跳响应
+                bool sendResult = await SendMessageAsync(client, response);
+                if (sendResult)
+                {
+                    _logger.LogInformation("已向设备 {IMEI} 发送心跳响应", packet.IMEI);
+                }
+                else
+                {
+                    _logger.LogWarning("向设备 {IMEI} 发送心跳响应失败", packet.IMEI);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "处理心跳数据时发生错误");
+            }
+        }
+
+        /// <summary>
+        /// 更新设备状态
+        /// </summary>
+        private async Task UpdateDeviceStatusAsync(string imei, TcpPacket.HeartbeatInfo heartbeatInfo)
+        {
+            try
+            {
+                _logger.LogInformation("开始更新设备状态：IMEI={IMEI}, 信号强度={SignalStrength}, 温度={Temperature}",
+                    imei, heartbeatInfo.SignalStrength, heartbeatInfo.Temperature);
+
+                // 如果IMEI为空，无法进行更新
+                if (string.IsNullOrEmpty(imei))
+                {
+                    _logger.LogWarning("无法更新设备状态：IMEI为空");
+                    return;
+                }
+
+                // 更新充电桩状态
+                await ExecuteWithRetryAsync(async () => 
+                {
+                    // 首先检查IMEI是否存在于数据库中
+                    var checkImeiSql = @"SELECT id FROM charging_piles WHERE imei = @imei";
+                    var pileId = await _dbConnection.ExecuteScalarAsync<string>(checkImeiSql, new { imei });
+
+                    // 如果IMEI不存在，记录警告但不中断操作
+                    if (string.IsNullOrEmpty(pileId))
+                    {
+                        _logger.LogWarning("设备 {IMEI} 不存在于数据库中，但仍收到心跳", imei);
+                        return;
+                    }
+
+                    // 更新设备状态
+                    var updateStatusSql = @"
+                        UPDATE charging_pile_status
+                        SET online_status = 1, 
+                            update_time = GETDATE(),
+                            signal_strength = @signalStrength,
+                            temperature = @temperature
+                        WHERE pile_id = @pileId;
+                        
+                        -- 如果没有状态记录，则创建一个
+                        IF @@ROWCOUNT = 0
+                        BEGIN
+                            INSERT INTO charging_pile_status 
+                            (pile_id, online_status, signal_strength, temperature, update_time)
+                            VALUES 
+                            (@pileId, 1, @signalStrength, @temperature, GETDATE())
+                        END
+                    ";
+                    
+                    await _dbConnection.ExecuteAsync(updateStatusSql, new { 
+                        pileId,
+                        signalStrength = heartbeatInfo.SignalStrength,
+                        temperature = heartbeatInfo.Temperature
+                    });
+                    
+                    _logger.LogInformation("设备 {IMEI} 状态已更新", imei);
+                    
+                    // 更新端口状态
+                    if (heartbeatInfo.PortStatus != null && heartbeatInfo.PortStatus.Length > 0)
+                    {
+                        for (int i = 0; i < heartbeatInfo.PortStatus.Length; i++)
+                        {
+                            int portNo = i + 1;
+                            byte portStatus = heartbeatInfo.PortStatus[i];
+
+                            // 只更新端口状态，不影响其他字段
+                            var updatePortSql = @"
+                                UPDATE charging_ports
+                                SET status = @status,
+                                    update_time = GETDATE()
+                                WHERE pile_id = @pileId
+                                AND port_no = @portNo
+                            ";
+                            
+                            await _dbConnection.ExecuteAsync(updatePortSql, new { 
+                                pileId,
+                                portNo,
+                                status = (int)portStatus
+                            });
+                            
+                            _logger.LogInformation("设备 {IMEI} 端口 {PortNo} 状态已更新为 {Status}", 
+                                imei, portNo, heartbeatInfo.GetPortStatusText(i));
+                        }
+                    }
+                }, "更新设备心跳状态");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "更新设备 {IMEI} 状态时发生错误", imei);
+            }
+        }
+
+        /// <summary>
+        /// 设备连接信息
+        /// </summary>
+        public class DeviceConnectionInfo
+        {
+            public string IMEI { get; set; }
+            public string ClientEndPoint { get; set; }
+            public DateTime LastActiveTime { get; set; }
+            public TcpClient Client { get; set; }
+        }
+    }
+}

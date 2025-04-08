@@ -1,0 +1,109 @@
+{
+  "Files": [
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\charging-piles.html",
+      "PackagePath": "staticwebassets\\charging-piles.html"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\charging-stations.html",
+      "PackagePath": "staticwebassets\\charging-stations.html"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\components\\footer.html",
+      "PackagePath": "staticwebassets\\components\\footer.html"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\components\\header.html",
+      "PackagePath": "staticwebassets\\components\\header.html"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\components\\sidebar.html",
+      "PackagePath": "staticwebassets\\components\\sidebar.html"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\components\\template.html",
+      "PackagePath": "staticwebassets\\components\\template.html"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\css\\sidebar.css",
+      "PackagePath": "staticwebassets\\css\\sidebar.css"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\css\\style.css",
+      "PackagePath": "staticwebassets\\css\\style.css"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\common.js",
+      "PackagePath": "staticwebassets\\js\\common.js"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\config.js",
+      "PackagePath": "staticwebassets\\js\\config.js"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\dashboard.js",
+      "PackagePath": "staticwebassets\\js\\dashboard.js"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\lib\\chart.min.js",
+      "PackagePath": "staticwebassets\\js\\lib\\chart.min.js"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\orders.js",
+      "PackagePath": "staticwebassets\\js\\orders.js"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\piles.js",
+      "PackagePath": "staticwebassets\\js\\piles.js"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\stations.js",
+      "PackagePath": "staticwebassets\\js\\stations.js"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\statistics.js",
+      "PackagePath": "staticwebassets\\js\\statistics.js"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\users.js",
+      "PackagePath": "staticwebassets\\js\\users.js"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\orders.html",
+      "PackagePath": "staticwebassets\\orders.html"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\statistics.html",
+      "PackagePath": "staticwebassets\\statistics.html"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\users.html",
+      "PackagePath": "staticwebassets\\users.html"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.ChargingPileAdmin.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.ChargingPileAdmin.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.build.ChargingPileAdmin.props",
+      "PackagePath": "build\\ChargingPileAdmin.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildMultiTargeting.ChargingPileAdmin.props",
+      "PackagePath": "buildMultiTargeting\\ChargingPileAdmin.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildTransitive.ChargingPileAdmin.props",
+      "PackagePath": "buildTransitive\\ChargingPileAdmin.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

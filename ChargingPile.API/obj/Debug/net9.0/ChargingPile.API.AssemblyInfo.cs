@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ChargingPile.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8811e05c7c6b7852480bea9ae4fe3f5e68bb7231")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2d95fc67b4700817a4fc3e2ccf32d5a368a5416d")]
 [assembly: System.Reflection.AssemblyProductAttribute("ChargingPile.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ChargingPile.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

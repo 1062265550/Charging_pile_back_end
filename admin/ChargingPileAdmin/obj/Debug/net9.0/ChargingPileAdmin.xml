@@ -1,0 +1,5371 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ChargingPileAdmin</name>
+    </assembly>
+    <members>
+        <member name="T:ChargingPileAdmin.Controllers.ChargingPilesController">
+            <summary>
+            充电桩管理 - 提供充电桩相关的增删改查操作
+            </summary>
+            <remarks>
+            本控制器负责充电桩的所有管理功能，包括：
+            - 充电桩信息的查询（按ID、按充电站、分页查询等）
+            - 充电桩的创建、更新和删除
+            - 充电桩状态管理
+            </remarks>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingPilesController.GetAllPiles">
+            <summary>
+            获取所有充电桩信息
+            </summary>
+            <remarks>
+            返回系统中所有充电桩的完整列表，包含充电桩基本信息、状态等数据
+            
+            使用场景：
+            - 管理后台展示所有充电桩
+            - 数据分析和统计
+            </remarks>
+            <returns>充电桩列表</returns>
+            <response code="200">成功返回充电桩列表</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingPilesController.GetPileById(System.String)">
+            <summary>
+            获取指定ID的充电桩详细信息
+            </summary>
+            <remarks>
+            根据充电桩ID获取单个充电桩的详细信息，包括：
+            - 基本信息（编号、名称、位置等）
+            - 技术参数（额定功率、电压、电流等）
+            - 状态信息（在线状态、使用状态等）
+            - 充电端口信息
+            
+            使用场景：
+            - 查看充电桩详情页面
+            - 充电桩管理和监控
+            </remarks>
+            <param name="id">充电桩ID（唯一标识符）</param>
+            <returns>充电桩详情</returns>
+            <response code="200">成功返回充电桩详情</response>
+            <response code="400">ID参数错误</response>
+            <response code="404">未找到指定ID的充电桩</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingPilesController.GetPilesByStationId(System.String)">
+            <summary>
+            获取指定充电站下的所有充电桩
+            </summary>
+            <remarks>
+            根据充电站ID查询该充电站下的所有充电桩信息，支持管理系统按充电站筛选查看充电桩
+            
+            使用场景：
+            - 充电站详情页查看所属充电桩
+            - 充电站管理和监控
+            - 数据统计分析
+            </remarks>
+            <param name="stationId">充电站ID（唯一标识符）</param>
+            <returns>充电桩列表</returns>
+            <response code="200">成功返回充电桩列表</response>
+            <response code="400">充电站ID参数错误</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingPilesController.GetPilesPaged(System.Int32,System.Int32,System.String,System.Nullable{System.Int32},System.String)">
+            <summary>
+            分页获取充电桩列表（支持多条件筛选）
+            </summary>
+            <remarks>
+            提供带分页功能的充电桩查询接口，支持多种筛选条件：
+            - 按充电站ID筛选
+            - 按充电桩状态筛选（在线/离线/充电中/空闲等）
+            - 按关键字搜索（支持充电桩编号、名称等）
+            
+            使用场景：
+            - 管理后台的充电桩列表页
+            - 带筛选条件的数据查询
+            - 移动端APP的充电桩查询
+            </remarks>
+            <param name="pageNumber">页码，从1开始</param>
+            <param name="pageSize">每页记录数，默认10条</param>
+            <param name="stationId">充电站ID，可选，用于筛选特定充电站的充电桩</param>
+            <param name="status">充电桩状态，可选，用于筛选特定状态的充电桩（0-离线，1-空闲，2-充电中，3-故障）</param>
+            <param name="keyword">关键字，可选，用于搜索充电桩编号或名称</param>
+            <returns>充电桩分页数据</returns>
+            <response code="200">成功返回分页数据</response>
+            <response code="400">分页参数错误</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingPilesController.CreatePile(ChargingPileAdmin.Dtos.CreateChargingPileDto)">
+            <summary>
+            创建新的充电桩
+            </summary>
+            <remarks>
+            创建一个新的充电桩记录，需要提供充电桩的基本信息、所属充电站、技术参数等
+            
+            请求示例:
+            ```json
+            {
+              "stationId": "001",
+              "pileNo": "PILE001",
+              "name": "快充桩1号",
+              "type": 1,
+              "power": 60,
+              "voltage": 220,
+              "current": 125,
+              "status": 1,
+              "location": "停车场东侧",
+              "manufacturer": "特斯拉"
+            }
+            ```
+            
+            使用场景：
+            - 管理员添加新充电桩
+            - 系统初始化导入充电桩数据
+            </remarks>
+            <param name="dto">创建充电桩的数据传输对象</param>
+            <returns>创建的充电桩ID</returns>
+            <response code="201">充电桩创建成功，返回新创建的充电桩ID</response>
+            <response code="400">请求数据验证失败</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingPilesController.UpdatePile(System.String,ChargingPileAdmin.Dtos.UpdateChargingPileDto)">
+            <summary>
+            更新充电桩信息
+            </summary>
+            <remarks>
+            根据充电桩ID更新充电桩的信息，可以更新的内容包括：
+            - 充电桩基本信息（名称、位置等）
+            - 技术参数（功率、电压、电流等）
+            - 状态信息（在线状态、使用状态等）
+            
+            请求示例:
+            ```json
+            {
+              "name": "快充桩1号(已升级)",
+              "status": 1,
+              "location": "停车场东北角",
+              "manufacturer": "特斯拉"
+            }
+            ```
+            
+            使用场景：
+            - 管理员修改充电桩信息
+            - 系统自动更新充电桩状态
+            </remarks>
+            <param name="id">充电桩ID</param>
+            <param name="dto">更新充电桩的数据传输对象</param>
+            <returns>更新结果</returns>
+            <response code="204">充电桩更新成功</response>
+            <response code="400">请求数据验证失败</response>
+            <response code="404">未找到指定ID的充电桩</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingPilesController.DeletePile(System.String)">
+            <summary>
+            删除充电桩
+            </summary>
+            <remarks>
+            根据充电桩ID删除指定的充电桩记录。删除前会进行以下检查：
+            - 充电桩是否存在
+            - 充电桩是否有未完成的订单
+            - 充电桩是否处于充电中状态
+            
+            使用场景：
+            - 管理员移除不再使用的充电桩
+            - 系统维护清理废弃数据
+            </remarks>
+            <param name="id">充电桩ID</param>
+            <returns>删除结果</returns>
+            <response code="204">充电桩删除成功</response>
+            <response code="400">ID参数错误</response>
+            <response code="404">未找到指定ID的充电桩</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="T:ChargingPileAdmin.Controllers.ChargingPortsController">
+            <summary>
+            充电端口管理接口
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingPortsController.GetAllPorts">
+            <summary>
+            获取所有充电端口
+            </summary>
+            <returns>充电端口列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingPortsController.GetPort(System.String)">
+            <summary>
+            获取充电端口详情
+            </summary>
+            <param name="id">充电端口ID</param>
+            <returns>充电端口详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingPortsController.GetPortsByPileId(System.String)">
+            <summary>
+            获取充电桩下的所有充电端口
+            </summary>
+            <param name="pileId">充电桩ID</param>
+            <returns>充电端口列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingPortsController.GetPortsPaged(System.Int32,System.Int32,System.String,System.Nullable{System.Int32},System.String)">
+            <summary>
+            获取充电端口分页列表
+            </summary>
+            <param name="pageNumber">页码</param>
+            <param name="pageSize">每页记录数</param>
+            <param name="pileId">充电桩ID，可选</param>
+            <param name="status">充电端口状态，可选</param>
+            <param name="keyword">关键字，可选</param>
+            <returns>充电端口分页列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingPortsController.CreatePort(ChargingPileAdmin.Dtos.CreateChargingPortDto)">
+            <summary>
+            创建充电端口
+            </summary>
+            <param name="dto">创建充电端口请求</param>
+            <returns>创建的充电端口ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingPortsController.UpdatePort(System.String,ChargingPileAdmin.Dtos.UpdateChargingPortDto)">
+            <summary>
+            更新充电端口
+            </summary>
+            <param name="id">充电端口ID</param>
+            <param name="dto">更新充电端口请求</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingPortsController.DeletePort(System.String)">
+            <summary>
+            删除充电端口
+            </summary>
+            <param name="id">充电端口ID</param>
+            <returns>操作结果</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Controllers.ChargingStationsController">
+            <summary>
+            充电站管理 - 提供充电站相关的增删改查操作
+            </summary>
+            <remarks>
+            本控制器负责充电站的所有管理功能，包括：
+            - 充电站信息的查询（按ID、分页查询等）
+            - 充电站的创建、更新和删除
+            - 充电站基础数据维护
+            
+            充电站是充电桩的集合，代表一个物理位置上的充电设施群
+            </remarks>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingStationsController.GetAllStations">
+            <summary>
+            获取所有充电站信息
+            </summary>
+            <remarks>
+            返回系统中所有充电站的完整列表，包含充电站基本信息、地址、状态等数据
+            
+            使用场景：
+            - 充电站地图展示
+            - 管理后台展示所有充电站
+            - 数据分析和统计
+            
+            注意：当充电站数量较多时，建议使用分页接口获取数据
+            </remarks>
+            <returns>充电站列表</returns>
+            <response code="200">成功返回充电站列表</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingStationsController.GetStationById(System.String)">
+            <summary>
+            获取指定ID的充电站详细信息
+            </summary>
+            <remarks>
+            根据充电站ID获取单个充电站的详细信息，包括：
+            - 基本信息（名称、地址、联系方式等）
+            - 运营信息（营业时间、收费标准等）
+            - 设备信息（充电桩数量、可用状态等）
+            - 状态信息（开放状态、维护状态等）
+            
+            使用场景：
+            - 查看充电站详情页面
+            - 充电站管理和监控
+            - APP中展示充电站详情
+            </remarks>
+            <param name="id">充电站ID（唯一标识符）</param>
+            <returns>充电站详情</returns>
+            <response code="200">成功返回充电站详情</response>
+            <response code="404">未找到指定ID的充电站</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingStationsController.GetStationsPaged(System.Int32,System.Int32,System.Nullable{System.Int32},System.String)">
+            <summary>
+            分页获取充电站列表（支持条件筛选）
+            </summary>
+            <remarks>
+            提供带分页功能的充电站查询接口，支持筛选条件：
+            - 按充电站状态筛选（开放/关闭/维护中等）
+            - 按关键字搜索（支持充电站名称、地址等）
+            
+            使用场景：
+            - 管理后台的充电站列表页
+            - 带筛选条件的充电站查询
+            - APP中的充电站查询
+            
+            充电站状态说明：
+            - 0：关闭（不对外开放）
+            - 1：开放（正常运营）
+            - 2：维护中（暂停服务）
+            </remarks>
+            <param name="pageNumber">页码，从1开始</param>
+            <param name="pageSize">每页记录数，默认10条</param>
+            <param name="status">充电站状态，可选，用于筛选特定状态的充电站</param>
+            <param name="keyword">关键字，可选，用于搜索充电站名称或地址</param>
+            <returns>充电站分页数据</returns>
+            <response code="200">成功返回分页数据</response>
+            <response code="400">分页参数错误</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingStationsController.CreateStation(ChargingPileAdmin.Dtos.CreateChargingStationDto)">
+            <summary>
+            创建新的充电站
+            </summary>
+            <remarks>
+            创建一个新的充电站记录，需要提供充电站的基本信息、地址、联系方式等
+            
+            请求示例:
+            ```json
+            {
+              "stationNo": "ST001",
+              "name": "城市中心充电站",
+              "address": "北京市朝阳区建国路88号",
+              "latitude": 39.9088,
+              "longitude": 116.4716,
+              "contactPerson": "张经理",
+              "contactPhone": "13800138000",
+              "openTime": "08:00-22:00",
+              "status": 1,
+              "description": "提供快充和慢充服务，配备休息区和便利店"
+            }
+            ```
+            
+            使用场景：
+            - 管理员添加新充电站
+            - 系统初始化导入充电站数据
+            </remarks>
+            <param name="dto">创建充电站的数据传输对象</param>
+            <returns>创建的充电站ID</returns>
+            <response code="201">充电站创建成功，返回新创建的充电站ID</response>
+            <response code="400">请求数据验证失败</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingStationsController.UpdateStation(System.String,ChargingPileAdmin.Dtos.UpdateChargingStationDto)">
+            <summary>
+            更新充电站信息
+            </summary>
+            <remarks>
+            根据充电站ID更新充电站的信息，可以更新的内容包括：
+            - 充电站基本信息（名称、地址、联系方式等）
+            - 运营信息（营业时间、收费标准等）
+            - 状态信息（开放状态、维护状态等）
+            
+            请求示例:
+            ```json
+            {
+              "name": "城市中心超级充电站",
+              "contactPerson": "李经理",
+              "contactPhone": "13900139000",
+              "openTime": "07:00-23:00",
+              "status": 1,
+              "description": "全新升级，新增10个快充桩，配备高级休息区和自助咖啡厅"
+            }
+            ```
+            
+            使用场景：
+            - 管理员修改充电站信息
+            - 更新充电站运营状态
+            - 调整充电站服务信息
+            </remarks>
+            <param name="id">充电站ID</param>
+            <param name="dto">更新充电站的数据传输对象</param>
+            <returns>更新结果</returns>
+            <response code="204">充电站更新成功</response>
+            <response code="400">请求数据验证失败</response>
+            <response code="404">未找到指定ID的充电站</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.ChargingStationsController.DeleteStation(System.String)">
+            <summary>
+            删除充电站
+            </summary>
+            <remarks>
+            根据充电站ID删除指定的充电站记录。删除前会进行以下检查：
+            - 充电站是否存在
+            - 充电站下是否有充电桩
+            - 充电站是否有未完成的订单
+            
+            使用场景：
+            - 管理员移除不再使用的充电站
+            - 系统维护清理废弃数据
+            
+            注意：删除充电站将同时删除与之关联的所有充电桩和历史数据
+            </remarks>
+            <param name="id">充电站ID</param>
+            <returns>删除结果</returns>
+            <response code="204">充电站删除成功</response>
+            <response code="400">ID参数错误</response>
+            <response code="404">未找到指定ID的充电站</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="T:ChargingPileAdmin.Controllers.HealthController">
+            <summary>
+            健康检查控制器 - 提供系统健康状态监控
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.HealthController.Get">
+            <summary>
+            获取系统健康状态
+            </summary>
+            <remarks>
+            返回系统健康状态信息，用于监控系统可用性
+            </remarks>
+            <returns>健康状态信息</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Controllers.OrdersController">
+            <summary>
+            订单管理 - 提供充电桩订单相关的增删改查操作
+            </summary>
+            <remarks>
+            本控制器负责充电订单的所有管理功能，包括：
+            - 订单信息的查询（按ID、按用户、按充电桩、分页查询等）
+            - 订单状态管理（创建、支付、取消、完成等）
+            - 订单统计数据分析
+            </remarks>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.OrdersController.GetAllOrders">
+            <summary>
+            获取所有订单信息
+            </summary>
+            <remarks>
+            返回系统中所有订单的完整列表，包含订单基本信息、用户信息、充电桩信息等数据
+            
+            使用场景：
+            - 管理后台展示所有订单记录
+            - 数据分析和统计
+            
+            注意：当订单数量较多时，建议使用分页接口获取数据
+            </remarks>
+            <returns>订单列表</returns>
+            <response code="200">成功返回订单列表</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.OrdersController.GetOrderById(System.String)">
+            <summary>
+            获取指定ID的订单详细信息
+            </summary>
+            <remarks>
+            根据订单ID获取单个订单的详细信息，包括：
+            - 基本信息（订单号、创建时间等）
+            - 用户信息（用户ID、用户名等）
+            - 充电桩信息（充电桩ID、名称等）
+            - 充电信息（电量、时长、费用等）
+            - 支付信息（支付状态、支付时间等）
+            
+            使用场景：
+            - 查看订单详情页面
+            - 订单管理和跟踪
+            </remarks>
+            <param name="id">订单ID（唯一标识符）</param>
+            <returns>订单详情</returns>
+            <response code="200">成功返回订单详情</response>
+            <response code="400">ID参数错误</response>
+            <response code="404">未找到指定ID的订单</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.OrdersController.GetOrdersPaged(System.Int32,System.Int32,System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.String)">
+            <summary>
+            分页获取订单列表（支持多条件筛选）
+            </summary>
+            <remarks>
+            提供带分页功能的订单查询接口，支持多种筛选条件：
+            - 按用户ID筛选
+            - 按充电桩ID筛选
+            - 按订单状态筛选（未支付/已支付/充电中/已完成/已取消等）
+            - 按日期范围筛选
+            - 按关键字搜索（订单号等）
+            
+            使用场景：
+            - 管理后台的订单列表页
+            - 用户个人中心的订单列表
+            - 带筛选条件的数据查询
+            
+            订单状态说明：
+            - 0：待支付
+            - 1：已支付（等待充电）
+            - 2：充电中
+            - 3：已完成
+            - 4：已取消
+            </remarks>
+            <param name="pageNumber">页码，从1开始</param>
+            <param name="pageSize">每页记录数，默认10条</param>
+            <param name="userId">用户ID，可选，用于筛选特定用户的订单</param>
+            <param name="pileId">充电桩ID，可选，用于筛选特定充电桩的订单</param>
+            <param name="status">订单状态，可选，用于筛选特定状态的订单</param>
+            <param name="startDate">开始日期，可选，用于筛选特定日期范围的订单</param>
+            <param name="endDate">结束日期，可选，用于筛选特定日期范围的订单</param>
+            <param name="keyword">关键字，可选，用于搜索订单号等</param>
+            <returns>订单分页数据</returns>
+            <response code="200">成功返回分页数据</response>
+            <response code="400">分页参数错误</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.OrdersController.GetOrdersByUserId(System.Int32)">
+            <summary>
+            获取指定用户的所有订单
+            </summary>
+            <remarks>
+            根据用户ID查询该用户的所有订单记录，按创建时间倒序排列
+            
+            使用场景：
+            - 用户个人中心查看历史订单
+            - 客服查询用户订单历史
+            - 数据分析和用户行为分析
+            </remarks>
+            <param name="userId">用户ID（唯一标识符）</param>
+            <returns>订单列表</returns>
+            <response code="200">成功返回订单列表</response>
+            <response code="400">用户ID参数错误</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.OrdersController.GetOrdersByPileId(System.String)">
+            <summary>
+            获取指定充电桩的所有订单
+            </summary>
+            <remarks>
+            根据充电桩ID查询该充电桩的所有订单记录，按创建时间倒序排列
+            
+            使用场景：
+            - 充电桩管理查看历史订单记录
+            - 充电桩使用情况分析
+            - 故障排查和运维管理
+            </remarks>
+            <param name="pileId">充电桩ID（唯一标识符）</param>
+            <returns>订单列表</returns>
+            <response code="200">成功返回订单列表</response>
+            <response code="400">充电桩ID参数错误</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.OrdersController.CreateOrder(ChargingPileAdmin.Dtos.CreateOrderDto)">
+            <summary>
+            创建新的充电订单
+            </summary>
+            <remarks>
+            创建一个新的充电订单，需要提供用户ID、充电桩ID、充电端口ID等信息
+            
+            请求示例:
+            ```json
+            {
+              "userId": 1001,
+              "pileId": "PILE001",
+              "portId": "PORT001",
+              "chargingMode": 1,
+              "chargingAmount": 20.5,
+              "estimatedTime": 60
+            }
+            ```
+            
+            充电模式说明：
+            - 0：按金额充电
+            - 1：按电量充电
+            - 2：按时间充电
+            - 3：充满为止
+            
+            使用场景：
+            - 用户在APP中创建新的充电订单
+            - 管理员代客户创建充电订单
+            </remarks>
+            <param name="dto">创建订单的数据传输对象</param>
+            <returns>创建的订单ID</returns>
+            <response code="201">订单创建成功，返回新创建的订单ID</response>
+            <response code="400">请求数据验证失败</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.OrdersController.UpdateOrderStatus(System.String,ChargingPileAdmin.Dtos.UpdateOrderStatusDto)">
+            <summary>
+            更新订单状态
+            </summary>
+            <remarks>
+            根据订单ID更新订单的状态，可用于各类订单状态流转场景
+            
+            请求示例:
+            ```json
+            {
+              "status": 2,
+              "remark": "用户已开始充电"
+            }
+            ```
+            
+            订单状态说明：
+            - 0：待支付
+            - 1：已支付（等待充电）
+            - 2：充电中
+            - 3：已完成
+            - 4：已取消
+            
+            使用场景：
+            - 管理员更新订单状态
+            - 系统自动更新订单状态
+            - 充电桩上报状态变更时同步更新订单状态
+            </remarks>
+            <param name="id">订单ID</param>
+            <param name="dto">订单状态更新的数据传输对象</param>
+            <returns>更新结果</returns>
+            <response code="204">订单状态更新成功</response>
+            <response code="400">请求数据验证失败</response>
+            <response code="404">未找到指定ID的订单</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.OrdersController.PayOrder(System.String,ChargingPileAdmin.Dtos.OrderPaymentDto)">
+            <summary>
+            订单支付
+            </summary>
+            <remarks>
+            处理订单的支付请求，更新订单状态为已支付，并记录支付信息
+            
+            请求示例:
+            ```json
+            {
+              "paymentMethod": 1,
+              "paymentAmount": 50.00,
+              "transactionId": "PAY123456789",
+              "remark": "微信支付"
+            }
+            ```
+            
+            支付方式说明：
+            - 0：余额支付
+            - 1：微信支付
+            - 2：支付宝支付
+            - 3：银行卡支付
+            - 4：其他方式
+            
+            使用场景：
+            - 用户在APP中完成订单支付
+            - 管理员代客户完成订单支付
+            - 线下支付后管理员手动更新支付状态
+            </remarks>
+            <param name="id">订单ID</param>
+            <param name="dto">订单支付的数据传输对象</param>
+            <returns>支付结果</returns>
+            <response code="204">订单支付成功</response>
+            <response code="400">请求数据验证失败</response>
+            <response code="404">未找到指定ID的订单</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.OrdersController.CancelOrder(System.String)">
+            <summary>
+            取消订单
+            </summary>
+            <remarks>
+            取消指定的订单，更新订单状态为已取消
+            
+            订单取消说明：
+            - 未支付订单可直接取消
+            - 已支付但未开始充电的订单取消后，将自动退款
+            - 充电中的订单不允许取消，需要先停止充电
+            - 已完成的订单不允许取消
+            
+            使用场景：
+            - 用户在APP中取消订单
+            - 管理员代客户取消订单
+            - 系统自动取消长时间未支付的订单
+            </remarks>
+            <param name="id">订单ID</param>
+            <returns>取消结果</returns>
+            <response code="204">订单取消成功</response>
+            <response code="400">请求参数错误</response>
+            <response code="404">未找到指定ID的订单</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.OrdersController.CompleteOrder(System.String,System.Decimal,System.Int32)">
+            <summary>
+            完成订单
+            </summary>
+            <remarks>
+            将订单标记为已完成状态，并记录实际充电电量和充电时长
+            
+            订单完成触发场景：
+            - 用户主动结束充电
+            - 充电达到预设条件自动结束
+            - 充电桩上报充电完成事件
+            
+            完成订单后的处理：
+            - 计算最终费用
+            - 生成电子发票（如需）
+            - 释放充电端口资源
+            - 推送完成通知给用户
+            </remarks>
+            <param name="id">订单ID</param>
+            <param name="powerConsumption">充电电量(kWh)，实际消耗的电量</param>
+            <param name="chargingTime">充电时长(秒)，实际充电的时间</param>
+            <returns>完成结果</returns>
+            <response code="204">订单完成成功</response>
+            <response code="400">请求参数错误</response>
+            <response code="404">未找到指定ID的订单</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.OrdersController.GetOrderStatistics(System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            获取订单统计数据
+            </summary>
+            <remarks>
+            获取系统中订单的统计分析数据，支持按时间范围筛选
+            
+            返回的统计数据包括：
+            - 订单总数
+            - 订单总金额
+            - 总充电电量
+            - 总充电时长
+            - 各状态订单数量分布
+            - 按日期的订单趋势
+            
+            使用场景：
+            - 管理后台的数据看板和报表
+            - 经营分析和决策支持
+            - 系统运营状况监控
+            </remarks>
+            <param name="startDate">开始日期，可选，默认为最近30天</param>
+            <param name="endDate">结束日期，可选，默认为当前日期</param>
+            <returns>订单统计数据</returns>
+            <response code="200">成功返回统计数据</response>
+            <response code="400">日期参数错误</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.StatisticsController.GetAllStatistics">
+            <summary>
+            获取所有统计数据
+            </summary>
+            <returns>所有统计数据</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.StatisticsController.GetPileStatistics">
+            <summary>
+            获取充电桩统计数据
+            </summary>
+            <returns>充电桩统计数据</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.StatisticsController.GetPortStatistics">
+            <summary>
+            获取充电口统计数据
+            </summary>
+            <returns>充电口统计数据</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.StatisticsController.GetUserStatistics">
+            <summary>
+            获取用户统计数据
+            </summary>
+            <returns>用户统计数据</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.StatisticsController.GetOrderStatistics">
+            <summary>
+            获取订单统计数据
+            </summary>
+            <returns>订单统计数据</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Controllers.UserAddressesController">
+            <summary>
+            用户地址管理控制器
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserAddressesController.GetUserAddresses(System.Int32)">
+            <summary>
+            获取用户的所有地址
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>地址列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserAddressesController.GetAddressById(System.Int32)">
+            <summary>
+            获取地址详情
+            </summary>
+            <param name="id">地址ID</param>
+            <returns>地址详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserAddressesController.GetUserDefaultAddress(System.Int32)">
+            <summary>
+            获取用户的默认地址
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>默认地址</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserAddressesController.CreateUserAddress(System.Int32,ChargingPileAdmin.Dtos.CreateUserAddressDto)">
+            <summary>
+            创建用户地址
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="dto">创建地址请求</param>
+            <returns>创建的地址ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserAddressesController.UpdateUserAddress(System.Int32,ChargingPileAdmin.Dtos.UpdateUserAddressDto)">
+            <summary>
+            更新用户地址
+            </summary>
+            <param name="id">地址ID</param>
+            <param name="dto">更新地址请求</param>
+            <returns>更新结果</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserAddressesController.DeleteUserAddress(System.Int32)">
+            <summary>
+            删除用户地址
+            </summary>
+            <param name="id">地址ID</param>
+            <returns>删除结果</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserAddressesController.SetDefaultAddress(System.Int32,System.Int32)">
+            <summary>
+            设置默认地址
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="addressId">地址ID</param>
+            <returns>设置结果</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Controllers.UserNotificationsController">
+            <summary>
+            用户消息通知控制器
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserNotificationsController.GetUserNotifications(System.Int32)">
+            <summary>
+            获取用户的所有通知
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>通知列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserNotificationsController.GetUserUnreadNotifications(System.Int32)">
+            <summary>
+            获取用户的未读通知
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>未读通知列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserNotificationsController.GetNotificationById(System.Int32)">
+            <summary>
+            获取通知详情
+            </summary>
+            <param name="id">通知ID</param>
+            <returns>通知详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserNotificationsController.CreateNotification(ChargingPileAdmin.Dtos.CreateUserNotificationDto)">
+            <summary>
+            创建用户通知
+            </summary>
+            <param name="dto">创建通知请求</param>
+            <returns>创建的通知ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserNotificationsController.BatchCreateNotifications(ChargingPileAdmin.Dtos.BatchCreateUserNotificationDto)">
+            <summary>
+            批量创建用户通知
+            </summary>
+            <param name="dto">批量创建通知请求</param>
+            <returns>创建的通知数量</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserNotificationsController.MarkNotificationAsRead(System.Int32)">
+            <summary>
+            标记通知为已读
+            </summary>
+            <param name="id">通知ID</param>
+            <returns>标记结果</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserNotificationsController.BatchMarkNotificationsAsRead(ChargingPileAdmin.Dtos.BatchMarkNotificationReadDto)">
+            <summary>
+            批量标记通知为已读
+            </summary>
+            <param name="dto">批量标记已读请求</param>
+            <returns>标记成功的数量</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserNotificationsController.MarkAllNotificationsAsRead(System.Int32)">
+            <summary>
+            标记用户所有通知为已读
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>标记成功的数量</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserNotificationsController.DeleteNotification(System.Int32)">
+            <summary>
+            删除通知
+            </summary>
+            <param name="id">通知ID</param>
+            <returns>删除结果</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserNotificationsController.GetUserUnreadNotificationCount(System.Int32)">
+            <summary>
+            获取用户未读通知数量
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>未读通知数量</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Controllers.UserRolesController">
+            <summary>
+            用户角色管理控制器
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserRolesController.GetAllRoles">
+            <summary>
+            获取所有角色
+            </summary>
+            <returns>角色列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserRolesController.GetRoleById(System.Int32)">
+            <summary>
+            获取角色详情
+            </summary>
+            <param name="id">角色ID</param>
+            <returns>角色详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserRolesController.CreateRole(ChargingPileAdmin.Dtos.CreateUserRoleDto)">
+            <summary>
+            创建角色
+            </summary>
+            <param name="dto">创建角色请求</param>
+            <returns>创建的角色ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserRolesController.UpdateRole(System.Int32,ChargingPileAdmin.Dtos.UpdateUserRoleDto)">
+            <summary>
+            更新角色
+            </summary>
+            <param name="id">角色ID</param>
+            <param name="dto">更新角色请求</param>
+            <returns>更新结果</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserRolesController.DeleteRole(System.Int32)">
+            <summary>
+            删除角色
+            </summary>
+            <param name="id">角色ID</param>
+            <returns>删除结果</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserRolesController.GetUserRoles(System.Int32)">
+            <summary>
+            获取用户的角色列表
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>角色列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserRolesController.AssignRoleToUser(ChargingPileAdmin.Dtos.AssignUserRoleDto)">
+            <summary>
+            分配用户角色
+            </summary>
+            <param name="dto">分配用户角色请求</param>
+            <returns>分配结果</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserRolesController.RemoveRoleFromUser(System.Int32,System.Int32)">
+            <summary>
+            移除用户角色
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="roleId">角色ID</param>
+            <returns>移除结果</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserRolesController.CheckUserHasRole(System.Int32,System.Int32)">
+            <summary>
+            检查用户是否拥有指定角色
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="roleId">角色ID</param>
+            <returns>是否拥有角色</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UserRolesController.CheckUserHasPermission(System.Int32,System.Int32)">
+            <summary>
+            检查用户是否拥有指定权限级别
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="permissionLevel">权限级别</param>
+            <returns>是否拥有权限</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Controllers.UsersController">
+            <summary>
+            用户管理 - 提供用户账户相关的增删改查操作
+            </summary>
+            <remarks>
+            本控制器负责用户的所有管理功能，包括：
+            - 用户信息的查询（按ID、分页查询等）
+            - 用户的创建、更新和删除
+            - 用户认证（登录）
+            - 密码管理
+            - 账户余额管理
+            </remarks>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UsersController.GetAllUsers">
+            <summary>
+            获取所有用户信息
+            </summary>
+            <remarks>
+            返回系统中所有用户的完整列表，包含用户基本信息、联系方式、账户状态等数据
+            
+            使用场景：
+            - 管理后台展示所有用户
+            - 系统用户数据分析
+            
+            注意：当用户数量较多时，建议使用分页接口获取数据
+            </remarks>
+            <returns>用户列表</returns>
+            <response code="200">成功返回用户列表</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UsersController.GetUserById(System.Int32)">
+            <summary>
+            获取指定ID的用户详细信息
+            </summary>
+            <remarks>
+            根据用户ID获取单个用户的详细信息，包括：
+            - 基本信息（用户名、真实姓名、电话等）
+            - 账户信息（注册时间、余额、状态等）
+            - 角色信息（用户角色、权限等）
+            
+            使用场景：
+            - 查看用户详情页面
+            - 用户资料管理
+            - 客服查询用户信息
+            </remarks>
+            <param name="id">用户ID（唯一标识符）</param>
+            <returns>用户详情</returns>
+            <response code="200">成功返回用户详情</response>
+            <response code="404">未找到指定ID的用户</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UsersController.GetUsersPaged(System.Int32,System.Int32,System.String)">
+            <summary>
+            分页获取用户列表（支持关键字搜索）
+            </summary>
+            <remarks>
+            提供带分页功能的用户查询接口，支持按关键字搜索用户信息
+            
+            搜索范围包括：
+            - 用户名
+            - 手机号码
+            - 真实姓名
+            - 邮箱地址
+            
+            使用场景：
+            - 管理后台的用户列表页
+            - 带搜索功能的用户查询
+            </remarks>
+            <param name="pageNumber">页码，从1开始</param>
+            <param name="pageSize">每页记录数，默认10条</param>
+            <param name="keyword">关键字，可选，用于搜索用户名、手机号、真实姓名或邮箱</param>
+            <returns>用户分页数据</returns>
+            <response code="200">成功返回分页数据</response>
+            <response code="400">分页参数错误</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UsersController.CreateUser(ChargingPileAdmin.Dtos.CreateUserDto)">
+            <summary>
+            创建新用户
+            </summary>
+            <remarks>
+            创建一个新的用户账户，需要提供用户的基本信息、联系方式、密码等
+            
+            请求示例:
+            ```json
+            {
+              "username": "zhangsan",
+              "password": "Pwd123456",
+              "realName": "张三",
+              "phone": "13812345678",
+              "email": "zhangsan@example.com",
+              "roleId": 2
+            }
+            ```
+            
+            使用场景：
+            - 管理员添加新用户
+            - 用户自行注册
+            </remarks>
+            <param name="dto">创建用户的数据传输对象</param>
+            <returns>创建的用户ID</returns>
+            <response code="201">用户创建成功，返回新创建的用户ID</response>
+            <response code="400">请求数据验证失败</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UsersController.UpdateUser(System.Int32,ChargingPileAdmin.Dtos.UpdateUserDto)">
+            <summary>
+            更新用户信息
+            </summary>
+            <remarks>
+            根据用户ID更新用户的信息，可以更新的内容包括：
+            - 用户基本信息（真实姓名、联系方式等）
+            - 账户状态（启用/禁用）
+            - 用户角色
+            
+            请求示例:
+            ```json
+            {
+              "realName": "张三(新)",
+              "phone": "13987654321",
+              "email": "zhangsan_new@example.com",
+              "status": 1,
+              "roleId": 3
+            }
+            ```
+            
+            使用场景：
+            - 管理员修改用户信息
+            - 用户更新个人资料
+            </remarks>
+            <param name="id">用户ID</param>
+            <param name="dto">更新用户的数据传输对象</param>
+            <returns>更新结果</returns>
+            <response code="204">用户更新成功</response>
+            <response code="400">请求数据验证失败</response>
+            <response code="404">未找到指定ID的用户</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UsersController.DeleteUser(System.Int32)">
+            <summary>
+            删除用户
+            </summary>
+            <remarks>
+            根据用户ID删除指定的用户记录。删除前会进行以下检查：
+            - 用户是否存在
+            - 用户是否有未完成的订单
+            - 用户是否有未处理的充值/退款记录
+            
+            使用场景：
+            - 管理员删除违规用户
+            - 用户申请注销账号
+            
+            注意：删除用户可能会保留部分历史数据用于统计和分析
+            </remarks>
+            <param name="id">用户ID</param>
+            <returns>删除结果</returns>
+            <response code="204">用户删除成功</response>
+            <response code="400">ID参数错误</response>
+            <response code="404">未找到指定ID的用户</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UsersController.Login(ChargingPileAdmin.Dtos.UserLoginDto)">
+            <summary>
+            用户登录
+            </summary>
+            <remarks>
+            验证用户身份并返回登录凭证和用户基本信息
+            
+            请求示例:
+            ```json
+            {
+              "username": "zhangsan",
+              "password": "Pwd123456"
+            }
+            ```
+            
+            返回内容包括：
+            - 用户基本信息
+            - 登录凭证（Token）
+            - 权限信息
+            
+            使用场景：
+            - 用户登录系统
+            - APP用户登录
+            </remarks>
+            <param name="dto">登录的数据传输对象，包含用户名和密码</param>
+            <returns>登录响应，包含用户信息和Token</returns>
+            <response code="200">登录成功，返回用户信息和Token</response>
+            <response code="400">请求数据验证失败</response>
+            <response code="401">用户名或密码错误</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UsersController.ChangePassword(System.Int32,ChargingPileAdmin.Dtos.ChangePasswordDto)">
+            <summary>
+            修改用户密码
+            </summary>
+            <remarks>
+            修改指定用户的登录密码，需要提供原密码和新密码
+            
+            请求示例:
+            ```json
+            {
+              "oldPassword": "OldPwd123",
+              "newPassword": "NewPwd456",
+              "confirmPassword": "NewPwd456"
+            }
+            ```
+            
+            密码要求：
+            - 长度不少于6位
+            - 包含字母和数字
+            - 新密码不能与旧密码相同
+            
+            使用场景：
+            - 用户主动修改密码
+            - 管理员重置用户密码
+            </remarks>
+            <param name="id">用户ID</param>
+            <param name="dto">修改密码的数据传输对象</param>
+            <returns>修改结果</returns>
+            <response code="204">密码修改成功</response>
+            <response code="400">请求数据验证失败</response>
+            <response code="404">未找到指定ID的用户</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="M:ChargingPileAdmin.Controllers.UsersController.RechargeBalance(System.Int32,ChargingPileAdmin.Dtos.RechargeBalanceDto)">
+            <summary>
+            用户账户充值
+            </summary>
+            <remarks>
+            为指定用户的账户充值余额，用于支付充电订单
+            
+            请求示例:
+            ```json
+            {
+              "amount": 100.00,
+              "paymentMethod": 1,
+              "transactionId": "PAY123456789",
+              "remark": "微信支付充值"
+            }
+            ```
+            
+            支付方式说明：
+            - 0：其他方式
+            - 1：微信支付
+            - 2：支付宝支付
+            - 3：银行卡支付
+            
+            使用场景：
+            - 用户在APP中充值余额
+            - 管理员代客户充值
+            - 线下支付后管理员手动增加余额
+            </remarks>
+            <param name="id">用户ID</param>
+            <param name="dto">充值余额的数据传输对象</param>
+            <returns>充值结果</returns>
+            <response code="204">充值成功</response>
+            <response code="400">请求数据验证失败</response>
+            <response code="404">未找到指定ID的用户</response>
+            <response code="500">服务器错误</response>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.ChargingPileDto">
+            <summary>
+            充电桩数据传输对象
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.Id">
+            <summary>
+            充电桩唯一标识符
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.StationId">
+            <summary>
+            所属充电站ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.StationName">
+            <summary>
+            所属充电站名称
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.PileNo">
+            <summary>
+            充电桩编号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.PileType">
+            <summary>
+            充电桩类型：1-直流快充，2-交流慢充
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.PileTypeDescription">
+            <summary>
+            充电桩类型描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.Status">
+            <summary>
+            充电桩状态：0-离线，1-空闲，2-使用中，3-故障
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.StatusDescription">
+            <summary>
+            充电桩状态描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.PowerRate">
+            <summary>
+            额定功率(kW)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.Manufacturer">
+            <summary>
+            制造商
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.IMEI">
+            <summary>
+            设备IMEI号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.TotalPorts">
+            <summary>
+            总端口数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.ProtocolVersion">
+            <summary>
+            协议版本
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.SoftwareVersion">
+            <summary>
+            软件版本
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.HardwareVersion">
+            <summary>
+            硬件版本
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.OnlineStatus">
+            <summary>
+            在线状态：0-离线，1-在线
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.OnlineStatusDescription">
+            <summary>
+            在线状态描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.SignalStrength">
+            <summary>
+            信号强度
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.Temperature">
+            <summary>
+            设备温度
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.LastHeartbeatTime">
+            <summary>
+            最后心跳时间
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.InstallationDate">
+            <summary>
+            安装日期
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.LastMaintenanceDate">
+            <summary>
+            最后维护日期
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileDto.UpdateTime">
+            <summary>
+            最后更新时间
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.CreateChargingPileDto">
+            <summary>
+            创建充电桩请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPileDto.StationId">
+            <summary>
+            所属充电站ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPileDto.PileNo">
+            <summary>
+            充电桩编号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPileDto.PileType">
+            <summary>
+            充电桩类型：1-直流快充，2-交流慢充
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPileDto.Status">
+            <summary>
+            充电桩状态：0-离线，1-空闲，2-使用中，3-故障
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPileDto.PowerRate">
+            <summary>
+            额定功率(kW)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPileDto.Manufacturer">
+            <summary>
+            制造商
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPileDto.IMEI">
+            <summary>
+            设备IMEI号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPileDto.TotalPorts">
+            <summary>
+            总端口数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPileDto.ProtocolVersion">
+            <summary>
+            协议版本
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPileDto.SoftwareVersion">
+            <summary>
+            软件版本
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPileDto.HardwareVersion">
+            <summary>
+            硬件版本
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPileDto.InstallationDate">
+            <summary>
+            安装日期
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.UpdateChargingPileDto">
+            <summary>
+            更新充电桩请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPileDto.PileNo">
+            <summary>
+            充电桩编号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPileDto.PileType">
+            <summary>
+            充电桩类型：1-直流快充，2-交流慢充
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPileDto.Status">
+            <summary>
+            充电桩状态：0-离线，1-空闲，2-使用中，3-故障
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPileDto.PowerRate">
+            <summary>
+            额定功率(kW)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPileDto.Manufacturer">
+            <summary>
+            制造商
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPileDto.IMEI">
+            <summary>
+            设备IMEI号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPileDto.TotalPorts">
+            <summary>
+            总端口数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPileDto.ProtocolVersion">
+            <summary>
+            协议版本
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPileDto.SoftwareVersion">
+            <summary>
+            软件版本
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPileDto.HardwareVersion">
+            <summary>
+            硬件版本
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPileDto.InstallationDate">
+            <summary>
+            安装日期
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPileDto.LastMaintenanceDate">
+            <summary>
+            最后维护日期
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.ChargingPortDto">
+            <summary>
+            充电端口数据传输对象
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.Id">
+            <summary>
+            充电端口唯一标识符
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.PileId">
+            <summary>
+            所属充电桩ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.PileNo">
+            <summary>
+            所属充电桩编号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.PortNo">
+            <summary>
+            端口编号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.PortType">
+            <summary>
+            端口类型：1-国标，2-欧标，3-美标
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.PortTypeDescription">
+            <summary>
+            端口类型描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.Status">
+            <summary>
+            端口状态：0-离线，1-空闲，2-使用中，3-故障
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.StatusDescription">
+            <summary>
+            端口状态描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.FaultType">
+            <summary>
+            故障类型：0-无故障，1-保险丝熔断，2-继电器粘连
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.FaultTypeDescription">
+            <summary>
+            故障类型描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.IsDisabled">
+            <summary>
+            是否禁用
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.CurrentOrderId">
+            <summary>
+            当前订单ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.Voltage">
+            <summary>
+            当前电压(V)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.CurrentAmpere">
+            <summary>
+            当前电流(A)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.Power">
+            <summary>
+            当前功率(kW)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.Temperature">
+            <summary>
+            端口温度
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.Electricity">
+            <summary>
+            当前电量(kWh)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.TotalChargingTimes">
+            <summary>
+            总充电次数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.TotalChargingDuration">
+            <summary>
+            总充电时长(秒)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.TotalPowerConsumption">
+            <summary>
+            总耗电量(kWh)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.LastCheckTime">
+            <summary>
+            最后检查时间
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.LastOrderId">
+            <summary>
+            最后一个订单ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortDto.UpdateTime">
+            <summary>
+            最后更新时间
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.CreateChargingPortDto">
+            <summary>
+            创建充电端口请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPortDto.PileId">
+            <summary>
+            所属充电桩ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPortDto.PortNo">
+            <summary>
+            端口编号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPortDto.PortType">
+            <summary>
+            端口类型：1-国标，2-欧标，3-美标
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPortDto.Status">
+            <summary>
+            端口状态：0-离线，1-空闲，2-使用中，3-故障
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPortDto.Voltage">
+            <summary>
+            当前电压(V)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPortDto.CurrentAmpere">
+            <summary>
+            当前电流(A)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPortDto.Power">
+            <summary>
+            当前功率(kW)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingPortDto.Temperature">
+            <summary>
+            端口温度
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.UpdateChargingPortDto">
+            <summary>
+            更新充电端口请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPortDto.PortNo">
+            <summary>
+            端口编号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPortDto.PortType">
+            <summary>
+            端口类型：1-国标，2-欧标，3-美标
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPortDto.IsDisabled">
+            <summary>
+            是否禁用
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPortDto.Status">
+            <summary>
+            端口状态：0-离线，1-空闲，2-使用中，3-故障
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPortDto.Voltage">
+            <summary>
+            当前电压(V)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPortDto.CurrentAmpere">
+            <summary>
+            当前电流(A)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPortDto.Power">
+            <summary>
+            当前功率(kW)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingPortDto.Temperature">
+            <summary>
+            端口温度
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.ChargingStationDto">
+            <summary>
+            充电站数据传输对象
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingStationDto.Id">
+            <summary>
+            充电站唯一标识符
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingStationDto.Name">
+            <summary>
+            充电站名称
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingStationDto.Status">
+            <summary>
+            充电站状态：0-离线，1-在线，2-维护中，3-故障
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingStationDto.StatusDescription">
+            <summary>
+            充电站状态描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingStationDto.Address">
+            <summary>
+            充电站地址
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingStationDto.Location">
+            <summary>
+            充电站地理位置坐标
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingStationDto.UpdateTime">
+            <summary>
+            最后更新时间
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingStationDto.PileCount">
+            <summary>
+            充电桩数量
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.CreateChargingStationDto">
+            <summary>
+            创建充电站请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingStationDto.Name">
+            <summary>
+            充电站名称
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingStationDto.Status">
+            <summary>
+            充电站状态：0-离线，1-在线，2-维护中，3-故障
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingStationDto.Address">
+            <summary>
+            充电站地址
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateChargingStationDto.Location">
+            <summary>
+            充电站地理位置坐标
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.UpdateChargingStationDto">
+            <summary>
+            更新充电站请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingStationDto.Name">
+            <summary>
+            充电站名称
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingStationDto.Status">
+            <summary>
+            充电站状态：0-离线，1-在线，2-维护中，3-故障
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingStationDto.Address">
+            <summary>
+            充电站地址
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateChargingStationDto.Location">
+            <summary>
+            充电站地理位置坐标
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.OrderDto">
+            <summary>
+            订单数据传输对象
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.Id">
+            <summary>
+            订单唯一标识符
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.OrderNo">
+            <summary>
+            订单编号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.UserNickname">
+            <summary>
+            用户昵称
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.PileId">
+            <summary>
+            充电桩ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.PileNo">
+            <summary>
+            充电桩编号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.PortId">
+            <summary>
+            充电端口ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.PortNo">
+            <summary>
+            充电端口编号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.Status">
+            <summary>
+            订单状态：0-待支付，1-充电中，2-已完成，3-已取消，4-异常
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.StatusDescription">
+            <summary>
+            订单状态描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.BillingMode">
+            <summary>
+            计费模式：0-按时间，1-电量+电量服务费，2-电量+时间服务费
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.BillingModeDescription">
+            <summary>
+            计费模式描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.StartTime">
+            <summary>
+            开始时间
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.EndTime">
+            <summary>
+            结束时间
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.ChargingTime">
+            <summary>
+            充电时长(秒)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.ChargingTimeFormatted">
+            <summary>
+            充电时长(格式化)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.PowerConsumption">
+            <summary>
+            充电电量(kWh)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.Amount">
+            <summary>
+            充电金额(元)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.ServiceFee">
+            <summary>
+            服务费(元)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.TotalAmount">
+            <summary>
+            总金额(元)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.PaymentStatus">
+            <summary>
+            支付状态：0-未支付，1-已支付，2-已退款
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.PaymentStatusDescription">
+            <summary>
+            支付状态描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.PaymentTime">
+            <summary>
+            支付时间
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.PaymentMethod">
+            <summary>
+            支付方式：1-微信，2-支付宝，3-余额
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.PaymentMethodDescription">
+            <summary>
+            支付方式描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.TransactionId">
+            <summary>
+            交易流水号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.Power">
+            <summary>
+            充电功率(kW)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.ChargingMode">
+            <summary>
+            充电模式：1-充满自停，2-按金额，3-按时间，4-按电量，5-其他
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.ChargingModeDescription">
+            <summary>
+            充电模式描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.StopReason">
+            <summary>
+            停止原因：0-充满自停，1-时间用完，2-金额用完，3-手动停止，4-电量用完
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.StopReasonDescription">
+            <summary>
+            停止原因描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.SharpElectricity">
+            <summary>
+            尖峰时段电量(kWh)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.SharpAmount">
+            <summary>
+            尖峰时段金额(元)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.PeakElectricity">
+            <summary>
+            峰时段电量(kWh)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.PeakAmount">
+            <summary>
+            峰时段金额(元)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.FlatElectricity">
+            <summary>
+            平时段电量(kWh)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.FlatAmount">
+            <summary>
+            平时段金额(元)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.ValleyElectricity">
+            <summary>
+            谷时段电量(kWh)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.ValleyAmount">
+            <summary>
+            谷时段金额(元)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.DeepValleyElectricity">
+            <summary>
+            深谷时段电量(kWh)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.DeepValleyAmount">
+            <summary>
+            深谷时段金额(元)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.Remark">
+            <summary>
+            订单备注
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderDto.UpdateTime">
+            <summary>
+            最后更新时间
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.CreateOrderDto">
+            <summary>
+            创建订单请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateOrderDto.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateOrderDto.PileId">
+            <summary>
+            充电桩ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateOrderDto.PortId">
+            <summary>
+            充电端口ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateOrderDto.BillingMode">
+            <summary>
+            计费模式：0-按时间，1-电量+电量服务费，2-电量+时间服务费
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateOrderDto.ChargingMode">
+            <summary>
+            充电模式：1-充满自停，2-按金额，3-按时间，4-按电量，5-其他
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.UpdateOrderStatusDto">
+            <summary>
+            更新订单状态请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateOrderStatusDto.Status">
+            <summary>
+            订单状态：0-待支付，1-充电中，2-已完成，3-已取消，4-异常
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateOrderStatusDto.StopReason">
+            <summary>
+            停止原因：0-充满自停，1-时间用完，2-金额用完，3-手动停止，4-电量用完
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.OrderPaymentDto">
+            <summary>
+            订单支付请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderPaymentDto.PaymentMethod">
+            <summary>
+            支付方式：1-微信，2-支付宝，3-余额
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderPaymentDto.TransactionId">
+            <summary>
+            交易流水号
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.OrderStatisticsDto">
+            <summary>
+            订单统计数据
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderStatisticsDto.TotalOrders">
+            <summary>
+            总订单数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderStatisticsDto.TotalPowerConsumption">
+            <summary>
+            总充电电量(kWh)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderStatisticsDto.TotalChargingTime">
+            <summary>
+            总充电时长(秒)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderStatisticsDto.TotalAmount">
+            <summary>
+            总充电金额(元)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderStatisticsDto.PendingPaymentOrders">
+            <summary>
+            待支付订单数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderStatisticsDto.PendingChargingOrders">
+            <summary>
+            已支付待充电订单数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderStatisticsDto.ChargingOrders">
+            <summary>
+            充电中订单数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderStatisticsDto.CompletedOrders">
+            <summary>
+            已完成订单数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderStatisticsDto.CancelledOrders">
+            <summary>
+            已取消订单数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.OrderStatisticsDto.AbnormalOrders">
+            <summary>
+            异常订单数
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.PagedResponseDto`1">
+            <summary>
+            分页响应数据
+            </summary>
+            <typeparam name="T">数据类型</typeparam>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.PagedResponseDto`1.PageNumber">
+            <summary>
+            当前页码
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.PagedResponseDto`1.PageSize">
+            <summary>
+            每页记录数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.PagedResponseDto`1.TotalCount">
+            <summary>
+            总记录数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.PagedResponseDto`1.TotalPages">
+            <summary>
+            总页数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.PagedResponseDto`1.HasPrevious">
+            <summary>
+            是否有上一页
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.PagedResponseDto`1.HasNext">
+            <summary>
+            是否有下一页
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.PagedResponseDto`1.Items">
+            <summary>
+            数据列表
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.StatisticsDto">
+            <summary>
+            统计数据DTO
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.StatisticsDto.PileStatistics">
+            <summary>
+            充电桩统计
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.StatisticsDto.PortStatistics">
+            <summary>
+            充电口统计
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.StatisticsDto.UserStatistics">
+            <summary>
+            用户统计
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.StatisticsDto.OrderStatistics">
+            <summary>
+            订单统计
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.ChargingPileStatisticsDto">
+            <summary>
+            充电桩统计DTO
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileStatisticsDto.TotalCount">
+            <summary>
+            充电桩总数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileStatisticsDto.OnlineCount">
+            <summary>
+            在线充电桩数量
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileStatisticsDto.OfflineCount">
+            <summary>
+            离线充电桩数量
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileStatisticsDto.FaultCount">
+            <summary>
+            故障充电桩数量
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileStatisticsDto.DcFastCount">
+            <summary>
+            直流快充数量
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPileStatisticsDto.AcSlowCount">
+            <summary>
+            交流慢充数量
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.ChargingPortStatisticsDto">
+            <summary>
+            充电口统计DTO
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortStatisticsDto.TotalCount">
+            <summary>
+            充电口总数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortStatisticsDto.IdleCount">
+            <summary>
+            空闲充电口数量
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortStatisticsDto.InUseCount">
+            <summary>
+            使用中充电口数量
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortStatisticsDto.FaultCount">
+            <summary>
+            故障充电口数量
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortStatisticsDto.GbCount">
+            <summary>
+            国标充电口数量
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortStatisticsDto.EuCount">
+            <summary>
+            欧标充电口数量
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChargingPortStatisticsDto.UsCount">
+            <summary>
+            美标充电口数量
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.UserStatisticsDto">
+            <summary>
+            用户统计DTO
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserStatisticsDto.TotalCount">
+            <summary>
+            用户总数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserStatisticsDto.NewUsersLast7Days">
+            <summary>
+            近7天新增用户数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserStatisticsDto.NewUsersLast30Days">
+            <summary>
+            近30天新增用户数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserStatisticsDto.ActiveUsers">
+            <summary>
+            活跃用户数（30天内有订单）
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserStatisticsDto.MaleCount">
+            <summary>
+            男性用户数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserStatisticsDto.FemaleCount">
+            <summary>
+            女性用户数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserStatisticsDto.UnknownGenderCount">
+            <summary>
+            性别未知用户数
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.StatOrderDto">
+            <summary>
+            订单统计DTO（统计模块专用）
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.StatOrderDto.TotalCount">
+            <summary>
+            订单总数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.StatOrderDto.TodayCount">
+            <summary>
+            今日订单数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.StatOrderDto.Last7DaysCount">
+            <summary>
+            近7天订单数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.StatOrderDto.Last30DaysCount">
+            <summary>
+            近30天订单数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.StatOrderDto.CompletedCount">
+            <summary>
+            完成订单数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.StatOrderDto.ChargingCount">
+            <summary>
+            充电中订单数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.StatOrderDto.PendingPaymentCount">
+            <summary>
+            待支付订单数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.StatOrderDto.CancelledCount">
+            <summary>
+            已取消订单数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.StatOrderDto.AbnormalCount">
+            <summary>
+            异常订单数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.StatOrderDto.TotalPowerConsumption">
+            <summary>
+            总充电量(kWh)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.StatOrderDto.TotalChargingDuration">
+            <summary>
+            总充电时长(分钟)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.StatOrderDto.TotalAmount">
+            <summary>
+            总消费金额(元)
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.UserAddressDto">
+            <summary>
+            用户地址数据传输对象
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserAddressDto.Id">
+            <summary>
+            地址唯一标识符
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserAddressDto.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserAddressDto.RecipientName">
+            <summary>
+            收件人姓名
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserAddressDto.RecipientPhone">
+            <summary>
+            收件人电话
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserAddressDto.Province">
+            <summary>
+            省份
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserAddressDto.City">
+            <summary>
+            城市
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserAddressDto.District">
+            <summary>
+            区县
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserAddressDto.DetailAddress">
+            <summary>
+            详细地址
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserAddressDto.FullAddress">
+            <summary>
+            完整地址
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserAddressDto.PostalCode">
+            <summary>
+            邮政编码
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserAddressDto.IsDefault">
+            <summary>
+            是否默认地址
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserAddressDto.Tag">
+            <summary>
+            标签：家、公司、学校等
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserAddressDto.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserAddressDto.UpdateTime">
+            <summary>
+            更新时间
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.CreateUserAddressDto">
+            <summary>
+            创建用户地址请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserAddressDto.RecipientName">
+            <summary>
+            收件人姓名
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserAddressDto.RecipientPhone">
+            <summary>
+            收件人电话
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserAddressDto.Province">
+            <summary>
+            省份
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserAddressDto.City">
+            <summary>
+            城市
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserAddressDto.District">
+            <summary>
+            区县
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserAddressDto.DetailAddress">
+            <summary>
+            详细地址
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserAddressDto.PostalCode">
+            <summary>
+            邮政编码
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserAddressDto.IsDefault">
+            <summary>
+            是否默认地址
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserAddressDto.Tag">
+            <summary>
+            标签：家、公司、学校等
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.UpdateUserAddressDto">
+            <summary>
+            更新用户地址请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateUserAddressDto.RecipientName">
+            <summary>
+            收件人姓名
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateUserAddressDto.RecipientPhone">
+            <summary>
+            收件人电话
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateUserAddressDto.Province">
+            <summary>
+            省份
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateUserAddressDto.City">
+            <summary>
+            城市
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateUserAddressDto.District">
+            <summary>
+            区县
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateUserAddressDto.DetailAddress">
+            <summary>
+            详细地址
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateUserAddressDto.PostalCode">
+            <summary>
+            邮政编码
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateUserAddressDto.IsDefault">
+            <summary>
+            是否默认地址
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateUserAddressDto.Tag">
+            <summary>
+            标签：家、公司、学校等
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.SetDefaultAddressDto">
+            <summary>
+            设置默认地址请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.SetDefaultAddressDto.AddressId">
+            <summary>
+            地址ID
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.UserDto">
+            <summary>
+            用户数据传输对象
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserDto.Id">
+            <summary>
+            用户唯一标识符
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserDto.OpenId">
+            <summary>
+            用户开放平台ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserDto.Nickname">
+            <summary>
+            用户昵称
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserDto.Avatar">
+            <summary>
+            用户头像URL
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserDto.Balance">
+            <summary>
+            账户余额
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserDto.Points">
+            <summary>
+            用户积分
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserDto.Gender">
+            <summary>
+            性别：0-未知，1-男，2-女
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserDto.GenderDescription">
+            <summary>
+            性别描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserDto.Country">
+            <summary>
+            国家
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserDto.Province">
+            <summary>
+            省份
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserDto.City">
+            <summary>
+            城市
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserDto.Language">
+            <summary>
+            语言偏好
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserDto.LastLoginTime">
+            <summary>
+            最后登录时间
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserDto.UpdateTime">
+            <summary>
+            最后更新时间
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.CreateUserDto">
+            <summary>
+            创建用户请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserDto.OpenId">
+            <summary>
+            用户开放平台ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserDto.Nickname">
+            <summary>
+            用户昵称
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserDto.Avatar">
+            <summary>
+            用户头像URL
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserDto.Password">
+            <summary>
+            用户密码
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserDto.Gender">
+            <summary>
+            性别：0-未知，1-男，2-女
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserDto.Country">
+            <summary>
+            国家
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserDto.Province">
+            <summary>
+            省份
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserDto.City">
+            <summary>
+            城市
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserDto.Language">
+            <summary>
+            语言偏好
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.UpdateUserDto">
+            <summary>
+            更新用户请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateUserDto.Nickname">
+            <summary>
+            用户昵称
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateUserDto.Avatar">
+            <summary>
+            用户头像URL
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateUserDto.Gender">
+            <summary>
+            性别：0-未知，1-男，2-女
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateUserDto.Country">
+            <summary>
+            国家
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateUserDto.Province">
+            <summary>
+            省份
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateUserDto.City">
+            <summary>
+            城市
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateUserDto.Language">
+            <summary>
+            语言偏好
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.UserLoginDto">
+            <summary>
+            用户登录请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserLoginDto.Username">
+            <summary>
+            用户开放平台ID或昵称
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserLoginDto.Password">
+            <summary>
+            用户密码
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.UserLoginResponseDto">
+            <summary>
+            用户登录响应
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserLoginResponseDto.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserLoginResponseDto.Nickname">
+            <summary>
+            用户昵称
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserLoginResponseDto.Avatar">
+            <summary>
+            用户头像URL
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserLoginResponseDto.Token">
+            <summary>
+            登录令牌
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.ChangePasswordDto">
+            <summary>
+            修改密码请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChangePasswordDto.OldPassword">
+            <summary>
+            旧密码
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChangePasswordDto.NewPassword">
+            <summary>
+            新密码
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.ChangePasswordDto.ConfirmPassword">
+            <summary>
+            确认新密码
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.RechargeBalanceDto">
+            <summary>
+            充值余额请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.RechargeBalanceDto.Amount">
+            <summary>
+            充值金额
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.RechargeBalanceDto.PaymentMethod">
+            <summary>
+            支付方式：1-微信，2-支付宝，3-银行卡
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.UserNotificationDto">
+            <summary>
+            用户消息通知数据传输对象
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserNotificationDto.Id">
+            <summary>
+            通知唯一标识符
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserNotificationDto.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserNotificationDto.Title">
+            <summary>
+            通知标题
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserNotificationDto.Content">
+            <summary>
+            通知内容
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserNotificationDto.Type">
+            <summary>
+            通知类型：1-系统通知，2-订单通知，3-活动通知，4-充值通知
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserNotificationDto.TypeDescription">
+            <summary>
+            通知类型描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserNotificationDto.RelatedId">
+            <summary>
+            相关ID，如订单ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserNotificationDto.IsRead">
+            <summary>
+            是否已读
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserNotificationDto.ReadTime">
+            <summary>
+            阅读时间
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserNotificationDto.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.CreateUserNotificationDto">
+            <summary>
+            创建用户通知请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserNotificationDto.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserNotificationDto.Title">
+            <summary>
+            通知标题
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserNotificationDto.Content">
+            <summary>
+            通知内容
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserNotificationDto.Type">
+            <summary>
+            通知类型：1-系统通知，2-订单通知，3-活动通知，4-充值通知
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserNotificationDto.RelatedId">
+            <summary>
+            相关ID，如订单ID
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.BatchCreateUserNotificationDto">
+            <summary>
+            批量创建用户通知请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.BatchCreateUserNotificationDto.UserIds">
+            <summary>
+            用户ID数组
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.BatchCreateUserNotificationDto.Title">
+            <summary>
+            通知标题
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.BatchCreateUserNotificationDto.Content">
+            <summary>
+            通知内容
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.BatchCreateUserNotificationDto.Type">
+            <summary>
+            通知类型：1-系统通知，2-订单通知，3-活动通知，4-充值通知
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.BatchCreateUserNotificationDto.RelatedId">
+            <summary>
+            相关ID，如订单ID
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.MarkNotificationReadDto">
+            <summary>
+            标记通知已读请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.MarkNotificationReadDto.NotificationId">
+            <summary>
+            通知ID
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.BatchMarkNotificationReadDto">
+            <summary>
+            批量标记通知已读请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.BatchMarkNotificationReadDto.NotificationIds">
+            <summary>
+            通知ID数组
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.MarkAllNotificationsReadDto">
+            <summary>
+            标记所有通知已读请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.MarkAllNotificationsReadDto.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.UserRoleDto">
+            <summary>
+            用户角色数据传输对象
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserRoleDto.Id">
+            <summary>
+            角色唯一标识符
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserRoleDto.Name">
+            <summary>
+            角色名称
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserRoleDto.Description">
+            <summary>
+            角色描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserRoleDto.PermissionLevel">
+            <summary>
+            权限级别：1-普通用户，2-VIP用户，3-管理员，4-超级管理员
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserRoleDto.PermissionLevelDescription">
+            <summary>
+            权限级别描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UserRoleDto.IsSystem">
+            <summary>
+            是否系统内置角色
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.CreateUserRoleDto">
+            <summary>
+            创建用户角色请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserRoleDto.Name">
+            <summary>
+            角色名称
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserRoleDto.Description">
+            <summary>
+            角色描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.CreateUserRoleDto.PermissionLevel">
+            <summary>
+            权限级别：1-普通用户，2-VIP用户，3-管理员，4-超级管理员
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.UpdateUserRoleDto">
+            <summary>
+            更新用户角色请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateUserRoleDto.Name">
+            <summary>
+            角色名称
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateUserRoleDto.Description">
+            <summary>
+            角色描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.UpdateUserRoleDto.PermissionLevel">
+            <summary>
+            权限级别：1-普通用户，2-VIP用户，3-管理员，4-超级管理员
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Dtos.AssignUserRoleDto">
+            <summary>
+            用户角色分配请求
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.AssignUserRoleDto.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Dtos.AssignUserRoleDto.RoleId">
+            <summary>
+            角色ID
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Models.ChargingPile">
+            <summary>
+            充电桩信息
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.Id">
+            <summary>
+            充电桩唯一标识符
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.StationId">
+            <summary>
+            所属充电站ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.PileNo">
+            <summary>
+            充电桩编号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.PileType">
+            <summary>
+            充电桩类型：1-直流快充，2-交流慢充
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.Status">
+            <summary>
+            充电桩状态：0-离线，1-空闲，2-使用中，3-故障
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.PowerRate">
+            <summary>
+            额定功率(kW)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.Manufacturer">
+            <summary>
+            制造商
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.IMEI">
+            <summary>
+            设备IMEI号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.TotalPorts">
+            <summary>
+            总端口数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.FloatingPower">
+            <summary>
+            浮充参考功率(W)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.AutoStopEnabled">
+            <summary>
+            充满自停开关状态
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.PluginWaitTime">
+            <summary>
+            充电器插入等待时间(秒)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.RemovalWaitTime">
+            <summary>
+            充电器移除等待时间(秒)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.SupportsNewProtocol">
+            <summary>
+            是否支持新协议格式(带IMEI)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.ProtocolVersion">
+            <summary>
+            协议版本
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.SoftwareVersion">
+            <summary>
+            软件版本
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.HardwareVersion">
+            <summary>
+            硬件版本
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.CCID">
+            <summary>
+            CCID号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.Voltage">
+            <summary>
+            额定电压
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.AmpereValue">
+            <summary>
+            额定电流
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.OnlineStatus">
+            <summary>
+            在线状态：0-离线，1-在线
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.SignalStrength">
+            <summary>
+            信号强度
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.Temperature">
+            <summary>
+            设备温度
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.LastHeartbeatTime">
+            <summary>
+            最后心跳时间
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.InstallationDate">
+            <summary>
+            安装日期
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.LastMaintenanceDate">
+            <summary>
+            最后维护日期
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPile.UpdateTime">
+            <summary>
+            最后更新时间
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Models.ChargingPort">
+            <summary>
+            充电端口信息
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPort.Id">
+            <summary>
+            充电端口唯一标识符
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPort.PileId">
+            <summary>
+            所属充电桩ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPort.PortNo">
+            <summary>
+            端口编号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPort.PortType">
+            <summary>
+            端口类型：1-国标，2-欧标，3-美标
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPort.Status">
+            <summary>
+            端口状态：0-离线，1-空闲，2-使用中，3-故障
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPort.FaultType">
+            <summary>
+            故障类型：0-无故障，1-保险丝熔断，2-继电器粘连
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPort.IsDisabled">
+            <summary>
+            是否禁用
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPort.CurrentOrderId">
+            <summary>
+            当前订单ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPort.Voltage">
+            <summary>
+            当前电压(V)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPort.CurrentAmpere">
+            <summary>
+            当前电流(A)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPort.Power">
+            <summary>
+            当前功率(kW)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPort.Temperature">
+            <summary>
+            端口温度
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPort.Electricity">
+            <summary>
+            当前电量(kWh)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPort.TotalChargingTimes">
+            <summary>
+            总充电次数
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPort.TotalChargingDuration">
+            <summary>
+            总充电时长(秒)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPort.TotalPowerConsumption">
+            <summary>
+            总耗电量(kWh)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPort.LastCheckTime">
+            <summary>
+            最后检查时间
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPort.LastOrderId">
+            <summary>
+            最后一个订单ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingPort.UpdateTime">
+            <summary>
+            最后更新时间
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Models.ChargingStation">
+            <summary>
+            充电站信息
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingStation.Id">
+            <summary>
+            充电站唯一标识符
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingStation.Name">
+            <summary>
+            充电站名称
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingStation.Status">
+            <summary>
+            充电站状态：0-离线，1-在线，2-维护中，3-故障
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingStation.Address">
+            <summary>
+            充电站地址
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingStation.Location">
+            <summary>
+            充电站地理位置坐标 (SQL Server geography 类型)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingStation.LocationString">
+            <summary>
+            获取经纬度字符串，格式为"经度,纬度"
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.ChargingStation.UpdateTime">
+            <summary>
+            最后更新时间
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Models.Order">
+            <summary>
+            订单信息
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.Id">
+            <summary>
+            订单唯一标识符
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.OrderNo">
+            <summary>
+            订单编号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.PileId">
+            <summary>
+            充电桩ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.PortId">
+            <summary>
+            充电端口ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.Status">
+            <summary>
+            订单状态：0-待支付，1-充电中，2-已完成，3-已取消，4-异常
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.BillingMode">
+            <summary>
+            计费模式：0-按时间，1-电量+电量服务费，2-电量+时间服务费
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.StartTime">
+            <summary>
+            开始时间
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.EndTime">
+            <summary>
+            结束时间
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.ChargingTime">
+            <summary>
+            充电时长(秒)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.PowerConsumption">
+            <summary>
+            充电电量(kWh)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.Amount">
+            <summary>
+            充电金额(元)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.ServiceFee">
+            <summary>
+            服务费(元)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.TotalAmount">
+            <summary>
+            总金额(元)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.PaymentStatus">
+            <summary>
+            支付状态：0-未支付，1-已支付，2-已退款
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.PaymentTime">
+            <summary>
+            支付时间
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.PaymentMethod">
+            <summary>
+            支付方式：1-微信，2-支付宝，3-余额
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.TransactionId">
+            <summary>
+            交易流水号
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.Power">
+            <summary>
+            充电功率(kW)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.ChargingMode">
+            <summary>
+            充电模式：1-充满自停，2-按金额，3-按时间，4-按电量，5-其他
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.StopReason">
+            <summary>
+            停止原因：0-充满自停，1-时间用完，2-金额用完，3-手动停止，4-电量用完
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.SharpElectricity">
+            <summary>
+            尖峰时段电量(kWh)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.SharpAmount">
+            <summary>
+            尖峰时段金额(元)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.PeakElectricity">
+            <summary>
+            峰时段电量(kWh)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.PeakAmount">
+            <summary>
+            峰时段金额(元)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.FlatElectricity">
+            <summary>
+            平时段电量(kWh)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.FlatAmount">
+            <summary>
+            平时段金额(元)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.ValleyElectricity">
+            <summary>
+            谷时段电量(kWh)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.ValleyAmount">
+            <summary>
+            谷时段金额(元)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.DeepValleyElectricity">
+            <summary>
+            深谷时段电量(kWh)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.DeepValleyAmount">
+            <summary>
+            深谷时段金额(元)
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.Remark">
+            <summary>
+            订单备注
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.Order.UpdateTime">
+            <summary>
+            最后更新时间
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Models.User">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.User.Id">
+            <summary>
+            用户唯一标识符
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.User.OpenId">
+            <summary>
+            用户开放平台ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.User.Nickname">
+            <summary>
+            用户昵称
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.User.Avatar">
+            <summary>
+            用户头像URL
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.User.Password">
+            <summary>
+            用户密码（加密存储）
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.User.Balance">
+            <summary>
+            账户余额
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.User.Points">
+            <summary>
+            用户积分
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.User.Gender">
+            <summary>
+            性别：0-未知，1-男，2-女
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.User.Country">
+            <summary>
+            国家
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.User.Province">
+            <summary>
+            省份
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.User.City">
+            <summary>
+            城市
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.User.Language">
+            <summary>
+            语言偏好
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.User.LastLoginTime">
+            <summary>
+            最后登录时间
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.User.UpdateTime">
+            <summary>
+            最后更新时间
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Models.UserAddress">
+            <summary>
+            用户地址信息
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserAddress.Id">
+            <summary>
+            地址唯一标识符
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserAddress.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserAddress.RecipientName">
+            <summary>
+            收件人姓名
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserAddress.RecipientPhone">
+            <summary>
+            收件人电话
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserAddress.Province">
+            <summary>
+            省份
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserAddress.City">
+            <summary>
+            城市
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserAddress.District">
+            <summary>
+            区县
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserAddress.DetailAddress">
+            <summary>
+            详细地址
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserAddress.PostalCode">
+            <summary>
+            邮政编码
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserAddress.IsDefault">
+            <summary>
+            是否默认地址
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserAddress.Tag">
+            <summary>
+            标签：家、公司、学校等
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserAddress.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserAddress.UpdateTime">
+            <summary>
+            更新时间
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Models.UserNotification">
+            <summary>
+            用户消息通知
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserNotification.Id">
+            <summary>
+            通知唯一标识符
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserNotification.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserNotification.Title">
+            <summary>
+            通知标题
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserNotification.Content">
+            <summary>
+            通知内容
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserNotification.Type">
+            <summary>
+            通知类型：1-系统通知，2-订单通知，3-活动通知，4-充值通知
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserNotification.RelatedId">
+            <summary>
+            相关ID，如订单ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserNotification.IsRead">
+            <summary>
+            是否已读
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserNotification.ReadTime">
+            <summary>
+            阅读时间
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserNotification.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Models.UserRole">
+            <summary>
+            用户角色信息
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserRole.Id">
+            <summary>
+            角色唯一标识符
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserRole.Name">
+            <summary>
+            角色名称
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserRole.Description">
+            <summary>
+            角色描述
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserRole.PermissionLevel">
+            <summary>
+            权限级别：1-普通用户，2-VIP用户，3-管理员，4-超级管理员
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserRole.IsSystem">
+            <summary>
+            是否系统内置角色
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Models.UserRoleMapping">
+            <summary>
+            用户角色映射关系
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserRoleMapping.Id">
+            <summary>
+            映射唯一标识符
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserRoleMapping.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ChargingPileAdmin.Models.UserRoleMapping.RoleId">
+            <summary>
+            角色ID
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Repositories.ChargingPileRepository">
+            <summary>
+            充电桩仓储实现
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.ChargingPileRepository.GetPileWithStationAsync(System.String)">
+            <summary>
+            获取充电桩及其所属充电站
+            </summary>
+            <param name="pileId">充电桩ID</param>
+            <returns>充电桩</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.ChargingPileRepository.GetPileWithPortsAsync(System.String)">
+            <summary>
+            获取充电桩及其下属充电端口
+            </summary>
+            <param name="pileId">充电桩ID</param>
+            <returns>充电桩</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.ChargingPileRepository.GetPileWithStationAndPortsAsync(System.String)">
+            <summary>
+            获取充电桩、所属充电站及下属充电端口
+            </summary>
+            <param name="pileId">充电桩ID</param>
+            <returns>充电桩</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.ChargingPileRepository.GetPilesByStationIdAsync(System.String)">
+            <summary>
+            根据充电站ID获取充电桩
+            </summary>
+            <param name="stationId">充电站ID</param>
+            <returns>充电桩列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.ChargingPileRepository.GetPilesByStatusAsync(System.Int32)">
+            <summary>
+            根据状态获取充电桩
+            </summary>
+            <param name="status">充电桩状态</param>
+            <returns>充电桩列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.ChargingPileRepository.IsPileNoExistsAsync(System.String,System.String)">
+            <summary>
+            检查充电桩编号是否已存在
+            </summary>
+            <param name="pileNo">充电桩编号</param>
+            <param name="excludeId">排除的充电桩ID</param>
+            <returns>是否存在</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Repositories.ChargingPortRepository">
+            <summary>
+            充电端口仓储实现
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.ChargingPortRepository.GetPortWithPileAsync(System.String)">
+            <summary>
+            获取充电端口及其所属充电桩
+            </summary>
+            <param name="portId">充电端口ID</param>
+            <returns>充电端口</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.ChargingPortRepository.GetPortsByPileIdAsync(System.String)">
+            <summary>
+            根据充电桩ID获取充电端口
+            </summary>
+            <param name="pileId">充电桩ID</param>
+            <returns>充电端口列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.ChargingPortRepository.GetPortsByStatusAsync(System.Int32)">
+            <summary>
+            根据状态获取充电端口
+            </summary>
+            <param name="status">充电端口状态</param>
+            <returns>充电端口列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.ChargingPortRepository.IsPortNoExistsAsync(System.String,System.String,System.String)">
+            <summary>
+            检查充电端口编号是否已存在于同一充电桩下
+            </summary>
+            <param name="pileId">充电桩ID</param>
+            <param name="portNo">充电端口编号</param>
+            <param name="excludeId">排除的充电端口ID</param>
+            <returns>是否存在</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Repositories.ChargingStationRepository">
+            <summary>
+            充电站仓储实现
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.ChargingStationRepository.GetStationWithPilesAsync(System.String)">
+            <summary>
+            获取充电站及其下属充电桩
+            </summary>
+            <param name="stationId">充电站ID</param>
+            <returns>充电站</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.ChargingStationRepository.GetStationsWithPileCountAsync">
+            <summary>
+            获取所有充电站及其下属充电桩数量
+            </summary>
+            <returns>充电站列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.ChargingStationRepository.GetStationsByStatusAsync(System.Int32)">
+            <summary>
+            根据状态获取充电站
+            </summary>
+            <param name="status">充电站状态</param>
+            <returns>充电站列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.ChargingStationRepository.IsNameExistsAsync(System.String,System.String)">
+            <summary>
+            检查充电站名称是否已存在
+            </summary>
+            <param name="name">充电站名称</param>
+            <param name="excludeId">排除的充电站ID</param>
+            <returns>是否存在</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Repositories.IChargingPileRepository">
+            <summary>
+            充电桩仓储接口
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IChargingPileRepository.GetPileWithStationAsync(System.String)">
+            <summary>
+            获取充电桩及其所属充电站
+            </summary>
+            <param name="pileId">充电桩ID</param>
+            <returns>充电桩</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IChargingPileRepository.GetPileWithPortsAsync(System.String)">
+            <summary>
+            获取充电桩及其下属充电端口
+            </summary>
+            <param name="pileId">充电桩ID</param>
+            <returns>充电桩</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IChargingPileRepository.GetPileWithStationAndPortsAsync(System.String)">
+            <summary>
+            获取充电桩、所属充电站及下属充电端口
+            </summary>
+            <param name="pileId">充电桩ID</param>
+            <returns>充电桩</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IChargingPileRepository.GetPilesByStationIdAsync(System.String)">
+            <summary>
+            根据充电站ID获取充电桩
+            </summary>
+            <param name="stationId">充电站ID</param>
+            <returns>充电桩列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IChargingPileRepository.GetPilesByStatusAsync(System.Int32)">
+            <summary>
+            根据状态获取充电桩
+            </summary>
+            <param name="status">充电桩状态</param>
+            <returns>充电桩列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IChargingPileRepository.IsPileNoExistsAsync(System.String,System.String)">
+            <summary>
+            检查充电桩编号是否已存在
+            </summary>
+            <param name="pileNo">充电桩编号</param>
+            <param name="excludeId">排除的充电桩ID</param>
+            <returns>是否存在</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Repositories.IChargingPortRepository">
+            <summary>
+            充电端口仓储接口
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IChargingPortRepository.GetPortWithPileAsync(System.String)">
+            <summary>
+            获取充电端口及其所属充电桩
+            </summary>
+            <param name="portId">充电端口ID</param>
+            <returns>充电端口</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IChargingPortRepository.GetPortsByPileIdAsync(System.String)">
+            <summary>
+            根据充电桩ID获取充电端口
+            </summary>
+            <param name="pileId">充电桩ID</param>
+            <returns>充电端口列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IChargingPortRepository.GetPortsByStatusAsync(System.Int32)">
+            <summary>
+            根据状态获取充电端口
+            </summary>
+            <param name="status">充电端口状态</param>
+            <returns>充电端口列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IChargingPortRepository.IsPortNoExistsAsync(System.String,System.String,System.String)">
+            <summary>
+            检查充电端口编号是否已存在于同一充电桩下
+            </summary>
+            <param name="pileId">充电桩ID</param>
+            <param name="portNo">充电端口编号</param>
+            <param name="excludeId">排除的充电端口ID</param>
+            <returns>是否存在</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Repositories.IChargingStationRepository">
+            <summary>
+            充电站仓储接口
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IChargingStationRepository.GetStationWithPilesAsync(System.String)">
+            <summary>
+            获取充电站及其下属充电桩
+            </summary>
+            <param name="stationId">充电站ID</param>
+            <returns>充电站</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IChargingStationRepository.GetStationsWithPileCountAsync">
+            <summary>
+            获取所有充电站及其下属充电桩数量
+            </summary>
+            <returns>充电站列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IChargingStationRepository.GetStationsByStatusAsync(System.Int32)">
+            <summary>
+            根据状态获取充电站
+            </summary>
+            <param name="status">充电站状态</param>
+            <returns>充电站列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IChargingStationRepository.IsNameExistsAsync(System.String,System.String)">
+            <summary>
+            检查充电站名称是否已存在
+            </summary>
+            <param name="name">充电站名称</param>
+            <param name="excludeId">排除的充电站ID</param>
+            <returns>是否存在</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Repositories.IRepository`1">
+            <summary>
+            通用仓储接口
+            </summary>
+            <typeparam name="T">实体类型</typeparam>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IRepository`1.GetAllAsync">
+            <summary>
+            获取所有实体
+            </summary>
+            <returns>实体集合</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IRepository`1.GetAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            根据条件获取实体
+            </summary>
+            <param name="filter">过滤条件</param>
+            <returns>实体集合</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IRepository`1.GetAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
+            <summary>
+            根据条件获取实体，并包含导航属性
+            </summary>
+            <param name="filter">过滤条件</param>
+            <param name="includeProperties">导航属性</param>
+            <returns>实体集合</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IRepository`1.GetByIdAsync(System.Object)">
+            <summary>
+            根据ID获取实体
+            </summary>
+            <param name="id">实体ID</param>
+            <returns>实体</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IRepository`1.GetByIdAsync(System.Object,System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
+            <summary>
+            根据ID获取实体，并包含导航属性
+            </summary>
+            <param name="id">实体ID</param>
+            <param name="includeProperties">导航属性</param>
+            <returns>实体</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IRepository`1.AddAsync(`0)">
+            <summary>
+            添加实体
+            </summary>
+            <param name="entity">实体</param>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IRepository`1.Update(`0)">
+            <summary>
+            更新实体
+            </summary>
+            <param name="entity">实体</param>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IRepository`1.Delete(`0)">
+            <summary>
+            删除实体
+            </summary>
+            <param name="entity">实体</param>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IRepository`1.DeleteAsync(System.Object)">
+            <summary>
+            根据ID删除实体
+            </summary>
+            <param name="id">实体ID</param>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IRepository`1.GetPagedAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Int32,System.Int32,System.Func{System.Linq.IQueryable{`0},System.Linq.IOrderedQueryable{`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
+            <summary>
+            获取分页数据
+            </summary>
+            <param name="filter">过滤条件</param>
+            <param name="pageNumber">页码</param>
+            <param name="pageSize">每页记录数</param>
+            <param name="orderBy">排序表达式</param>
+            <param name="includeProperties">导航属性</param>
+            <returns>分页数据</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.IRepository`1.SaveChangesAsync">
+            <summary>
+            保存更改
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Repositories.Repository`1">
+            <summary>
+            通用仓储实现
+            </summary>
+            <typeparam name="T">实体类型</typeparam>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.Repository`1.GetAllAsync">
+            <summary>
+            获取所有实体
+            </summary>
+            <returns>实体集合</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.Repository`1.GetAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            根据条件获取实体
+            </summary>
+            <param name="filter">过滤条件</param>
+            <returns>实体集合</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.Repository`1.GetAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
+            <summary>
+            根据条件获取实体，并包含导航属性
+            </summary>
+            <param name="filter">过滤条件</param>
+            <param name="includeProperties">导航属性</param>
+            <returns>实体集合</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.Repository`1.GetByIdAsync(System.Object)">
+            <summary>
+            根据ID获取实体
+            </summary>
+            <param name="id">实体ID</param>
+            <returns>实体</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.Repository`1.GetByIdAsync(System.Object,System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
+            <summary>
+            根据ID获取实体，并包含导航属性
+            </summary>
+            <param name="id">实体ID</param>
+            <param name="includeProperties">导航属性</param>
+            <returns>实体</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.Repository`1.AddAsync(`0)">
+            <summary>
+            添加实体
+            </summary>
+            <param name="entity">实体</param>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.Repository`1.Update(`0)">
+            <summary>
+            更新实体
+            </summary>
+            <param name="entity">实体</param>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.Repository`1.Delete(`0)">
+            <summary>
+            删除实体
+            </summary>
+            <param name="entity">实体</param>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.Repository`1.DeleteAsync(System.Object)">
+            <summary>
+            根据ID删除实体
+            </summary>
+            <param name="id">实体ID</param>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.Repository`1.GetPagedAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Int32,System.Int32,System.Func{System.Linq.IQueryable{`0},System.Linq.IOrderedQueryable{`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
+            <summary>
+            获取分页数据
+            </summary>
+            <param name="filter">过滤条件</param>
+            <param name="pageNumber">页码</param>
+            <param name="pageSize">每页记录数</param>
+            <param name="orderBy">排序表达式</param>
+            <param name="includeProperties">导航属性</param>
+            <returns>分页数据</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Repositories.Repository`1.SaveChangesAsync">
+            <summary>
+            保存更改
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Services.ChargingPileService">
+            <summary>
+            充电桩服务实现
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingPileService.GetAllPilesAsync">
+            <summary>
+            获取所有充电桩
+            </summary>
+            <returns>充电桩列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingPileService.GetPileByIdAsync(System.String)">
+            <summary>
+            获取充电桩详情
+            </summary>
+            <param name="id">充电桩ID</param>
+            <returns>充电桩详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingPileService.GetPilesByStationIdAsync(System.String)">
+            <summary>
+            根据充电站ID获取充电桩列表
+            </summary>
+            <param name="stationId">充电站ID</param>
+            <returns>充电桩列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingPileService.GetPilesPagedAsync(System.Int32,System.Int32,System.String,System.Nullable{System.Int32},System.String)">
+            <summary>
+            获取充电桩分页列表
+            </summary>
+            <param name="pageNumber">页码</param>
+            <param name="pageSize">每页记录数</param>
+            <param name="stationId">充电站ID，可选</param>
+            <param name="status">充电桩状态，可选</param>
+            <param name="keyword">关键字，可选</param>
+            <returns>充电桩分页列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingPileService.CreatePileAsync(ChargingPileAdmin.Dtos.CreateChargingPileDto)">
+            <summary>
+            创建充电桩
+            </summary>
+            <param name="dto">创建充电桩请求</param>
+            <returns>创建的充电桩ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingPileService.UpdatePileAsync(System.String,ChargingPileAdmin.Dtos.UpdateChargingPileDto)">
+            <summary>
+            更新充电桩
+            </summary>
+            <param name="id">充电桩ID</param>
+            <param name="dto">更新充电桩请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingPileService.DeletePileAsync(System.String)">
+            <summary>
+            删除充电桩
+            </summary>
+            <param name="id">充电桩ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingPileService.MapToDto(ChargingPileAdmin.Models.ChargingPile)">
+            <summary>
+            将充电桩实体映射为DTO
+            </summary>
+            <param name="pile">充电桩实体</param>
+            <returns>充电桩DTO</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Services.ChargingPortService">
+            <summary>
+            充电端口服务实现
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingPortService.GetAllPortsAsync">
+            <summary>
+            获取所有充电端口
+            </summary>
+            <returns>充电端口列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingPortService.GetPortByIdAsync(System.String)">
+            <summary>
+            获取充电端口详情
+            </summary>
+            <param name="id">充电端口ID</param>
+            <returns>充电端口详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingPortService.GetPortsByPileIdAsync(System.String)">
+            <summary>
+            根据充电桩ID获取充电端口列表
+            </summary>
+            <param name="pileId">充电桩ID</param>
+            <returns>充电端口列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingPortService.GetPortsPagedAsync(System.Int32,System.Int32,System.String,System.Nullable{System.Int32},System.String)">
+            <summary>
+            获取充电端口分页列表
+            </summary>
+            <param name="pageNumber">页码</param>
+            <param name="pageSize">每页记录数</param>
+            <param name="pileId">充电桩ID，可选</param>
+            <param name="status">充电端口状态，可选</param>
+            <param name="keyword">关键字，可选</param>
+            <returns>充电端口分页列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingPortService.CreatePortAsync(ChargingPileAdmin.Dtos.CreateChargingPortDto)">
+            <summary>
+            创建充电端口
+            </summary>
+            <param name="dto">创建充电端口请求</param>
+            <returns>创建的充电端口ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingPortService.UpdatePortAsync(System.String,ChargingPileAdmin.Dtos.UpdateChargingPortDto)">
+            <summary>
+            更新充电端口
+            </summary>
+            <param name="id">充电端口ID</param>
+            <param name="dto">更新充电端口请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingPortService.DeletePortAsync(System.String)">
+            <summary>
+            删除充电端口
+            </summary>
+            <param name="id">充电端口ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingPortService.MapToDto(ChargingPileAdmin.Models.ChargingPort)">
+            <summary>
+            将充电端口实体映射为DTO
+            </summary>
+            <param name="port">充电端口实体</param>
+            <returns>充电端口DTO</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Services.ChargingStationService">
+            <summary>
+            充电站服务实现
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingStationService.GetAllStationsAsync">
+            <summary>
+            获取所有充电站
+            </summary>
+            <returns>充电站列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingStationService.GetStationByIdAsync(System.String)">
+            <summary>
+            获取充电站详情
+            </summary>
+            <param name="id">充电站ID</param>
+            <returns>充电站详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingStationService.GetStationsPagedAsync(System.Int32,System.Int32,System.Nullable{System.Int32},System.String)">
+            <summary>
+            获取充电站分页列表
+            </summary>
+            <param name="pageNumber">页码</param>
+            <param name="pageSize">每页记录数</param>
+            <param name="status">充电站状态，可选</param>
+            <param name="keyword">关键字，可选</param>
+            <returns>充电站分页列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingStationService.CreateStationAsync(ChargingPileAdmin.Dtos.CreateChargingStationDto)">
+            <summary>
+            创建充电站
+            </summary>
+            <param name="dto">创建充电站请求</param>
+            <returns>创建的充电站ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingStationService.UpdateStationAsync(System.String,ChargingPileAdmin.Dtos.UpdateChargingStationDto)">
+            <summary>
+            更新充电站
+            </summary>
+            <param name="id">充电站ID</param>
+            <param name="dto">更新充电站请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingStationService.DeleteStationAsync(System.String)">
+            <summary>
+            删除充电站
+            </summary>
+            <param name="id">充电站ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.ChargingStationService.MapToDto(ChargingPileAdmin.Models.ChargingStation,System.Int32)">
+            <summary>
+            将充电站实体映射为DTO
+            </summary>
+            <param name="station">充电站实体</param>
+            <param name="pileCount">充电桩数量</param>
+            <returns>充电站DTO</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Services.IChargingPileService">
+            <summary>
+            充电桩服务接口
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingPileService.GetAllPilesAsync">
+            <summary>
+            获取所有充电桩
+            </summary>
+            <returns>充电桩列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingPileService.GetPileByIdAsync(System.String)">
+            <summary>
+            获取充电桩详情
+            </summary>
+            <param name="id">充电桩ID</param>
+            <returns>充电桩详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingPileService.GetPilesByStationIdAsync(System.String)">
+            <summary>
+            根据充电站ID获取充电桩列表
+            </summary>
+            <param name="stationId">充电站ID</param>
+            <returns>充电桩列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingPileService.GetPilesPagedAsync(System.Int32,System.Int32,System.String,System.Nullable{System.Int32},System.String)">
+            <summary>
+            获取充电桩分页列表
+            </summary>
+            <param name="pageNumber">页码</param>
+            <param name="pageSize">每页记录数</param>
+            <param name="stationId">充电站ID，可选</param>
+            <param name="status">充电桩状态，可选</param>
+            <param name="keyword">关键字，可选</param>
+            <returns>充电桩分页列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingPileService.CreatePileAsync(ChargingPileAdmin.Dtos.CreateChargingPileDto)">
+            <summary>
+            创建充电桩
+            </summary>
+            <param name="dto">创建充电桩请求</param>
+            <returns>创建的充电桩ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingPileService.UpdatePileAsync(System.String,ChargingPileAdmin.Dtos.UpdateChargingPileDto)">
+            <summary>
+            更新充电桩
+            </summary>
+            <param name="id">充电桩ID</param>
+            <param name="dto">更新充电桩请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingPileService.DeletePileAsync(System.String)">
+            <summary>
+            删除充电桩
+            </summary>
+            <param name="id">充电桩ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Services.IChargingPortService">
+            <summary>
+            充电端口服务接口
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingPortService.GetAllPortsAsync">
+            <summary>
+            获取所有充电端口
+            </summary>
+            <returns>充电端口列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingPortService.GetPortByIdAsync(System.String)">
+            <summary>
+            获取充电端口详情
+            </summary>
+            <param name="id">充电端口ID</param>
+            <returns>充电端口详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingPortService.GetPortsByPileIdAsync(System.String)">
+            <summary>
+            根据充电桩ID获取充电端口列表
+            </summary>
+            <param name="pileId">充电桩ID</param>
+            <returns>充电端口列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingPortService.GetPortsPagedAsync(System.Int32,System.Int32,System.String,System.Nullable{System.Int32},System.String)">
+            <summary>
+            获取充电端口分页列表
+            </summary>
+            <param name="pageNumber">页码</param>
+            <param name="pageSize">每页记录数</param>
+            <param name="pileId">充电桩ID，可选</param>
+            <param name="status">充电端口状态，可选</param>
+            <param name="keyword">关键字，可选</param>
+            <returns>充电端口分页列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingPortService.CreatePortAsync(ChargingPileAdmin.Dtos.CreateChargingPortDto)">
+            <summary>
+            创建充电端口
+            </summary>
+            <param name="dto">创建充电端口请求</param>
+            <returns>创建的充电端口ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingPortService.UpdatePortAsync(System.String,ChargingPileAdmin.Dtos.UpdateChargingPortDto)">
+            <summary>
+            更新充电端口
+            </summary>
+            <param name="id">充电端口ID</param>
+            <param name="dto">更新充电端口请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingPortService.DeletePortAsync(System.String)">
+            <summary>
+            删除充电端口
+            </summary>
+            <param name="id">充电端口ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Services.IChargingStationService">
+            <summary>
+            充电站服务接口
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingStationService.GetAllStationsAsync">
+            <summary>
+            获取所有充电站
+            </summary>
+            <returns>充电站列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingStationService.GetStationByIdAsync(System.String)">
+            <summary>
+            获取充电站详情
+            </summary>
+            <param name="id">充电站ID</param>
+            <returns>充电站详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingStationService.GetStationsPagedAsync(System.Int32,System.Int32,System.Nullable{System.Int32},System.String)">
+            <summary>
+            获取充电站分页列表
+            </summary>
+            <param name="pageNumber">页码</param>
+            <param name="pageSize">每页记录数</param>
+            <param name="status">充电站状态，可选</param>
+            <param name="keyword">关键字，可选</param>
+            <returns>充电站分页列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingStationService.CreateStationAsync(ChargingPileAdmin.Dtos.CreateChargingStationDto)">
+            <summary>
+            创建充电站
+            </summary>
+            <param name="dto">创建充电站请求</param>
+            <returns>创建的充电站ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingStationService.UpdateStationAsync(System.String,ChargingPileAdmin.Dtos.UpdateChargingStationDto)">
+            <summary>
+            更新充电站
+            </summary>
+            <param name="id">充电站ID</param>
+            <param name="dto">更新充电站请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IChargingStationService.DeleteStationAsync(System.String)">
+            <summary>
+            删除充电站
+            </summary>
+            <param name="id">充电站ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Services.IOrderService">
+            <summary>
+            订单服务接口
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IOrderService.GetAllOrdersAsync">
+            <summary>
+            获取所有订单
+            </summary>
+            <returns>订单列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IOrderService.GetOrderByIdAsync(System.String)">
+            <summary>
+            获取订单详情
+            </summary>
+            <param name="id">订单ID</param>
+            <returns>订单详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IOrderService.GetOrdersPagedAsync(System.Int32,System.Int32,System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.String)">
+            <summary>
+            获取订单分页列表
+            </summary>
+            <param name="pageNumber">页码</param>
+            <param name="pageSize">每页记录数</param>
+            <param name="userId">用户ID，可选</param>
+            <param name="pileId">充电桩ID，可选</param>
+            <param name="status">订单状态，可选</param>
+            <param name="startDate">开始日期，可选</param>
+            <param name="endDate">结束日期，可选</param>
+            <param name="keyword">关键字，可选</param>
+            <returns>订单分页列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IOrderService.GetOrdersByUserIdAsync(System.Int32)">
+            <summary>
+            获取用户订单列表
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>订单列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IOrderService.GetOrdersByPileIdAsync(System.String)">
+            <summary>
+            获取充电桩订单列表
+            </summary>
+            <param name="pileId">充电桩ID</param>
+            <returns>订单列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IOrderService.CreateOrderAsync(ChargingPileAdmin.Dtos.CreateOrderDto)">
+            <summary>
+            创建订单
+            </summary>
+            <param name="dto">创建订单请求</param>
+            <returns>创建的订单ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IOrderService.UpdateOrderStatusAsync(System.String,ChargingPileAdmin.Dtos.UpdateOrderStatusDto)">
+            <summary>
+            更新订单状态
+            </summary>
+            <param name="id">订单ID</param>
+            <param name="dto">更新订单状态请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IOrderService.PayOrderAsync(System.String,ChargingPileAdmin.Dtos.OrderPaymentDto)">
+            <summary>
+            订单支付
+            </summary>
+            <param name="id">订单ID</param>
+            <param name="dto">订单支付请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IOrderService.CancelOrderAsync(System.String)">
+            <summary>
+            取消订单
+            </summary>
+            <param name="id">订单ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IOrderService.CompleteOrderAsync(System.String,System.Decimal,System.Int32)">
+            <summary>
+            完成订单
+            </summary>
+            <param name="id">订单ID</param>
+            <param name="powerConsumption">充电电量(kWh)</param>
+            <param name="chargingTime">充电时长(秒)</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IOrderService.GetOrderStatisticsAsync(System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            获取订单统计数据
+            </summary>
+            <param name="startDate">开始日期，可选</param>
+            <param name="endDate">结束日期，可选</param>
+            <returns>订单统计数据</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Services.IStatisticsService">
+            <summary>
+            统计数据服务接口
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IStatisticsService.GetAllStatisticsAsync">
+            <summary>
+            获取所有统计数据
+            </summary>
+            <returns>统计数据DTO</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IStatisticsService.GetPileStatisticsAsync">
+            <summary>
+            获取充电桩统计数据
+            </summary>
+            <returns>充电桩统计数据DTO</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IStatisticsService.GetPortStatisticsAsync">
+            <summary>
+            获取充电口统计数据
+            </summary>
+            <returns>充电口统计数据DTO</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IStatisticsService.GetUserStatisticsAsync">
+            <summary>
+            获取用户统计数据
+            </summary>
+            <returns>用户统计数据DTO</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IStatisticsService.GetOrderStatisticsAsync">
+            <summary>
+            获取订单统计数据
+            </summary>
+            <returns>订单统计数据DTO</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Services.IUserAddressService">
+            <summary>
+            用户地址服务接口
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserAddressService.GetUserAddressesAsync(System.Int32)">
+            <summary>
+            获取用户的所有地址
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>地址列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserAddressService.GetAddressByIdAsync(System.Int32)">
+            <summary>
+            获取地址详情
+            </summary>
+            <param name="id">地址ID</param>
+            <returns>地址详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserAddressService.GetUserDefaultAddressAsync(System.Int32)">
+            <summary>
+            获取用户的默认地址
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>默认地址</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserAddressService.CreateUserAddressAsync(System.Int32,ChargingPileAdmin.Dtos.CreateUserAddressDto)">
+            <summary>
+            创建用户地址
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="dto">创建地址请求</param>
+            <returns>创建的地址ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserAddressService.UpdateUserAddressAsync(System.Int32,ChargingPileAdmin.Dtos.UpdateUserAddressDto)">
+            <summary>
+            更新用户地址
+            </summary>
+            <param name="id">地址ID</param>
+            <param name="dto">更新地址请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserAddressService.DeleteUserAddressAsync(System.Int32)">
+            <summary>
+            删除用户地址
+            </summary>
+            <param name="id">地址ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserAddressService.SetDefaultAddressAsync(System.Int32,System.Int32)">
+            <summary>
+            设置默认地址
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="addressId">地址ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Services.IUserNotificationService">
+            <summary>
+            用户消息通知服务接口
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserNotificationService.GetUserNotificationsAsync(System.Int32)">
+            <summary>
+            获取用户的所有通知
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>通知列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserNotificationService.GetUserUnreadNotificationsAsync(System.Int32)">
+            <summary>
+            获取用户的未读通知
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>未读通知列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserNotificationService.GetNotificationByIdAsync(System.Int32)">
+            <summary>
+            获取通知详情
+            </summary>
+            <param name="id">通知ID</param>
+            <returns>通知详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserNotificationService.CreateNotificationAsync(ChargingPileAdmin.Dtos.CreateUserNotificationDto)">
+            <summary>
+            创建用户通知
+            </summary>
+            <param name="dto">创建通知请求</param>
+            <returns>创建的通知ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserNotificationService.BatchCreateNotificationsAsync(ChargingPileAdmin.Dtos.BatchCreateUserNotificationDto)">
+            <summary>
+            批量创建用户通知
+            </summary>
+            <param name="dto">批量创建通知请求</param>
+            <returns>创建的通知数量</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserNotificationService.MarkNotificationAsReadAsync(System.Int32)">
+            <summary>
+            标记通知为已读
+            </summary>
+            <param name="id">通知ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserNotificationService.BatchMarkNotificationsAsReadAsync(ChargingPileAdmin.Dtos.BatchMarkNotificationReadDto)">
+            <summary>
+            批量标记通知为已读
+            </summary>
+            <param name="dto">批量标记已读请求</param>
+            <returns>标记成功的数量</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserNotificationService.MarkAllNotificationsAsReadAsync(System.Int32)">
+            <summary>
+            标记用户所有通知为已读
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>标记成功的数量</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserNotificationService.DeleteNotificationAsync(System.Int32)">
+            <summary>
+            删除通知
+            </summary>
+            <param name="id">通知ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserNotificationService.GetUserUnreadNotificationCountAsync(System.Int32)">
+            <summary>
+            获取用户未读通知数量
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>未读通知数量</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Services.IUserRoleService">
+            <summary>
+            用户角色服务接口
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserRoleService.GetAllRolesAsync">
+            <summary>
+            获取所有角色
+            </summary>
+            <returns>角色列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserRoleService.GetRoleByIdAsync(System.Int32)">
+            <summary>
+            获取角色详情
+            </summary>
+            <param name="id">角色ID</param>
+            <returns>角色详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserRoleService.CreateRoleAsync(ChargingPileAdmin.Dtos.CreateUserRoleDto)">
+            <summary>
+            创建角色
+            </summary>
+            <param name="dto">创建角色请求</param>
+            <returns>创建的角色ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserRoleService.UpdateRoleAsync(System.Int32,ChargingPileAdmin.Dtos.UpdateUserRoleDto)">
+            <summary>
+            更新角色
+            </summary>
+            <param name="id">角色ID</param>
+            <param name="dto">更新角色请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserRoleService.DeleteRoleAsync(System.Int32)">
+            <summary>
+            删除角色
+            </summary>
+            <param name="id">角色ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserRoleService.GetUserRolesAsync(System.Int32)">
+            <summary>
+            获取用户的角色列表
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>角色列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserRoleService.AssignRoleToUserAsync(ChargingPileAdmin.Dtos.AssignUserRoleDto)">
+            <summary>
+            分配用户角色
+            </summary>
+            <param name="dto">分配用户角色请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserRoleService.RemoveRoleFromUserAsync(System.Int32,System.Int32)">
+            <summary>
+            移除用户角色
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="roleId">角色ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserRoleService.HasRoleAsync(System.Int32,System.Int32)">
+            <summary>
+            检查用户是否拥有指定角色
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="roleId">角色ID</param>
+            <returns>是否拥有角色</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserRoleService.HasPermissionAsync(System.Int32,System.Int32)">
+            <summary>
+            检查用户是否拥有指定权限级别
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="permissionLevel">权限级别</param>
+            <returns>是否拥有权限</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Services.IUserService">
+            <summary>
+            用户服务接口
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserService.GetAllUsersAsync">
+            <summary>
+            获取所有用户
+            </summary>
+            <returns>用户列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserService.GetUserByIdAsync(System.Int32)">
+            <summary>
+            获取用户详情
+            </summary>
+            <param name="id">用户ID</param>
+            <returns>用户详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserService.GetUsersPagedAsync(System.Int32,System.Int32,System.String)">
+            <summary>
+            获取用户分页列表
+            </summary>
+            <param name="pageNumber">页码</param>
+            <param name="pageSize">每页记录数</param>
+            <param name="keyword">关键字，可选</param>
+            <returns>用户分页列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserService.CreateUserAsync(ChargingPileAdmin.Dtos.CreateUserDto)">
+            <summary>
+            创建用户
+            </summary>
+            <param name="dto">创建用户请求</param>
+            <returns>创建的用户ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserService.UpdateUserAsync(System.Int32,ChargingPileAdmin.Dtos.UpdateUserDto)">
+            <summary>
+            更新用户
+            </summary>
+            <param name="id">用户ID</param>
+            <param name="dto">更新用户请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserService.DeleteUserAsync(System.Int32)">
+            <summary>
+            删除用户
+            </summary>
+            <param name="id">用户ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserService.LoginAsync(ChargingPileAdmin.Dtos.UserLoginDto)">
+            <summary>
+            用户登录
+            </summary>
+            <param name="dto">登录请求</param>
+            <returns>登录响应</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserService.ChangePasswordAsync(System.Int32,ChargingPileAdmin.Dtos.ChangePasswordDto)">
+            <summary>
+            修改密码
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="dto">修改密码请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.IUserService.RechargeBalanceAsync(System.Int32,ChargingPileAdmin.Dtos.RechargeBalanceDto)">
+            <summary>
+            充值余额
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="dto">充值余额请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Services.OrderService">
+            <summary>
+            订单服务实现
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.OrderService.GetAllOrdersAsync">
+            <summary>
+            获取所有订单
+            </summary>
+            <returns>订单列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.OrderService.GetOrderByIdAsync(System.String)">
+            <summary>
+            获取订单详情
+            </summary>
+            <param name="id">订单ID</param>
+            <returns>订单详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.OrderService.GetOrdersPagedAsync(System.Int32,System.Int32,System.Nullable{System.Int32},System.String,System.Nullable{System.Int32},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.String)">
+            <summary>
+            获取订单分页列表
+            </summary>
+            <param name="pageNumber">页码</param>
+            <param name="pageSize">每页记录数</param>
+            <param name="userId">用户ID，可选</param>
+            <param name="pileId">充电桩ID，可选</param>
+            <param name="status">订单状态，可选</param>
+            <param name="startDate">开始日期，可选</param>
+            <param name="endDate">结束日期，可选</param>
+            <param name="keyword">关键字，可选</param>
+            <returns>订单分页列表</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Services.OrderService.ParameterReplacer">
+            <summary>
+            参数替换访问器，用于组合条件表达式
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.OrderService.GetOrdersByUserIdAsync(System.Int32)">
+            <summary>
+            获取用户订单列表
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>订单列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.OrderService.GetOrdersByPileIdAsync(System.String)">
+            <summary>
+            获取充电桩订单列表
+            </summary>
+            <param name="pileId">充电桩ID</param>
+            <returns>订单列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.OrderService.CreateOrderAsync(ChargingPileAdmin.Dtos.CreateOrderDto)">
+            <summary>
+            创建订单
+            </summary>
+            <param name="dto">创建订单请求</param>
+            <returns>创建的订单ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.OrderService.UpdateOrderStatusAsync(System.String,ChargingPileAdmin.Dtos.UpdateOrderStatusDto)">
+            <summary>
+            更新订单状态
+            </summary>
+            <param name="id">订单ID</param>
+            <param name="dto">更新订单状态请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.OrderService.PayOrderAsync(System.String,ChargingPileAdmin.Dtos.OrderPaymentDto)">
+            <summary>
+            订单支付
+            </summary>
+            <param name="id">订单ID</param>
+            <param name="dto">订单支付请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.OrderService.CancelOrderAsync(System.String)">
+            <summary>
+            取消订单
+            </summary>
+            <param name="id">订单ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.OrderService.CompleteOrderAsync(System.String,System.Decimal,System.Int32)">
+            <summary>
+            完成订单
+            </summary>
+            <param name="id">订单ID</param>
+            <param name="powerConsumption">充电电量(kWh)</param>
+            <param name="chargingTime">充电时长(秒)</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.OrderService.GetOrderStatisticsAsync(System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            获取订单统计数据
+            </summary>
+            <param name="startDate">开始日期，可选</param>
+            <param name="endDate">结束日期，可选</param>
+            <returns>订单统计数据</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.OrderService.MapToDto(ChargingPileAdmin.Models.Order)">
+            <summary>
+            将订单实体映射为DTO
+            </summary>
+            <param name="order">订单实体</param>
+            <returns>订单DTO</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.OrderService.GenerateOrderNo">
+            <summary>
+            生成订单编号
+            </summary>
+            <returns>订单编号</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Services.StatisticsService">
+            <summary>
+            统计数据服务实现
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.StatisticsService.GetAllStatisticsAsync">
+            <summary>
+            获取所有统计数据
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.StatisticsService.GetPileStatisticsAsync">
+            <summary>
+            获取充电桩统计数据
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.StatisticsService.GetPortStatisticsAsync">
+            <summary>
+            获取充电口统计数据
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.StatisticsService.GetUserStatisticsAsync">
+            <summary>
+            获取用户统计数据
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.StatisticsService.GetOrderStatisticsAsync">
+            <summary>
+            获取订单统计数据
+            </summary>
+        </member>
+        <member name="T:ChargingPileAdmin.Services.UserAddressService">
+            <summary>
+            用户地址服务实现
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserAddressService.GetUserAddressesAsync(System.Int32)">
+            <summary>
+            获取用户的所有地址
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>地址列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserAddressService.GetAddressByIdAsync(System.Int32)">
+            <summary>
+            获取地址详情
+            </summary>
+            <param name="id">地址ID</param>
+            <returns>地址详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserAddressService.GetUserDefaultAddressAsync(System.Int32)">
+            <summary>
+            获取用户的默认地址
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>默认地址</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserAddressService.CreateUserAddressAsync(System.Int32,ChargingPileAdmin.Dtos.CreateUserAddressDto)">
+            <summary>
+            创建用户地址
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="dto">创建地址请求</param>
+            <returns>创建的地址ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserAddressService.UpdateUserAddressAsync(System.Int32,ChargingPileAdmin.Dtos.UpdateUserAddressDto)">
+            <summary>
+            更新用户地址
+            </summary>
+            <param name="id">地址ID</param>
+            <param name="dto">更新地址请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserAddressService.DeleteUserAddressAsync(System.Int32)">
+            <summary>
+            删除用户地址
+            </summary>
+            <param name="id">地址ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserAddressService.SetDefaultAddressAsync(System.Int32,System.Int32)">
+            <summary>
+            设置默认地址
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="addressId">地址ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserAddressService.ClearDefaultAddressAsync(System.Int32)">
+            <summary>
+            清除用户的默认地址
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserAddressService.MapToDto(ChargingPileAdmin.Models.UserAddress)">
+            <summary>
+            将地址实体映射为DTO
+            </summary>
+            <param name="address">地址实体</param>
+            <returns>地址DTO</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Services.UserNotificationService">
+            <summary>
+            用户消息通知服务实现
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserNotificationService.GetUserNotificationsAsync(System.Int32)">
+            <summary>
+            获取用户的所有通知
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>通知列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserNotificationService.GetUserUnreadNotificationsAsync(System.Int32)">
+            <summary>
+            获取用户的未读通知
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>未读通知列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserNotificationService.GetNotificationByIdAsync(System.Int32)">
+            <summary>
+            获取通知详情
+            </summary>
+            <param name="id">通知ID</param>
+            <returns>通知详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserNotificationService.CreateNotificationAsync(ChargingPileAdmin.Dtos.CreateUserNotificationDto)">
+            <summary>
+            创建用户通知
+            </summary>
+            <param name="dto">创建通知请求</param>
+            <returns>创建的通知ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserNotificationService.BatchCreateNotificationsAsync(ChargingPileAdmin.Dtos.BatchCreateUserNotificationDto)">
+            <summary>
+            批量创建用户通知
+            </summary>
+            <param name="dto">批量创建通知请求</param>
+            <returns>创建的通知数量</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserNotificationService.MarkNotificationAsReadAsync(System.Int32)">
+            <summary>
+            标记通知为已读
+            </summary>
+            <param name="id">通知ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserNotificationService.BatchMarkNotificationsAsReadAsync(ChargingPileAdmin.Dtos.BatchMarkNotificationReadDto)">
+            <summary>
+            批量标记通知为已读
+            </summary>
+            <param name="dto">批量标记已读请求</param>
+            <returns>标记成功的数量</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserNotificationService.MarkAllNotificationsAsReadAsync(System.Int32)">
+            <summary>
+            标记用户所有通知为已读
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>标记成功的数量</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserNotificationService.DeleteNotificationAsync(System.Int32)">
+            <summary>
+            删除通知
+            </summary>
+            <param name="id">通知ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserNotificationService.GetUserUnreadNotificationCountAsync(System.Int32)">
+            <summary>
+            获取用户未读通知数量
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>未读通知数量</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserNotificationService.MapToDto(ChargingPileAdmin.Models.UserNotification)">
+            <summary>
+            将通知实体映射为DTO
+            </summary>
+            <param name="notification">通知实体</param>
+            <returns>通知DTO</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Services.UserRoleService">
+            <summary>
+            用户角色服务实现
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserRoleService.GetAllRolesAsync">
+            <summary>
+            获取所有角色
+            </summary>
+            <returns>角色列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserRoleService.GetRoleByIdAsync(System.Int32)">
+            <summary>
+            获取角色详情
+            </summary>
+            <param name="id">角色ID</param>
+            <returns>角色详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserRoleService.CreateRoleAsync(ChargingPileAdmin.Dtos.CreateUserRoleDto)">
+            <summary>
+            创建角色
+            </summary>
+            <param name="dto">创建角色请求</param>
+            <returns>创建的角色ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserRoleService.UpdateRoleAsync(System.Int32,ChargingPileAdmin.Dtos.UpdateUserRoleDto)">
+            <summary>
+            更新角色
+            </summary>
+            <param name="id">角色ID</param>
+            <param name="dto">更新角色请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserRoleService.DeleteRoleAsync(System.Int32)">
+            <summary>
+            删除角色
+            </summary>
+            <param name="id">角色ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserRoleService.GetUserRolesAsync(System.Int32)">
+            <summary>
+            获取用户的角色列表
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>角色列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserRoleService.AssignRoleToUserAsync(ChargingPileAdmin.Dtos.AssignUserRoleDto)">
+            <summary>
+            分配用户角色
+            </summary>
+            <param name="dto">分配用户角色请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserRoleService.RemoveRoleFromUserAsync(System.Int32,System.Int32)">
+            <summary>
+            移除用户角色
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="roleId">角色ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserRoleService.HasRoleAsync(System.Int32,System.Int32)">
+            <summary>
+            检查用户是否拥有指定角色
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="roleId">角色ID</param>
+            <returns>是否拥有角色</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserRoleService.HasPermissionAsync(System.Int32,System.Int32)">
+            <summary>
+            检查用户是否拥有指定权限级别
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="permissionLevel">权限级别</param>
+            <returns>是否拥有权限</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserRoleService.MapToDto(ChargingPileAdmin.Models.UserRole)">
+            <summary>
+            将角色实体映射为DTO
+            </summary>
+            <param name="role">角色实体</param>
+            <returns>角色DTO</returns>
+        </member>
+        <member name="T:ChargingPileAdmin.Services.UserService">
+            <summary>
+            用户服务实现
+            </summary>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserService.GetAllUsersAsync">
+            <summary>
+            获取所有用户
+            </summary>
+            <returns>用户列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserService.GetUserByIdAsync(System.Int32)">
+            <summary>
+            获取用户详情
+            </summary>
+            <param name="id">用户ID</param>
+            <returns>用户详情</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserService.GetUsersPagedAsync(System.Int32,System.Int32,System.String)">
+            <summary>
+            获取用户分页列表
+            </summary>
+            <param name="pageNumber">页码</param>
+            <param name="pageSize">每页记录数</param>
+            <param name="keyword">关键字，可选</param>
+            <returns>用户分页列表</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserService.CreateUserAsync(ChargingPileAdmin.Dtos.CreateUserDto)">
+            <summary>
+            创建用户
+            </summary>
+            <param name="dto">创建用户请求</param>
+            <returns>创建的用户ID</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserService.UpdateUserAsync(System.Int32,ChargingPileAdmin.Dtos.UpdateUserDto)">
+            <summary>
+            更新用户
+            </summary>
+            <param name="id">用户ID</param>
+            <param name="dto">更新用户请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserService.DeleteUserAsync(System.Int32)">
+            <summary>
+            删除用户
+            </summary>
+            <param name="id">用户ID</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserService.LoginAsync(ChargingPileAdmin.Dtos.UserLoginDto)">
+            <summary>
+            用户登录
+            </summary>
+            <param name="dto">登录请求</param>
+            <returns>登录响应</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserService.ChangePasswordAsync(System.Int32,ChargingPileAdmin.Dtos.ChangePasswordDto)">
+            <summary>
+            修改密码
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="dto">修改密码请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserService.RechargeBalanceAsync(System.Int32,ChargingPileAdmin.Dtos.RechargeBalanceDto)">
+            <summary>
+            充值余额
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="dto">充值余额请求</param>
+            <returns>是否成功</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserService.MapToDto(ChargingPileAdmin.Models.User)">
+            <summary>
+            将用户实体映射为DTO
+            </summary>
+            <param name="user">用户实体</param>
+            <returns>用户DTO</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserService.HashPassword(System.String)">
+            <summary>
+            哈希密码
+            </summary>
+            <param name="password">原始密码</param>
+            <returns>哈希后的密码</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserService.VerifyPassword(System.String,System.String)">
+            <summary>
+            验证密码
+            </summary>
+            <param name="password">原始密码</param>
+            <param name="hashedPassword">哈希后的密码</param>
+            <returns>是否匹配</returns>
+        </member>
+        <member name="M:ChargingPileAdmin.Services.UserService.GenerateToken(System.Int32)">
+            <summary>
+            生成登录令牌（简化版，实际应使用JWT）
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns>登录令牌</returns>
+        </member>
+    </members>
+</doc>
