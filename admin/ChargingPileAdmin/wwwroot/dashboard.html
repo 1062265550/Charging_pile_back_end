@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>控制面板 - 充电桩管理平台</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link href="css/lib/bootstrap.min.css" rel="stylesheet">
+    <!-- 自定义CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/sidebar.css" rel="stylesheet">
+    <link href="css/layout-fix.css" rel="stylesheet">
+    <link href="css/custom-icons.css" rel="stylesheet">
+    <!-- Font Awesome 图标 -->
+    <link rel="stylesheet" href="css/lib/all.min.css">
+    <!-- Chart.js -->
+    <script src="js/lib/chart.min.js"></script>
+</head>
+<body>
+    <!-- 顶部导航栏容器 -->
+    <div id="header-container"></div>
+
+    <!-- 主要内容区域 -->
+    <div class="d-flex flex-column flex-lg-row">
+        <!-- 左侧边栏容器 -->
+        <div id="sidebar-container" class="flex-shrink-0"></div>
+
+        <!-- 主内容区 -->
+        <div class="flex-grow-1 ps-0 pe-0 main-content">
+            <div class="bg-white p-0">
+                <div class="bg-primary text-white p-3 d-flex justify-content-between align-items-center">
+                    <h5 class="m-0"><i class="fas fa-tachometer-alt me-2"></i> 控制面板</h5>
+                </div>
+
+                <!-- 搜索和过滤区域 -->
+                <div class="bg-light p-3 border-bottom">
+                    <div class="row align-items-center">
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="搜索功能...">
+                                <button class="btn btn-outline-secondary" type="button"><i class="fas fa-search"></i> 搜索</button>
+                            </div>
+                        </div>
+                        <div class="col-md-8 text-end">
+                            <button class="btn btn-outline-primary" id="refreshDashboard"><i class="fas fa-sync-alt"></i> 刷新</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 统计卡片区域 -->
+                <div class="row mx-0 mt-3">
+                    <div class="col-md-3 mb-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="rounded-circle bg-primary bg-opacity-10 p-3 me-3">
+                                    <i class="fas fa-map-marker-alt text-primary fa-2x"></i>
+                                </div>
+                                <div>
+                                    <h6 class="card-title text-muted mb-0">充电站总数</h6>
+                                    <h2 class="my-1" id="stationCount">0</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="rounded-circle bg-success bg-opacity-10 p-3 me-3">
+                                    <i class="fas fa-bolt text-success fa-2x"></i>
+                                </div>
+                                <div>
+                                    <h6 class="card-title text-muted mb-0">充电桩总数</h6>
+                                    <h2 class="my-1" id="pileCount">0</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="rounded-circle bg-info bg-opacity-10 p-3 me-3">
+                                    <i class="fas fa-file-invoice text-info fa-2x"></i>
+                                </div>
+                                <div>
+                                    <h6 class="card-title text-muted mb-0">今日订单数</h6>
+                                    <h2 class="my-1" id="todayOrderCount">0</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="rounded-circle bg-warning bg-opacity-10 p-3 me-3">
+                                    <i class="fas fa-users text-warning fa-2x"></i>
+                                </div>
+                                <div>
+                                    <h6 class="card-title text-muted mb-0">用户总数</h6>
+                                    <h2 class="my-1" id="userCount">0</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 订单和图表区域 -->
+                <div class="row mx-0">
+                    <!-- 最近订单 -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                                <h6 class="m-0 fw-bold text-primary">最近订单</h6>
+                                <a href="orders.html" class="btn btn-sm btn-primary">查看全部</a>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover mb-0" id="recentOrdersTable">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>订单编号</th>
+                                                <th>用户</th>
+                                                <th>充电桩</th>
+                                                <th>状态</th>
+                                                <th>时间</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="5" class="text-center">加载中...</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 充电桩状态 -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-white py-3">
+                                <h6 class="m-0 fw-bold text-primary">充电桩状态分布</h6>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="pileStatusChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 分页区域 -->
+                <div class="d-flex justify-content-center my-3">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">首页</a>
+                            </li>
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">上一页</a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">下一页</a>
+                            </li>
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">末页</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚容器 -->
+    <div id="footer-container"></div>
+
+    <!-- jQuery -->
+    <script src="js/lib/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="js/lib/bootstrap.bundle.min.js"></script>
+    <!-- 认证脚本 -->
+    <script src="js/auth.js"></script>
+    <!-- 公共API配置 -->
+    <script src="js/config.js"></script>
+    <!-- 公共组件管理 -->
+    <script src="js/common.js"></script>
+    <!-- 首页JS -->
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

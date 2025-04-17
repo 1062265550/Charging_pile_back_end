@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "RFaVfyU9kjQHHRFKqEpHgjRAMTrGafK+RueOt8wiIFA=",
+  "Hash": "imSaKI+13iAl4o2Kbev6IWRlvr+lNZlvizQw8L43IJo=",
   "Source": "ChargingPileAdmin",
   "BasePath": "_content/ChargingPileAdmin",
   "Mode": "Default",
@@ -16,6 +16,27 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\2tqparqfc1-xqtk2pv8fd.gz",
+      "SourceId": "ChargingPileAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/ChargingPileAdmin",
+      "RelativePath": "js/auth#[.{fingerprint=xqtk2pv8fd}]?.js.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\auth.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "8k5iov1u70",
+      "Integrity": "qHAvsBPSIQUh4mSTmA1A9FmMYxOPDxFqtf+Kmd8Jals=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\auth.js"
+    },
     {
       "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\3fnq6jjslk-pbi57e33ig.gz",
       "SourceId": "ChargingPileAdmin",
@@ -38,12 +59,12 @@
       "OriginalItemSpec": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\lib\\chart.min.js"
     },
     {
-      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\41qr6oh6c3-44gc4d4g4u.gz",
+      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\41qr6oh6c3-5pv7dz18dh.gz",
       "SourceId": "ChargingPileAdmin",
       "SourceType": "Discovered",
       "ContentRoot": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/ChargingPileAdmin",
-      "RelativePath": "index#[.{fingerprint=44gc4d4g4u}]?.html.gz",
+      "RelativePath": "index#[.{fingerprint=5pv7dz18dh}]?.html.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -52,8 +73,8 @@
       "RelatedAsset": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\index.html",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "1r0v836111",
-      "Integrity": "jakgRg02msokdmYwONjSyG6QYLam4IEoZOLE6v3ct6E=",
+      "Fingerprint": "4ptm0r8wbw",
+      "Integrity": "2AtbmxTTHAdCh1Dxd4lX90jVe14k8miZOvN/OEPcSeQ=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\index.html"
@@ -143,12 +164,12 @@
       "OriginalItemSpec": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\charging-piles.html"
     },
     {
-      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\8pfywm1r38-72wr0otk0a.gz",
+      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\8pfywm1r38-hew5lxmjx2.gz",
       "SourceId": "ChargingPileAdmin",
       "SourceType": "Discovered",
       "ContentRoot": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/ChargingPileAdmin",
-      "RelativePath": "css/style#[.{fingerprint=72wr0otk0a}]?.css.gz",
+      "RelativePath": "css/style#[.{fingerprint=hew5lxmjx2}]?.css.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -157,8 +178,8 @@
       "RelatedAsset": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\css\\style.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "jkonkf8zik",
-      "Integrity": "I0xOIa4f9SpAvtGHRvyQK79Q/gSO2V3JLOAL92X6IPY=",
+      "Fingerprint": "v9vhcqmzm2",
+      "Integrity": "bfO+Xu7MJ8/aNzyv8cjCFr0+VucvEO/TkqAlceVQbnY=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\css\\style.css"
@@ -206,12 +227,12 @@
       "OriginalItemSpec": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\users.html"
     },
     {
-      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\dvaltjxar1-vam3d2vdes.gz",
+      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\dvaltjxar1-72gir1d9fk.gz",
       "SourceId": "ChargingPileAdmin",
       "SourceType": "Discovered",
       "ContentRoot": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/ChargingPileAdmin",
-      "RelativePath": "js/common#[.{fingerprint=vam3d2vdes}]?.js.gz",
+      "RelativePath": "js/common#[.{fingerprint=72gir1d9fk}]?.js.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -220,19 +241,40 @@
       "RelatedAsset": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\common.js",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "g8awrl10hd",
-      "Integrity": "MIVxJ4BTNSWVFwoyVzH8wLYXnkmJyW1Wl9wLb/wyibc=",
+      "Fingerprint": "8zxj359jcx",
+      "Integrity": "PGbJnMlWzD2AEVhirSY2V0+sXVUkoxGTwxwBBOgsrKY=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\common.js"
     },
     {
-      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\g897avw7w7-px58ahx7e1.gz",
+      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\f9p6rr2yq8-qr6337s53x.gz",
       "SourceId": "ChargingPileAdmin",
       "SourceType": "Discovered",
       "ContentRoot": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/ChargingPileAdmin",
-      "RelativePath": "js/dashboard#[.{fingerprint=px58ahx7e1}]?.js.gz",
+      "RelativePath": "login#[.{fingerprint=qr6337s53x}]?.html.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\login.html",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "b4iqfsx933",
+      "Integrity": "xXJCWuFXOBmZW4bnyfo+nlP4AiYdHlWnGJc+AkRnRCc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\login.html"
+    },
+    {
+      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\g897avw7w7-4jbv9j6uoo.gz",
+      "SourceId": "ChargingPileAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/ChargingPileAdmin",
+      "RelativePath": "js/dashboard#[.{fingerprint=4jbv9j6uoo}]?.js.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -241,8 +283,8 @@
       "RelatedAsset": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\dashboard.js",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "svm4qe3w1j",
-      "Integrity": "KDFL6CJU6k62KhdycKOIZWmG2a2Zv/TQ/mDuy/o6g5A=",
+      "Fingerprint": "mhkx0gql94",
+      "Integrity": "BvpBAmz22L63YKxgrPvDnF+SY2rke/R1DD8ogArG3KE=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\dashboard.js"
@@ -269,12 +311,12 @@
       "OriginalItemSpec": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\users.js"
     },
     {
-      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\irqort64d4-1m189spsyb.gz",
+      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\irqort64d4-v72kuf0r2p.gz",
       "SourceId": "ChargingPileAdmin",
       "SourceType": "Discovered",
       "ContentRoot": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/ChargingPileAdmin",
-      "RelativePath": "js/stations#[.{fingerprint=1m189spsyb}]?.js.gz",
+      "RelativePath": "js/stations#[.{fingerprint=v72kuf0r2p}]?.js.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -283,8 +325,8 @@
       "RelatedAsset": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\stations.js",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "rlcyvxi8yc",
-      "Integrity": "TzdVV7p+//Ux5yWWLP6JcErdWGC5S7H4JVL8D2qiBkg=",
+      "Fingerprint": "tc7vaaqc05",
+      "Integrity": "A3c4/5L6n6XWIQ901nw+t7k+RONxXY7JHWkyR+lh6+4=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\stations.js"
@@ -395,12 +437,12 @@
       "OriginalItemSpec": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\orders.html"
     },
     {
-      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\qt6ushue0h-lskj5yhag5.gz",
+      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\qt6ushue0h-ys2ymve6il.gz",
       "SourceId": "ChargingPileAdmin",
       "SourceType": "Discovered",
       "ContentRoot": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/ChargingPileAdmin",
-      "RelativePath": "js/config#[.{fingerprint=lskj5yhag5}]?.js.gz",
+      "RelativePath": "js/config#[.{fingerprint=ys2ymve6il}]?.js.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -409,19 +451,19 @@
       "RelatedAsset": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\config.js",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "c7oxoi9rpo",
-      "Integrity": "yOjP80n7tCNS7hqtPgoFEAVQM14Y3TNwx4dmLTDdFjk=",
+      "Fingerprint": "odpgycjgu2",
+      "Integrity": "hNkUFoEDay7k69RuWroumFKv3jn3yFCgfy1aAV+3Ql8=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\config.js"
     },
     {
-      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\u2k5tpv23f-2j1h0mwr6s.gz",
+      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\u2k5tpv23f-rels34vpqu.gz",
       "SourceId": "ChargingPileAdmin",
       "SourceType": "Discovered",
       "ContentRoot": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/ChargingPileAdmin",
-      "RelativePath": "charging-stations#[.{fingerprint=2j1h0mwr6s}]?.html.gz",
+      "RelativePath": "charging-stations#[.{fingerprint=rels34vpqu}]?.html.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -430,19 +472,40 @@
       "RelatedAsset": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\charging-stations.html",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "ompwlbhpb1",
-      "Integrity": "wNrJZN5Hjnt7JahlTUI+xcmsMnSdgdvmyepeMmOooYQ=",
+      "Fingerprint": "7w9frx7bp5",
+      "Integrity": "1y6BOTcylDo1EZjrdwHZBfhoeftxLBZUP6IcrzkYpZg=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\charging-stations.html"
     },
     {
-      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\w1louw5qmx-pekrjmh55k.gz",
+      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\ugmsiucu0d-c6gqe5gdmw.gz",
       "SourceId": "ChargingPileAdmin",
       "SourceType": "Discovered",
       "ContentRoot": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/ChargingPileAdmin",
-      "RelativePath": "components/header#[.{fingerprint=pekrjmh55k}]?.html.gz",
+      "RelativePath": "css/particles#[.{fingerprint=c6gqe5gdmw}]?.css.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\css\\particles.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "idorgq5hep",
+      "Integrity": "2gMuEZa3XzHsWPEziRjMp05av4A1SNyibysVufpbfYU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\css\\particles.css"
+    },
+    {
+      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\w1louw5qmx-flhdnenmwt.gz",
+      "SourceId": "ChargingPileAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/ChargingPileAdmin",
+      "RelativePath": "components/header#[.{fingerprint=flhdnenmwt}]?.html.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -451,8 +514,8 @@
       "RelatedAsset": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\components\\header.html",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "xuvb4c6ksm",
-      "Integrity": "9/X1FDvBgPTJtD/YM7eM8lUGEH40omJ0mSKqmZ8ZNEo=",
+      "Fingerprint": "168xvzswse",
+      "Integrity": "Z633geFBx7LN/V7s0E+i+vKrxNSNt4PvpdkhFIXBsb8=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\components\\header.html"
@@ -493,8 +556,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "2j1h0mwr6s",
-      "Integrity": "AgZByo4Uj4qdUVh/xE3tkXv+0zDUYiTwAdmF5DtH9X4=",
+      "Fingerprint": "rels34vpqu",
+      "Integrity": "Y/7U8BMentxh3rF7d8GWZWk1PnIqAc7keltbuL0bK/U=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\charging-stations.html"
@@ -535,8 +598,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "pekrjmh55k",
-      "Integrity": "7wSvMOFOQ2O7atWLHi83aiis3s8frK6etc/rBbXMg3U=",
+      "Fingerprint": "flhdnenmwt",
+      "Integrity": "rQbMEHRA9fv8fqi5NjAeMclqNIwtKFrtU1qcvGIFJNM=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\components\\header.html"
@@ -584,6 +647,27 @@
       "OriginalItemSpec": "wwwroot\\components\\template.html"
     },
     {
+      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\css\\particles.css",
+      "SourceId": "ChargingPileAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\",
+      "BasePath": "_content/ChargingPileAdmin",
+      "RelativePath": "css/particles#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "c6gqe5gdmw",
+      "Integrity": "nOmA40RHs0nJEUX8eCh1bbTf30R6vK1ZDQhH0Sd4uHk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\particles.css"
+    },
+    {
       "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\css\\sidebar.css",
       "SourceId": "ChargingPileAdmin",
       "SourceType": "Discovered",
@@ -619,8 +703,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "72wr0otk0a",
-      "Integrity": "8fSCNYlj/u68D31oEVPsaUs9oNTavFrTwyHGlddDMEE=",
+      "Fingerprint": "hew5lxmjx2",
+      "Integrity": "t1PvecYlGR+KVqRPSSowK47g8zIL869R1TUx5z5B2DU=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\style.css"
@@ -640,11 +724,32 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "44gc4d4g4u",
-      "Integrity": "lPQFfEFQuAMbu2SqtQvr+/kGLj5jX9XjNC92718Lh5o=",
+      "Fingerprint": "5pv7dz18dh",
+      "Integrity": "OUWJQ4wyfNtm38udFU3qnDWbi9HLZmdE8sm9eRlM6zI=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\index.html"
+    },
+    {
+      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\auth.js",
+      "SourceId": "ChargingPileAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\",
+      "BasePath": "_content/ChargingPileAdmin",
+      "RelativePath": "js/auth#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "xqtk2pv8fd",
+      "Integrity": "mQmksmxD9Ct+JoB/LV+dLhO302k0Xx+qUeBZPRUOpLY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\auth.js"
     },
     {
       "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\common.js",
@@ -661,8 +766,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "vam3d2vdes",
-      "Integrity": "WcfgYFyvBJbJlYdEJR78E2ahfNTGBkvnsYvZJF5nCi8=",
+      "Fingerprint": "72gir1d9fk",
+      "Integrity": "z9A+IhD/Y8JgyY4kp7yqJbcvExPZVQZOF8pmajBw/X8=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\common.js"
@@ -682,8 +787,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "lskj5yhag5",
-      "Integrity": "+5I1oXSEJqKpl7Zl93VeBEBIjSLdA3QAL1nZP4GTPAk=",
+      "Fingerprint": "ys2ymve6il",
+      "Integrity": "slQkXYbGyxNJhjL1NoF7nh9oodf/SoifR2Lqg6cdnOY=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\config.js"
@@ -703,8 +808,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "px58ahx7e1",
-      "Integrity": "8zHu7EFfc+a7hTI96VGFI47SkJ9J2xkRcG84xMzR5DQ=",
+      "Fingerprint": "4jbv9j6uoo",
+      "Integrity": "4P669+a4KKPRyYx2p9n5WbsWi6RvC7qbWCrBOPzCJLk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\dashboard.js"
@@ -787,8 +892,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "1m189spsyb",
-      "Integrity": "KeNbHcRDjrUa/f5N62iIydFBj3xULeWVYzg/MMTuvPY=",
+      "Fingerprint": "v72kuf0r2p",
+      "Integrity": "O4IVcjcCsDV1vx15bGP5si6qE6xuUEeOezQ+OZUmiE4=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\stations.js"
@@ -834,6 +939,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\users.js"
+    },
+    {
+      "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\login.html",
+      "SourceId": "ChargingPileAdmin",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\",
+      "BasePath": "_content/ChargingPileAdmin",
+      "RelativePath": "login#[.{fingerprint}]?.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "qr6337s53x",
+      "Integrity": "+luSDGDASdiQzREfBQgFnjbM508AZPC9SOhXGFSmF/c=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\login.html"
     },
     {
       "Identity": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\orders.html",
@@ -1199,13 +1325,13 @@
       ]
     },
     {
-      "Route": "charging-stations.2j1h0mwr6s.html",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\u2k5tpv23f-2j1h0mwr6s.gz",
+      "Route": "charging-stations.html",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\u2k5tpv23f-rels34vpqu.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000273373428"
+          "Quality": "0.000272034820"
         }
       ],
       "ResponseHeaders": [
@@ -1215,19 +1341,19 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "3657"
+          "Value": "3675"
         },
         {
           "Name": "ETag",
-          "Value": "\"wNrJZN5Hjnt7JahlTUI+xcmsMnSdgdvmyepeMmOooYQ=\""
+          "Value": "\"1y6BOTcylDo1EZjrdwHZBfhoeftxLBZUP6IcrzkYpZg=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 08:55:33 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Encoding",
@@ -1243,26 +1369,18 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"AgZByo4Uj4qdUVh/xE3tkXv+0zDUYiTwAdmF5DtH9X4=\""
+          "Value": "W/\"Y/7U8BMentxh3rF7d8GWZWk1PnIqAc7keltbuL0bK/U=\""
         }
       ],
       "EndpointProperties": [
         {
-          "Name": "fingerprint",
-          "Value": "2j1h0mwr6s"
-        },
-        {
-          "Name": "label",
-          "Value": "charging-stations.html"
-        },
-        {
           "Name": "integrity",
-          "Value": "sha256-AgZByo4Uj4qdUVh/xE3tkXv+0zDUYiTwAdmF5DtH9X4="
+          "Value": "sha256-Y/7U8BMentxh3rF7d8GWZWk1PnIqAc7keltbuL0bK/U="
         }
       ]
     },
     {
-      "Route": "charging-stations.2j1h0mwr6s.html",
+      "Route": "charging-stations.html",
       "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\charging-stations.html",
       "Selectors": [],
       "ResponseHeaders": [
@@ -1272,7 +1390,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "19356"
+          "Value": "19761"
         },
         {
           "Name": "Content-Type",
@@ -1280,11 +1398,156 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"AgZByo4Uj4qdUVh/xE3tkXv+0zDUYiTwAdmF5DtH9X4=\""
+          "Value": "\"Y/7U8BMentxh3rF7d8GWZWk1PnIqAc7keltbuL0bK/U=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 08:55:33 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Y/7U8BMentxh3rF7d8GWZWk1PnIqAc7keltbuL0bK/U="
+        }
+      ]
+    },
+    {
+      "Route": "charging-stations.html.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\u2k5tpv23f-rels34vpqu.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3675"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1y6BOTcylDo1EZjrdwHZBfhoeftxLBZUP6IcrzkYpZg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-1y6BOTcylDo1EZjrdwHZBfhoeftxLBZUP6IcrzkYpZg="
+        }
+      ]
+    },
+    {
+      "Route": "charging-stations.rels34vpqu.html",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\u2k5tpv23f-rels34vpqu.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000272034820"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3675"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1y6BOTcylDo1EZjrdwHZBfhoeftxLBZUP6IcrzkYpZg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"Y/7U8BMentxh3rF7d8GWZWk1PnIqAc7keltbuL0bK/U=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "rels34vpqu"
+        },
+        {
+          "Name": "label",
+          "Value": "charging-stations.html"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Y/7U8BMentxh3rF7d8GWZWk1PnIqAc7keltbuL0bK/U="
+        }
+      ]
+    },
+    {
+      "Route": "charging-stations.rels34vpqu.html",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\charging-stations.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19761"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Y/7U8BMentxh3rF7d8GWZWk1PnIqAc7keltbuL0bK/U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1294,7 +1557,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "2j1h0mwr6s"
+          "Value": "rels34vpqu"
         },
         {
           "Name": "label",
@@ -1302,13 +1565,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-AgZByo4Uj4qdUVh/xE3tkXv+0zDUYiTwAdmF5DtH9X4="
+          "Value": "sha256-Y/7U8BMentxh3rF7d8GWZWk1PnIqAc7keltbuL0bK/U="
         }
       ]
     },
     {
-      "Route": "charging-stations.2j1h0mwr6s.html.gz",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\u2k5tpv23f-2j1h0mwr6s.gz",
+      "Route": "charging-stations.rels34vpqu.html.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\u2k5tpv23f-rels34vpqu.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1317,7 +1580,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "3657"
+          "Value": "3675"
         },
         {
           "Name": "Content-Type",
@@ -1325,11 +1588,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"wNrJZN5Hjnt7JahlTUI+xcmsMnSdgdvmyepeMmOooYQ=\""
+          "Value": "\"1y6BOTcylDo1EZjrdwHZBfhoeftxLBZUP6IcrzkYpZg=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 08:55:33 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1347,7 +1610,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "2j1h0mwr6s"
+          "Value": "rels34vpqu"
         },
         {
           "Name": "label",
@@ -1355,144 +1618,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-wNrJZN5Hjnt7JahlTUI+xcmsMnSdgdvmyepeMmOooYQ="
-        }
-      ]
-    },
-    {
-      "Route": "charging-stations.html",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\u2k5tpv23f-2j1h0mwr6s.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.000273373428"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "3657"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"wNrJZN5Hjnt7JahlTUI+xcmsMnSdgdvmyepeMmOooYQ=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 08:55:33 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/html"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"AgZByo4Uj4qdUVh/xE3tkXv+0zDUYiTwAdmF5DtH9X4=\""
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-AgZByo4Uj4qdUVh/xE3tkXv+0zDUYiTwAdmF5DtH9X4="
-        }
-      ]
-    },
-    {
-      "Route": "charging-stations.html",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\charging-stations.html",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "19356"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/html"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"AgZByo4Uj4qdUVh/xE3tkXv+0zDUYiTwAdmF5DtH9X4=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 08:55:33 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-AgZByo4Uj4qdUVh/xE3tkXv+0zDUYiTwAdmF5DtH9X4="
-        }
-      ]
-    },
-    {
-      "Route": "charging-stations.html.gz",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\u2k5tpv23f-2j1h0mwr6s.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "3657"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/html"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"wNrJZN5Hjnt7JahlTUI+xcmsMnSdgdvmyepeMmOooYQ=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 08:55:33 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-wNrJZN5Hjnt7JahlTUI+xcmsMnSdgdvmyepeMmOooYQ="
+          "Value": "sha256-1y6BOTcylDo1EZjrdwHZBfhoeftxLBZUP6IcrzkYpZg="
         }
       ]
     },
@@ -1795,13 +1921,13 @@
       ]
     },
     {
-      "Route": "components/header.html",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\w1louw5qmx-pekrjmh55k.gz",
+      "Route": "components/header.flhdnenmwt.html",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\w1louw5qmx-flhdnenmwt.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.001776198934"
+          "Quality": "0.001763668430"
         }
       ],
       "ResponseHeaders": [
@@ -1811,19 +1937,19 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "562"
+          "Value": "566"
         },
         {
           "Name": "ETag",
-          "Value": "\"9/X1FDvBgPTJtD/YM7eM8lUGEH40omJ0mSKqmZ8ZNEo=\""
+          "Value": "\"Z633geFBx7LN/V7s0E+i+vKrxNSNt4PvpdkhFIXBsb8=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 03:06:42 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
-          "Value": "no-cache"
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Encoding",
@@ -1839,18 +1965,26 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"7wSvMOFOQ2O7atWLHi83aiis3s8frK6etc/rBbXMg3U=\""
+          "Value": "W/\"rQbMEHRA9fv8fqi5NjAeMclqNIwtKFrtU1qcvGIFJNM=\""
         }
       ],
       "EndpointProperties": [
         {
+          "Name": "fingerprint",
+          "Value": "flhdnenmwt"
+        },
+        {
+          "Name": "label",
+          "Value": "components/header.html"
+        },
+        {
           "Name": "integrity",
-          "Value": "sha256-7wSvMOFOQ2O7atWLHi83aiis3s8frK6etc/rBbXMg3U="
+          "Value": "sha256-rQbMEHRA9fv8fqi5NjAeMclqNIwtKFrtU1qcvGIFJNM="
         }
       ]
     },
     {
-      "Route": "components/header.html",
+      "Route": "components/header.flhdnenmwt.html",
       "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\components\\header.html",
       "Selectors": [],
       "ResponseHeaders": [
@@ -1860,7 +1994,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2150"
+          "Value": "2189"
         },
         {
           "Name": "Content-Type",
@@ -1868,121 +2002,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"7wSvMOFOQ2O7atWLHi83aiis3s8frK6etc/rBbXMg3U=\""
+          "Value": "\"rQbMEHRA9fv8fqi5NjAeMclqNIwtKFrtU1qcvGIFJNM=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 03:06:42 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-7wSvMOFOQ2O7atWLHi83aiis3s8frK6etc/rBbXMg3U="
-        }
-      ]
-    },
-    {
-      "Route": "components/header.html.gz",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\w1louw5qmx-pekrjmh55k.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "562"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/html"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"9/X1FDvBgPTJtD/YM7eM8lUGEH40omJ0mSKqmZ8ZNEo=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 03:06:42 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-9/X1FDvBgPTJtD/YM7eM8lUGEH40omJ0mSKqmZ8ZNEo="
-        }
-      ]
-    },
-    {
-      "Route": "components/header.pekrjmh55k.html",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\w1louw5qmx-pekrjmh55k.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.001776198934"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "562"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"9/X1FDvBgPTJtD/YM7eM8lUGEH40omJ0mSKqmZ8ZNEo=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 03:06:42 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
           "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/html"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"7wSvMOFOQ2O7atWLHi83aiis3s8frK6etc/rBbXMg3U=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "pekrjmh55k"
+          "Value": "flhdnenmwt"
         },
         {
           "Name": "label",
@@ -1990,13 +2024,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-7wSvMOFOQ2O7atWLHi83aiis3s8frK6etc/rBbXMg3U="
+          "Value": "sha256-rQbMEHRA9fv8fqi5NjAeMclqNIwtKFrtU1qcvGIFJNM="
         }
       ]
     },
     {
-      "Route": "components/header.pekrjmh55k.html",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\components\\header.html",
+      "Route": "components/header.flhdnenmwt.html.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\w1louw5qmx-flhdnenmwt.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2005,7 +2039,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2150"
+          "Value": "566"
         },
         {
           "Name": "Content-Type",
@@ -2013,56 +2047,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"7wSvMOFOQ2O7atWLHi83aiis3s8frK6etc/rBbXMg3U=\""
+          "Value": "\"Z633geFBx7LN/V7s0E+i+vKrxNSNt4PvpdkhFIXBsb8=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 03:06:42 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "pekrjmh55k"
-        },
-        {
-          "Name": "label",
-          "Value": "components/header.html"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-7wSvMOFOQ2O7atWLHi83aiis3s8frK6etc/rBbXMg3U="
-        }
-      ]
-    },
-    {
-      "Route": "components/header.pekrjmh55k.html.gz",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\w1louw5qmx-pekrjmh55k.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "562"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/html"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"9/X1FDvBgPTJtD/YM7eM8lUGEH40omJ0mSKqmZ8ZNEo=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 03:06:42 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2080,7 +2069,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "pekrjmh55k"
+          "Value": "flhdnenmwt"
         },
         {
           "Name": "label",
@@ -2088,7 +2077,144 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-9/X1FDvBgPTJtD/YM7eM8lUGEH40omJ0mSKqmZ8ZNEo="
+          "Value": "sha256-Z633geFBx7LN/V7s0E+i+vKrxNSNt4PvpdkhFIXBsb8="
+        }
+      ]
+    },
+    {
+      "Route": "components/header.html",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\w1louw5qmx-flhdnenmwt.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001763668430"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "566"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Z633geFBx7LN/V7s0E+i+vKrxNSNt4PvpdkhFIXBsb8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"rQbMEHRA9fv8fqi5NjAeMclqNIwtKFrtU1qcvGIFJNM=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-rQbMEHRA9fv8fqi5NjAeMclqNIwtKFrtU1qcvGIFJNM="
+        }
+      ]
+    },
+    {
+      "Route": "components/header.html",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\components\\header.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2189"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"rQbMEHRA9fv8fqi5NjAeMclqNIwtKFrtU1qcvGIFJNM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-rQbMEHRA9fv8fqi5NjAeMclqNIwtKFrtU1qcvGIFJNM="
+        }
+      ]
+    },
+    {
+      "Route": "components/header.html.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\w1louw5qmx-flhdnenmwt.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "566"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Z633geFBx7LN/V7s0E+i+vKrxNSNt4PvpdkhFIXBsb8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Z633geFBx7LN/V7s0E+i+vKrxNSNt4PvpdkhFIXBsb8="
         }
       ]
     },
@@ -2689,6 +2815,304 @@
       ]
     },
     {
+      "Route": "css/particles.c6gqe5gdmw.css",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\ugmsiucu0d-c6gqe5gdmw.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.007299270073"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "136"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"2gMuEZa3XzHsWPEziRjMp05av4A1SNyibysVufpbfYU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 03:22:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"nOmA40RHs0nJEUX8eCh1bbTf30R6vK1ZDQhH0Sd4uHk=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "c6gqe5gdmw"
+        },
+        {
+          "Name": "label",
+          "Value": "css/particles.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-nOmA40RHs0nJEUX8eCh1bbTf30R6vK1ZDQhH0Sd4uHk="
+        }
+      ]
+    },
+    {
+      "Route": "css/particles.c6gqe5gdmw.css",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\css\\particles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "150"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"nOmA40RHs0nJEUX8eCh1bbTf30R6vK1ZDQhH0Sd4uHk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 03:22:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "c6gqe5gdmw"
+        },
+        {
+          "Name": "label",
+          "Value": "css/particles.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-nOmA40RHs0nJEUX8eCh1bbTf30R6vK1ZDQhH0Sd4uHk="
+        }
+      ]
+    },
+    {
+      "Route": "css/particles.c6gqe5gdmw.css.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\ugmsiucu0d-c6gqe5gdmw.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "136"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"2gMuEZa3XzHsWPEziRjMp05av4A1SNyibysVufpbfYU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 03:22:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "c6gqe5gdmw"
+        },
+        {
+          "Name": "label",
+          "Value": "css/particles.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-2gMuEZa3XzHsWPEziRjMp05av4A1SNyibysVufpbfYU="
+        }
+      ]
+    },
+    {
+      "Route": "css/particles.css",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\ugmsiucu0d-c6gqe5gdmw.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.007299270073"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "136"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"2gMuEZa3XzHsWPEziRjMp05av4A1SNyibysVufpbfYU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 03:22:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"nOmA40RHs0nJEUX8eCh1bbTf30R6vK1ZDQhH0Sd4uHk=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-nOmA40RHs0nJEUX8eCh1bbTf30R6vK1ZDQhH0Sd4uHk="
+        }
+      ]
+    },
+    {
+      "Route": "css/particles.css",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\css\\particles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "150"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"nOmA40RHs0nJEUX8eCh1bbTf30R6vK1ZDQhH0Sd4uHk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 03:22:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-nOmA40RHs0nJEUX8eCh1bbTf30R6vK1ZDQhH0Sd4uHk="
+        }
+      ]
+    },
+    {
+      "Route": "css/particles.css.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\ugmsiucu0d-c6gqe5gdmw.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "136"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"2gMuEZa3XzHsWPEziRjMp05av4A1SNyibysVufpbfYU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 03:22:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-2gMuEZa3XzHsWPEziRjMp05av4A1SNyibysVufpbfYU="
+        }
+      ]
+    },
+    {
       "Route": "css/sidebar.8md6v739lj.css",
       "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\pmhxtz91iq-8md6v739lj.gz",
       "Selectors": [
@@ -2987,13 +3411,13 @@
       ]
     },
     {
-      "Route": "css/style.72wr0otk0a.css",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\8pfywm1r38-72wr0otk0a.gz",
+      "Route": "css/style.css",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\8pfywm1r38-hew5lxmjx2.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000713775874"
+          "Quality": "0.000705716302"
         }
       ],
       "ResponseHeaders": [
@@ -3003,19 +3427,19 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1400"
+          "Value": "1416"
         },
         {
           "Name": "ETag",
-          "Value": "\"I0xOIa4f9SpAvtGHRvyQK79Q/gSO2V3JLOAL92X6IPY=\""
+          "Value": "\"bfO+Xu7MJ8/aNzyv8cjCFr0+VucvEO/TkqAlceVQbnY=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 03 Apr 2025 06:36:13 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Encoding",
@@ -3031,26 +3455,18 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"8fSCNYlj/u68D31oEVPsaUs9oNTavFrTwyHGlddDMEE=\""
+          "Value": "W/\"t1PvecYlGR+KVqRPSSowK47g8zIL869R1TUx5z5B2DU=\""
         }
       ],
       "EndpointProperties": [
         {
-          "Name": "fingerprint",
-          "Value": "72wr0otk0a"
-        },
-        {
-          "Name": "label",
-          "Value": "css/style.css"
-        },
-        {
           "Name": "integrity",
-          "Value": "sha256-8fSCNYlj/u68D31oEVPsaUs9oNTavFrTwyHGlddDMEE="
+          "Value": "sha256-t1PvecYlGR+KVqRPSSowK47g8zIL869R1TUx5z5B2DU="
         }
       ]
     },
     {
-      "Route": "css/style.72wr0otk0a.css",
+      "Route": "css/style.css",
       "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\css\\style.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -3060,7 +3476,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "3938"
+          "Value": "4146"
         },
         {
           "Name": "Content-Type",
@@ -3068,11 +3484,156 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"8fSCNYlj/u68D31oEVPsaUs9oNTavFrTwyHGlddDMEE=\""
+          "Value": "\"t1PvecYlGR+KVqRPSSowK47g8zIL869R1TUx5z5B2DU=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 03 Apr 2025 06:36:13 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-t1PvecYlGR+KVqRPSSowK47g8zIL869R1TUx5z5B2DU="
+        }
+      ]
+    },
+    {
+      "Route": "css/style.css.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\8pfywm1r38-hew5lxmjx2.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1416"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"bfO+Xu7MJ8/aNzyv8cjCFr0+VucvEO/TkqAlceVQbnY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-bfO+Xu7MJ8/aNzyv8cjCFr0+VucvEO/TkqAlceVQbnY="
+        }
+      ]
+    },
+    {
+      "Route": "css/style.hew5lxmjx2.css",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\8pfywm1r38-hew5lxmjx2.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000705716302"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1416"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"bfO+Xu7MJ8/aNzyv8cjCFr0+VucvEO/TkqAlceVQbnY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"t1PvecYlGR+KVqRPSSowK47g8zIL869R1TUx5z5B2DU=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hew5lxmjx2"
+        },
+        {
+          "Name": "label",
+          "Value": "css/style.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-t1PvecYlGR+KVqRPSSowK47g8zIL869R1TUx5z5B2DU="
+        }
+      ]
+    },
+    {
+      "Route": "css/style.hew5lxmjx2.css",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\css\\style.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4146"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"t1PvecYlGR+KVqRPSSowK47g8zIL869R1TUx5z5B2DU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3082,7 +3643,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "72wr0otk0a"
+          "Value": "hew5lxmjx2"
         },
         {
           "Name": "label",
@@ -3090,13 +3651,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-8fSCNYlj/u68D31oEVPsaUs9oNTavFrTwyHGlddDMEE="
+          "Value": "sha256-t1PvecYlGR+KVqRPSSowK47g8zIL869R1TUx5z5B2DU="
         }
       ]
     },
     {
-      "Route": "css/style.72wr0otk0a.css.gz",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\8pfywm1r38-72wr0otk0a.gz",
+      "Route": "css/style.hew5lxmjx2.css.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\8pfywm1r38-hew5lxmjx2.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -3105,7 +3666,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1400"
+          "Value": "1416"
         },
         {
           "Name": "Content-Type",
@@ -3113,11 +3674,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"I0xOIa4f9SpAvtGHRvyQK79Q/gSO2V3JLOAL92X6IPY=\""
+          "Value": "\"bfO+Xu7MJ8/aNzyv8cjCFr0+VucvEO/TkqAlceVQbnY=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 03 Apr 2025 06:36:13 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3135,7 +3696,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "72wr0otk0a"
+          "Value": "hew5lxmjx2"
         },
         {
           "Name": "label",
@@ -3143,18 +3704,18 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-I0xOIa4f9SpAvtGHRvyQK79Q/gSO2V3JLOAL92X6IPY="
+          "Value": "sha256-bfO+Xu7MJ8/aNzyv8cjCFr0+VucvEO/TkqAlceVQbnY="
         }
       ]
     },
     {
-      "Route": "css/style.css",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\8pfywm1r38-72wr0otk0a.gz",
+      "Route": "index.5pv7dz18dh.html",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\41qr6oh6c3-5pv7dz18dh.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000713775874"
+          "Quality": "0.000539665407"
         }
       ],
       "ResponseHeaders": [
@@ -3164,152 +3725,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1400"
+          "Value": "1852"
         },
         {
           "Name": "ETag",
-          "Value": "\"I0xOIa4f9SpAvtGHRvyQK79Q/gSO2V3JLOAL92X6IPY=\""
+          "Value": "\"2AtbmxTTHAdCh1Dxd4lX90jVe14k8miZOvN/OEPcSeQ=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 03 Apr 2025 06:36:13 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"8fSCNYlj/u68D31oEVPsaUs9oNTavFrTwyHGlddDMEE=\""
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-8fSCNYlj/u68D31oEVPsaUs9oNTavFrTwyHGlddDMEE="
-        }
-      ]
-    },
-    {
-      "Route": "css/style.css",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\css\\style.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "3938"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"8fSCNYlj/u68D31oEVPsaUs9oNTavFrTwyHGlddDMEE=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Thu, 03 Apr 2025 06:36:13 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-8fSCNYlj/u68D31oEVPsaUs9oNTavFrTwyHGlddDMEE="
-        }
-      ]
-    },
-    {
-      "Route": "css/style.css.gz",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\8pfywm1r38-72wr0otk0a.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1400"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"I0xOIa4f9SpAvtGHRvyQK79Q/gSO2V3JLOAL92X6IPY=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Thu, 03 Apr 2025 06:36:13 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-I0xOIa4f9SpAvtGHRvyQK79Q/gSO2V3JLOAL92X6IPY="
-        }
-      ]
-    },
-    {
-      "Route": "index.44gc4d4g4u.html",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\41qr6oh6c3-44gc4d4g4u.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.000542593597"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1842"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"jakgRg02msokdmYwONjSyG6QYLam4IEoZOLE6v3ct6E=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 08:45:48 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3329,13 +3753,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"lPQFfEFQuAMbu2SqtQvr+/kGLj5jX9XjNC92718Lh5o=\""
+          "Value": "W/\"OUWJQ4wyfNtm38udFU3qnDWbi9HLZmdE8sm9eRlM6zI=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "44gc4d4g4u"
+          "Value": "5pv7dz18dh"
         },
         {
           "Name": "label",
@@ -3343,12 +3767,12 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-lPQFfEFQuAMbu2SqtQvr+/kGLj5jX9XjNC92718Lh5o="
+          "Value": "sha256-OUWJQ4wyfNtm38udFU3qnDWbi9HLZmdE8sm9eRlM6zI="
         }
       ]
     },
     {
-      "Route": "index.44gc4d4g4u.html",
+      "Route": "index.5pv7dz18dh.html",
       "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\index.html",
       "Selectors": [],
       "ResponseHeaders": [
@@ -3358,7 +3782,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "9364"
+          "Value": "9553"
         },
         {
           "Name": "Content-Type",
@@ -3366,11 +3790,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"lPQFfEFQuAMbu2SqtQvr+/kGLj5jX9XjNC92718Lh5o=\""
+          "Value": "\"OUWJQ4wyfNtm38udFU3qnDWbi9HLZmdE8sm9eRlM6zI=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 08:45:48 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3380,7 +3804,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "44gc4d4g4u"
+          "Value": "5pv7dz18dh"
         },
         {
           "Name": "label",
@@ -3388,13 +3812,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-lPQFfEFQuAMbu2SqtQvr+/kGLj5jX9XjNC92718Lh5o="
+          "Value": "sha256-OUWJQ4wyfNtm38udFU3qnDWbi9HLZmdE8sm9eRlM6zI="
         }
       ]
     },
     {
-      "Route": "index.44gc4d4g4u.html.gz",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\41qr6oh6c3-44gc4d4g4u.gz",
+      "Route": "index.5pv7dz18dh.html.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\41qr6oh6c3-5pv7dz18dh.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -3403,7 +3827,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1842"
+          "Value": "1852"
         },
         {
           "Name": "Content-Type",
@@ -3411,11 +3835,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"jakgRg02msokdmYwONjSyG6QYLam4IEoZOLE6v3ct6E=\""
+          "Value": "\"2AtbmxTTHAdCh1Dxd4lX90jVe14k8miZOvN/OEPcSeQ=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 08:45:48 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3433,7 +3857,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "44gc4d4g4u"
+          "Value": "5pv7dz18dh"
         },
         {
           "Name": "label",
@@ -3441,13 +3865,150 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-jakgRg02msokdmYwONjSyG6QYLam4IEoZOLE6v3ct6E="
+          "Value": "sha256-2AtbmxTTHAdCh1Dxd4lX90jVe14k8miZOvN/OEPcSeQ="
         }
       ]
     },
     {
       "Route": "index.html",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\41qr6oh6c3-44gc4d4g4u.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\41qr6oh6c3-5pv7dz18dh.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000539665407"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1852"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"2AtbmxTTHAdCh1Dxd4lX90jVe14k8miZOvN/OEPcSeQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"OUWJQ4wyfNtm38udFU3qnDWbi9HLZmdE8sm9eRlM6zI=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-OUWJQ4wyfNtm38udFU3qnDWbi9HLZmdE8sm9eRlM6zI="
+        }
+      ]
+    },
+    {
+      "Route": "index.html",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9553"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"OUWJQ4wyfNtm38udFU3qnDWbi9HLZmdE8sm9eRlM6zI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-OUWJQ4wyfNtm38udFU3qnDWbi9HLZmdE8sm9eRlM6zI="
+        }
+      ]
+    },
+    {
+      "Route": "index.html.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\41qr6oh6c3-5pv7dz18dh.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1852"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"2AtbmxTTHAdCh1Dxd4lX90jVe14k8miZOvN/OEPcSeQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-2AtbmxTTHAdCh1Dxd4lX90jVe14k8miZOvN/OEPcSeQ="
+        }
+      ]
+    },
+    {
+      "Route": "js/auth.js",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\2tqparqfc1-xqtk2pv8fd.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -3466,11 +4027,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"jakgRg02msokdmYwONjSyG6QYLam4IEoZOLE6v3ct6E=\""
+          "Value": "\"qHAvsBPSIQUh4mSTmA1A9FmMYxOPDxFqtf+Kmd8Jals=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 08:45:48 GMT"
+          "Value": "Tue, 08 Apr 2025 03:12:40 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3486,23 +4047,23 @@
         },
         {
           "Name": "Content-Type",
-          "Value": "text/html"
+          "Value": "text/javascript"
         },
         {
           "Name": "ETag",
-          "Value": "W/\"lPQFfEFQuAMbu2SqtQvr+/kGLj5jX9XjNC92718Lh5o=\""
+          "Value": "W/\"mQmksmxD9Ct+JoB/LV+dLhO302k0Xx+qUeBZPRUOpLY=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-lPQFfEFQuAMbu2SqtQvr+/kGLj5jX9XjNC92718Lh5o="
+          "Value": "sha256-mQmksmxD9Ct+JoB/LV+dLhO302k0Xx+qUeBZPRUOpLY="
         }
       ]
     },
     {
-      "Route": "index.html",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\index.html",
+      "Route": "js/auth.js",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\auth.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -3511,19 +4072,19 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "9364"
+          "Value": "4779"
         },
         {
           "Name": "Content-Type",
-          "Value": "text/html"
+          "Value": "text/javascript"
         },
         {
           "Name": "ETag",
-          "Value": "\"lPQFfEFQuAMbu2SqtQvr+/kGLj5jX9XjNC92718Lh5o=\""
+          "Value": "\"mQmksmxD9Ct+JoB/LV+dLhO302k0Xx+qUeBZPRUOpLY=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 08:45:48 GMT"
+          "Value": "Tue, 08 Apr 2025 03:12:40 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3533,13 +4094,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-lPQFfEFQuAMbu2SqtQvr+/kGLj5jX9XjNC92718Lh5o="
+          "Value": "sha256-mQmksmxD9Ct+JoB/LV+dLhO302k0Xx+qUeBZPRUOpLY="
         }
       ]
     },
     {
-      "Route": "index.html.gz",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\41qr6oh6c3-44gc4d4g4u.gz",
+      "Route": "js/auth.js.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\2tqparqfc1-xqtk2pv8fd.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -3552,15 +4113,15 @@
         },
         {
           "Name": "Content-Type",
-          "Value": "text/html"
+          "Value": "text/javascript"
         },
         {
           "Name": "ETag",
-          "Value": "\"jakgRg02msokdmYwONjSyG6QYLam4IEoZOLE6v3ct6E=\""
+          "Value": "\"qHAvsBPSIQUh4mSTmA1A9FmMYxOPDxFqtf+Kmd8Jals=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 08:45:48 GMT"
+          "Value": "Tue, 08 Apr 2025 03:12:40 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3578,18 +4139,18 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-jakgRg02msokdmYwONjSyG6QYLam4IEoZOLE6v3ct6E="
+          "Value": "sha256-qHAvsBPSIQUh4mSTmA1A9FmMYxOPDxFqtf+Kmd8Jals="
         }
       ]
     },
     {
-      "Route": "js/common.js",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\dvaltjxar1-vam3d2vdes.gz",
+      "Route": "js/auth.xqtk2pv8fd.js",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\2tqparqfc1-xqtk2pv8fd.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000678426052"
+          "Quality": "0.000542593597"
         }
       ],
       "ResponseHeaders": [
@@ -3599,19 +4160,19 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1473"
+          "Value": "1842"
         },
         {
           "Name": "ETag",
-          "Value": "\"MIVxJ4BTNSWVFwoyVzH8wLYXnkmJyW1Wl9wLb/wyibc=\""
+          "Value": "\"qHAvsBPSIQUh4mSTmA1A9FmMYxOPDxFqtf+Kmd8Jals=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 03:07:59 GMT"
+          "Value": "Tue, 08 Apr 2025 03:12:40 GMT"
         },
         {
           "Name": "Cache-Control",
-          "Value": "no-cache"
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Encoding",
@@ -3627,18 +4188,187 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"WcfgYFyvBJbJlYdEJR78E2ahfNTGBkvnsYvZJF5nCi8=\""
+          "Value": "W/\"mQmksmxD9Ct+JoB/LV+dLhO302k0Xx+qUeBZPRUOpLY=\""
         }
       ],
       "EndpointProperties": [
         {
+          "Name": "fingerprint",
+          "Value": "xqtk2pv8fd"
+        },
+        {
+          "Name": "label",
+          "Value": "js/auth.js"
+        },
+        {
           "Name": "integrity",
-          "Value": "sha256-WcfgYFyvBJbJlYdEJR78E2ahfNTGBkvnsYvZJF5nCi8="
+          "Value": "sha256-mQmksmxD9Ct+JoB/LV+dLhO302k0Xx+qUeBZPRUOpLY="
         }
       ]
     },
     {
-      "Route": "js/common.js",
+      "Route": "js/auth.xqtk2pv8fd.js",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\auth.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4779"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"mQmksmxD9Ct+JoB/LV+dLhO302k0Xx+qUeBZPRUOpLY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 03:12:40 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "xqtk2pv8fd"
+        },
+        {
+          "Name": "label",
+          "Value": "js/auth.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-mQmksmxD9Ct+JoB/LV+dLhO302k0Xx+qUeBZPRUOpLY="
+        }
+      ]
+    },
+    {
+      "Route": "js/auth.xqtk2pv8fd.js.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\2tqparqfc1-xqtk2pv8fd.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1842"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"qHAvsBPSIQUh4mSTmA1A9FmMYxOPDxFqtf+Kmd8Jals=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 03:12:40 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "xqtk2pv8fd"
+        },
+        {
+          "Name": "label",
+          "Value": "js/auth.js.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-qHAvsBPSIQUh4mSTmA1A9FmMYxOPDxFqtf+Kmd8Jals="
+        }
+      ]
+    },
+    {
+      "Route": "js/common.72gir1d9fk.js",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\dvaltjxar1-72gir1d9fk.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000672947510"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1485"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PGbJnMlWzD2AEVhirSY2V0+sXVUkoxGTwxwBBOgsrKY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"z9A+IhD/Y8JgyY4kp7yqJbcvExPZVQZOF8pmajBw/X8=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "72gir1d9fk"
+        },
+        {
+          "Name": "label",
+          "Value": "js/common.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-z9A+IhD/Y8JgyY4kp7yqJbcvExPZVQZOF8pmajBw/X8="
+        }
+      ]
+    },
+    {
+      "Route": "js/common.72gir1d9fk.js",
       "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\common.js",
       "Selectors": [],
       "ResponseHeaders": [
@@ -3648,7 +4378,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "3719"
+          "Value": "3833"
         },
         {
           "Name": "Content-Type",
@@ -3656,121 +4386,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"WcfgYFyvBJbJlYdEJR78E2ahfNTGBkvnsYvZJF5nCi8=\""
+          "Value": "\"z9A+IhD/Y8JgyY4kp7yqJbcvExPZVQZOF8pmajBw/X8=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 03:07:59 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-WcfgYFyvBJbJlYdEJR78E2ahfNTGBkvnsYvZJF5nCi8="
-        }
-      ]
-    },
-    {
-      "Route": "js/common.js.gz",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\dvaltjxar1-vam3d2vdes.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1473"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"MIVxJ4BTNSWVFwoyVzH8wLYXnkmJyW1Wl9wLb/wyibc=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 03:07:59 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-MIVxJ4BTNSWVFwoyVzH8wLYXnkmJyW1Wl9wLb/wyibc="
-        }
-      ]
-    },
-    {
-      "Route": "js/common.vam3d2vdes.js",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\dvaltjxar1-vam3d2vdes.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.000678426052"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1473"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"MIVxJ4BTNSWVFwoyVzH8wLYXnkmJyW1Wl9wLb/wyibc=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 03:07:59 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
           "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"WcfgYFyvBJbJlYdEJR78E2ahfNTGBkvnsYvZJF5nCi8=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "vam3d2vdes"
+          "Value": "72gir1d9fk"
         },
         {
           "Name": "label",
@@ -3778,13 +4408,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-WcfgYFyvBJbJlYdEJR78E2ahfNTGBkvnsYvZJF5nCi8="
+          "Value": "sha256-z9A+IhD/Y8JgyY4kp7yqJbcvExPZVQZOF8pmajBw/X8="
         }
       ]
     },
     {
-      "Route": "js/common.vam3d2vdes.js",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\common.js",
+      "Route": "js/common.72gir1d9fk.js.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\dvaltjxar1-72gir1d9fk.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -3793,7 +4423,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "3719"
+          "Value": "1485"
         },
         {
           "Name": "Content-Type",
@@ -3801,56 +4431,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"WcfgYFyvBJbJlYdEJR78E2ahfNTGBkvnsYvZJF5nCi8=\""
+          "Value": "\"PGbJnMlWzD2AEVhirSY2V0+sXVUkoxGTwxwBBOgsrKY=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 03:07:59 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "vam3d2vdes"
-        },
-        {
-          "Name": "label",
-          "Value": "js/common.js"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-WcfgYFyvBJbJlYdEJR78E2ahfNTGBkvnsYvZJF5nCi8="
-        }
-      ]
-    },
-    {
-      "Route": "js/common.vam3d2vdes.js.gz",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\dvaltjxar1-vam3d2vdes.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1473"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"MIVxJ4BTNSWVFwoyVzH8wLYXnkmJyW1Wl9wLb/wyibc=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 03:07:59 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3868,7 +4453,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "vam3d2vdes"
+          "Value": "72gir1d9fk"
         },
         {
           "Name": "label",
@@ -3876,18 +4461,18 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-MIVxJ4BTNSWVFwoyVzH8wLYXnkmJyW1Wl9wLb/wyibc="
+          "Value": "sha256-PGbJnMlWzD2AEVhirSY2V0+sXVUkoxGTwxwBBOgsrKY="
         }
       ]
     },
     {
-      "Route": "js/config.js",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\qt6ushue0h-lskj5yhag5.gz",
+      "Route": "js/common.js",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\dvaltjxar1-72gir1d9fk.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000651465798"
+          "Quality": "0.000672947510"
         }
       ],
       "ResponseHeaders": [
@@ -3897,15 +4482,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1534"
+          "Value": "1485"
         },
         {
           "Name": "ETag",
-          "Value": "\"yOjP80n7tCNS7hqtPgoFEAVQM14Y3TNwx4dmLTDdFjk=\""
+          "Value": "\"PGbJnMlWzD2AEVhirSY2V0+sXVUkoxGTwxwBBOgsrKY=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 09:55:46 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3925,13 +4510,150 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"+5I1oXSEJqKpl7Zl93VeBEBIjSLdA3QAL1nZP4GTPAk=\""
+          "Value": "W/\"z9A+IhD/Y8JgyY4kp7yqJbcvExPZVQZOF8pmajBw/X8=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-+5I1oXSEJqKpl7Zl93VeBEBIjSLdA3QAL1nZP4GTPAk="
+          "Value": "sha256-z9A+IhD/Y8JgyY4kp7yqJbcvExPZVQZOF8pmajBw/X8="
+        }
+      ]
+    },
+    {
+      "Route": "js/common.js",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\common.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3833"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"z9A+IhD/Y8JgyY4kp7yqJbcvExPZVQZOF8pmajBw/X8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-z9A+IhD/Y8JgyY4kp7yqJbcvExPZVQZOF8pmajBw/X8="
+        }
+      ]
+    },
+    {
+      "Route": "js/common.js.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\dvaltjxar1-72gir1d9fk.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1485"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PGbJnMlWzD2AEVhirSY2V0+sXVUkoxGTwxwBBOgsrKY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-PGbJnMlWzD2AEVhirSY2V0+sXVUkoxGTwxwBBOgsrKY="
+        }
+      ]
+    },
+    {
+      "Route": "js/config.js",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\qt6ushue0h-ys2ymve6il.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000646412411"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1546"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"hNkUFoEDay7k69RuWroumFKv3jn3yFCgfy1aAV+3Ql8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"slQkXYbGyxNJhjL1NoF7nh9oodf/SoifR2Lqg6cdnOY=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-slQkXYbGyxNJhjL1NoF7nh9oodf/SoifR2Lqg6cdnOY="
         }
       ]
     },
@@ -3946,7 +4668,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "6087"
+          "Value": "6259"
         },
         {
           "Name": "Content-Type",
@@ -3954,11 +4676,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"+5I1oXSEJqKpl7Zl93VeBEBIjSLdA3QAL1nZP4GTPAk=\""
+          "Value": "\"slQkXYbGyxNJhjL1NoF7nh9oodf/SoifR2Lqg6cdnOY=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 09:55:46 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3968,13 +4690,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-+5I1oXSEJqKpl7Zl93VeBEBIjSLdA3QAL1nZP4GTPAk="
+          "Value": "sha256-slQkXYbGyxNJhjL1NoF7nh9oodf/SoifR2Lqg6cdnOY="
         }
       ]
     },
     {
       "Route": "js/config.js.gz",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\qt6ushue0h-lskj5yhag5.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\qt6ushue0h-ys2ymve6il.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -3983,7 +4705,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1534"
+          "Value": "1546"
         },
         {
           "Name": "Content-Type",
@@ -3991,11 +4713,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"yOjP80n7tCNS7hqtPgoFEAVQM14Y3TNwx4dmLTDdFjk=\""
+          "Value": "\"hNkUFoEDay7k69RuWroumFKv3jn3yFCgfy1aAV+3Ql8=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 09:55:46 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4013,18 +4735,18 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-yOjP80n7tCNS7hqtPgoFEAVQM14Y3TNwx4dmLTDdFjk="
+          "Value": "sha256-hNkUFoEDay7k69RuWroumFKv3jn3yFCgfy1aAV+3Ql8="
         }
       ]
     },
     {
-      "Route": "js/config.lskj5yhag5.js",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\qt6ushue0h-lskj5yhag5.gz",
+      "Route": "js/config.ys2ymve6il.js",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\qt6ushue0h-ys2ymve6il.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000651465798"
+          "Quality": "0.000646412411"
         }
       ],
       "ResponseHeaders": [
@@ -4034,15 +4756,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1534"
+          "Value": "1546"
         },
         {
           "Name": "ETag",
-          "Value": "\"yOjP80n7tCNS7hqtPgoFEAVQM14Y3TNwx4dmLTDdFjk=\""
+          "Value": "\"hNkUFoEDay7k69RuWroumFKv3jn3yFCgfy1aAV+3Ql8=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 09:55:46 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4062,13 +4784,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"+5I1oXSEJqKpl7Zl93VeBEBIjSLdA3QAL1nZP4GTPAk=\""
+          "Value": "W/\"slQkXYbGyxNJhjL1NoF7nh9oodf/SoifR2Lqg6cdnOY=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "lskj5yhag5"
+          "Value": "ys2ymve6il"
         },
         {
           "Name": "label",
@@ -4076,12 +4798,12 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-+5I1oXSEJqKpl7Zl93VeBEBIjSLdA3QAL1nZP4GTPAk="
+          "Value": "sha256-slQkXYbGyxNJhjL1NoF7nh9oodf/SoifR2Lqg6cdnOY="
         }
       ]
     },
     {
-      "Route": "js/config.lskj5yhag5.js",
+      "Route": "js/config.ys2ymve6il.js",
       "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\config.js",
       "Selectors": [],
       "ResponseHeaders": [
@@ -4091,7 +4813,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "6087"
+          "Value": "6259"
         },
         {
           "Name": "Content-Type",
@@ -4099,11 +4821,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"+5I1oXSEJqKpl7Zl93VeBEBIjSLdA3QAL1nZP4GTPAk=\""
+          "Value": "\"slQkXYbGyxNJhjL1NoF7nh9oodf/SoifR2Lqg6cdnOY=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 09:55:46 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4113,7 +4835,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "lskj5yhag5"
+          "Value": "ys2ymve6il"
         },
         {
           "Name": "label",
@@ -4121,13 +4843,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-+5I1oXSEJqKpl7Zl93VeBEBIjSLdA3QAL1nZP4GTPAk="
+          "Value": "sha256-slQkXYbGyxNJhjL1NoF7nh9oodf/SoifR2Lqg6cdnOY="
         }
       ]
     },
     {
-      "Route": "js/config.lskj5yhag5.js.gz",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\qt6ushue0h-lskj5yhag5.gz",
+      "Route": "js/config.ys2ymve6il.js.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\qt6ushue0h-ys2ymve6il.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -4136,7 +4858,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1534"
+          "Value": "1546"
         },
         {
           "Name": "Content-Type",
@@ -4144,11 +4866,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"yOjP80n7tCNS7hqtPgoFEAVQM14Y3TNwx4dmLTDdFjk=\""
+          "Value": "\"hNkUFoEDay7k69RuWroumFKv3jn3yFCgfy1aAV+3Ql8=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 09:55:46 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4166,7 +4888,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "lskj5yhag5"
+          "Value": "ys2ymve6il"
         },
         {
           "Name": "label",
@@ -4174,18 +4896,18 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-yOjP80n7tCNS7hqtPgoFEAVQM14Y3TNwx4dmLTDdFjk="
+          "Value": "sha256-hNkUFoEDay7k69RuWroumFKv3jn3yFCgfy1aAV+3Ql8="
         }
       ]
     },
     {
-      "Route": "js/dashboard.js",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\g897avw7w7-px58ahx7e1.gz",
+      "Route": "js/dashboard.4jbv9j6uoo.js",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\g897avw7w7-4jbv9j6uoo.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000240269101"
+          "Quality": "0.000239177230"
         }
       ],
       "ResponseHeaders": [
@@ -4195,19 +4917,19 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "4161"
+          "Value": "4180"
         },
         {
           "Name": "ETag",
-          "Value": "\"KDFL6CJU6k62KhdycKOIZWmG2a2Zv/TQ/mDuy/o6g5A=\""
+          "Value": "\"BvpBAmz22L63YKxgrPvDnF+SY2rke/R1DD8ogArG3KE=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 02:45:22 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
-          "Value": "no-cache"
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Encoding",
@@ -4223,18 +4945,26 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"8zHu7EFfc+a7hTI96VGFI47SkJ9J2xkRcG84xMzR5DQ=\""
+          "Value": "W/\"4P669+a4KKPRyYx2p9n5WbsWi6RvC7qbWCrBOPzCJLk=\""
         }
       ],
       "EndpointProperties": [
         {
+          "Name": "fingerprint",
+          "Value": "4jbv9j6uoo"
+        },
+        {
+          "Name": "label",
+          "Value": "js/dashboard.js"
+        },
+        {
           "Name": "integrity",
-          "Value": "sha256-8zHu7EFfc+a7hTI96VGFI47SkJ9J2xkRcG84xMzR5DQ="
+          "Value": "sha256-4P669+a4KKPRyYx2p9n5WbsWi6RvC7qbWCrBOPzCJLk="
         }
       ]
     },
     {
-      "Route": "js/dashboard.js",
+      "Route": "js/dashboard.4jbv9j6uoo.js",
       "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\dashboard.js",
       "Selectors": [],
       "ResponseHeaders": [
@@ -4244,7 +4974,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "15659"
+          "Value": "16114"
         },
         {
           "Name": "Content-Type",
@@ -4252,121 +4982,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"8zHu7EFfc+a7hTI96VGFI47SkJ9J2xkRcG84xMzR5DQ=\""
+          "Value": "\"4P669+a4KKPRyYx2p9n5WbsWi6RvC7qbWCrBOPzCJLk=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 02:45:22 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-8zHu7EFfc+a7hTI96VGFI47SkJ9J2xkRcG84xMzR5DQ="
-        }
-      ]
-    },
-    {
-      "Route": "js/dashboard.js.gz",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\g897avw7w7-px58ahx7e1.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "4161"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"KDFL6CJU6k62KhdycKOIZWmG2a2Zv/TQ/mDuy/o6g5A=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 02:45:22 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-KDFL6CJU6k62KhdycKOIZWmG2a2Zv/TQ/mDuy/o6g5A="
-        }
-      ]
-    },
-    {
-      "Route": "js/dashboard.px58ahx7e1.js",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\g897avw7w7-px58ahx7e1.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.000240269101"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "4161"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"KDFL6CJU6k62KhdycKOIZWmG2a2Zv/TQ/mDuy/o6g5A=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 02:45:22 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
           "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"8zHu7EFfc+a7hTI96VGFI47SkJ9J2xkRcG84xMzR5DQ=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "px58ahx7e1"
+          "Value": "4jbv9j6uoo"
         },
         {
           "Name": "label",
@@ -4374,13 +5004,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-8zHu7EFfc+a7hTI96VGFI47SkJ9J2xkRcG84xMzR5DQ="
+          "Value": "sha256-4P669+a4KKPRyYx2p9n5WbsWi6RvC7qbWCrBOPzCJLk="
         }
       ]
     },
     {
-      "Route": "js/dashboard.px58ahx7e1.js",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\dashboard.js",
+      "Route": "js/dashboard.4jbv9j6uoo.js.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\g897avw7w7-4jbv9j6uoo.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -4389,7 +5019,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "15659"
+          "Value": "4180"
         },
         {
           "Name": "Content-Type",
@@ -4397,56 +5027,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"8zHu7EFfc+a7hTI96VGFI47SkJ9J2xkRcG84xMzR5DQ=\""
+          "Value": "\"BvpBAmz22L63YKxgrPvDnF+SY2rke/R1DD8ogArG3KE=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 02:45:22 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "px58ahx7e1"
-        },
-        {
-          "Name": "label",
-          "Value": "js/dashboard.js"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-8zHu7EFfc+a7hTI96VGFI47SkJ9J2xkRcG84xMzR5DQ="
-        }
-      ]
-    },
-    {
-      "Route": "js/dashboard.px58ahx7e1.js.gz",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\g897avw7w7-px58ahx7e1.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "4161"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"KDFL6CJU6k62KhdycKOIZWmG2a2Zv/TQ/mDuy/o6g5A=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 08 Apr 2025 02:45:22 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4464,7 +5049,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "px58ahx7e1"
+          "Value": "4jbv9j6uoo"
         },
         {
           "Name": "label",
@@ -4472,7 +5057,144 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-KDFL6CJU6k62KhdycKOIZWmG2a2Zv/TQ/mDuy/o6g5A="
+          "Value": "sha256-BvpBAmz22L63YKxgrPvDnF+SY2rke/R1DD8ogArG3KE="
+        }
+      ]
+    },
+    {
+      "Route": "js/dashboard.js",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\g897avw7w7-4jbv9j6uoo.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000239177230"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4180"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"BvpBAmz22L63YKxgrPvDnF+SY2rke/R1DD8ogArG3KE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"4P669+a4KKPRyYx2p9n5WbsWi6RvC7qbWCrBOPzCJLk=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-4P669+a4KKPRyYx2p9n5WbsWi6RvC7qbWCrBOPzCJLk="
+        }
+      ]
+    },
+    {
+      "Route": "js/dashboard.js",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\dashboard.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "16114"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"4P669+a4KKPRyYx2p9n5WbsWi6RvC7qbWCrBOPzCJLk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-4P669+a4KKPRyYx2p9n5WbsWi6RvC7qbWCrBOPzCJLk="
+        }
+      ]
+    },
+    {
+      "Route": "js/dashboard.js.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\g897avw7w7-4jbv9j6uoo.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4180"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"BvpBAmz22L63YKxgrPvDnF+SY2rke/R1DD8ogArG3KE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-BvpBAmz22L63YKxgrPvDnF+SY2rke/R1DD8ogArG3KE="
         }
       ]
     },
@@ -5371,13 +6093,13 @@
       ]
     },
     {
-      "Route": "js/stations.1m189spsyb.js",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\irqort64d4-1m189spsyb.gz",
+      "Route": "js/stations.js",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\irqort64d4-v72kuf0r2p.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000277238703"
+          "Quality": "0.000275633958"
         }
       ],
       "ResponseHeaders": [
@@ -5387,19 +6109,19 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "3606"
+          "Value": "3627"
         },
         {
           "Name": "ETag",
-          "Value": "\"TzdVV7p+//Ux5yWWLP6JcErdWGC5S7H4JVL8D2qiBkg=\""
+          "Value": "\"A3c4/5L6n6XWIQ901nw+t7k+RONxXY7JHWkyR+lh6+4=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 03 Apr 2025 07:46:20 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Encoding",
@@ -5415,26 +6137,18 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"KeNbHcRDjrUa/f5N62iIydFBj3xULeWVYzg/MMTuvPY=\""
+          "Value": "W/\"O4IVcjcCsDV1vx15bGP5si6qE6xuUEeOezQ+OZUmiE4=\""
         }
       ],
       "EndpointProperties": [
         {
-          "Name": "fingerprint",
-          "Value": "1m189spsyb"
-        },
-        {
-          "Name": "label",
-          "Value": "js/stations.js"
-        },
-        {
           "Name": "integrity",
-          "Value": "sha256-KeNbHcRDjrUa/f5N62iIydFBj3xULeWVYzg/MMTuvPY="
+          "Value": "sha256-O4IVcjcCsDV1vx15bGP5si6qE6xuUEeOezQ+OZUmiE4="
         }
       ]
     },
     {
-      "Route": "js/stations.1m189spsyb.js",
+      "Route": "js/stations.js",
       "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\stations.js",
       "Selectors": [],
       "ResponseHeaders": [
@@ -5444,7 +6158,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "13520"
+          "Value": "13960"
         },
         {
           "Name": "Content-Type",
@@ -5452,11 +6166,156 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"KeNbHcRDjrUa/f5N62iIydFBj3xULeWVYzg/MMTuvPY=\""
+          "Value": "\"O4IVcjcCsDV1vx15bGP5si6qE6xuUEeOezQ+OZUmiE4=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 03 Apr 2025 07:46:20 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-O4IVcjcCsDV1vx15bGP5si6qE6xuUEeOezQ+OZUmiE4="
+        }
+      ]
+    },
+    {
+      "Route": "js/stations.js.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\irqort64d4-v72kuf0r2p.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3627"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"A3c4/5L6n6XWIQ901nw+t7k+RONxXY7JHWkyR+lh6+4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-A3c4/5L6n6XWIQ901nw+t7k+RONxXY7JHWkyR+lh6+4="
+        }
+      ]
+    },
+    {
+      "Route": "js/stations.v72kuf0r2p.js",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\irqort64d4-v72kuf0r2p.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000275633958"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3627"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"A3c4/5L6n6XWIQ901nw+t7k+RONxXY7JHWkyR+lh6+4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"O4IVcjcCsDV1vx15bGP5si6qE6xuUEeOezQ+OZUmiE4=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "v72kuf0r2p"
+        },
+        {
+          "Name": "label",
+          "Value": "js/stations.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-O4IVcjcCsDV1vx15bGP5si6qE6xuUEeOezQ+OZUmiE4="
+        }
+      ]
+    },
+    {
+      "Route": "js/stations.v72kuf0r2p.js",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\stations.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "13960"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"O4IVcjcCsDV1vx15bGP5si6qE6xuUEeOezQ+OZUmiE4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -5466,7 +6325,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "1m189spsyb"
+          "Value": "v72kuf0r2p"
         },
         {
           "Name": "label",
@@ -5474,13 +6333,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-KeNbHcRDjrUa/f5N62iIydFBj3xULeWVYzg/MMTuvPY="
+          "Value": "sha256-O4IVcjcCsDV1vx15bGP5si6qE6xuUEeOezQ+OZUmiE4="
         }
       ]
     },
     {
-      "Route": "js/stations.1m189spsyb.js.gz",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\irqort64d4-1m189spsyb.gz",
+      "Route": "js/stations.v72kuf0r2p.js.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\irqort64d4-v72kuf0r2p.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -5489,7 +6348,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "3606"
+          "Value": "3627"
         },
         {
           "Name": "Content-Type",
@@ -5497,11 +6356,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"TzdVV7p+//Ux5yWWLP6JcErdWGC5S7H4JVL8D2qiBkg=\""
+          "Value": "\"A3c4/5L6n6XWIQ901nw+t7k+RONxXY7JHWkyR+lh6+4=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 03 Apr 2025 07:46:20 GMT"
+          "Value": "Tue, 08 Apr 2025 04:56:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -5519,7 +6378,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "1m189spsyb"
+          "Value": "v72kuf0r2p"
         },
         {
           "Name": "label",
@@ -5527,144 +6386,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-TzdVV7p+//Ux5yWWLP6JcErdWGC5S7H4JVL8D2qiBkg="
-        }
-      ]
-    },
-    {
-      "Route": "js/stations.js",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\irqort64d4-1m189spsyb.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.000277238703"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "3606"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"TzdVV7p+//Ux5yWWLP6JcErdWGC5S7H4JVL8D2qiBkg=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Thu, 03 Apr 2025 07:46:20 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"KeNbHcRDjrUa/f5N62iIydFBj3xULeWVYzg/MMTuvPY=\""
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-KeNbHcRDjrUa/f5N62iIydFBj3xULeWVYzg/MMTuvPY="
-        }
-      ]
-    },
-    {
-      "Route": "js/stations.js",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\stations.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "13520"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"KeNbHcRDjrUa/f5N62iIydFBj3xULeWVYzg/MMTuvPY=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Thu, 03 Apr 2025 07:46:20 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-KeNbHcRDjrUa/f5N62iIydFBj3xULeWVYzg/MMTuvPY="
-        }
-      ]
-    },
-    {
-      "Route": "js/stations.js.gz",
-      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\irqort64d4-1m189spsyb.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "3606"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"TzdVV7p+//Ux5yWWLP6JcErdWGC5S7H4JVL8D2qiBkg=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Thu, 03 Apr 2025 07:46:20 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-TzdVV7p+//Ux5yWWLP6JcErdWGC5S7H4JVL8D2qiBkg="
+          "Value": "sha256-A3c4/5L6n6XWIQ901nw+t7k+RONxXY7JHWkyR+lh6+4="
         }
       ]
     },
@@ -6261,6 +6983,304 @@
         {
           "Name": "integrity",
           "Value": "sha256-5mbzy5rREriycEqc6J5zYguCYa+pMIwuelhWjW5kBh8="
+        }
+      ]
+    },
+    {
+      "Route": "login.html",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\f9p6rr2yq8-qr6337s53x.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000355113636"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2815"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"xXJCWuFXOBmZW4bnyfo+nlP4AiYdHlWnGJc+AkRnRCc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 03:22:24 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"+luSDGDASdiQzREfBQgFnjbM508AZPC9SOhXGFSmF/c=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-+luSDGDASdiQzREfBQgFnjbM508AZPC9SOhXGFSmF/c="
+        }
+      ]
+    },
+    {
+      "Route": "login.html",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\login.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "11098"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"+luSDGDASdiQzREfBQgFnjbM508AZPC9SOhXGFSmF/c=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 03:22:24 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-+luSDGDASdiQzREfBQgFnjbM508AZPC9SOhXGFSmF/c="
+        }
+      ]
+    },
+    {
+      "Route": "login.html.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\f9p6rr2yq8-qr6337s53x.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2815"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"xXJCWuFXOBmZW4bnyfo+nlP4AiYdHlWnGJc+AkRnRCc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 03:22:24 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-xXJCWuFXOBmZW4bnyfo+nlP4AiYdHlWnGJc+AkRnRCc="
+        }
+      ]
+    },
+    {
+      "Route": "login.qr6337s53x.html",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\f9p6rr2yq8-qr6337s53x.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000355113636"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2815"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"xXJCWuFXOBmZW4bnyfo+nlP4AiYdHlWnGJc+AkRnRCc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 03:22:24 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"+luSDGDASdiQzREfBQgFnjbM508AZPC9SOhXGFSmF/c=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "qr6337s53x"
+        },
+        {
+          "Name": "label",
+          "Value": "login.html"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-+luSDGDASdiQzREfBQgFnjbM508AZPC9SOhXGFSmF/c="
+        }
+      ]
+    },
+    {
+      "Route": "login.qr6337s53x.html",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\login.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "11098"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"+luSDGDASdiQzREfBQgFnjbM508AZPC9SOhXGFSmF/c=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 03:22:24 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "qr6337s53x"
+        },
+        {
+          "Name": "label",
+          "Value": "login.html"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-+luSDGDASdiQzREfBQgFnjbM508AZPC9SOhXGFSmF/c="
+        }
+      ]
+    },
+    {
+      "Route": "login.qr6337s53x.html.gz",
+      "AssetFile": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\obj\\Debug\\net9.0\\compressed\\f9p6rr2yq8-qr6337s53x.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2815"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"xXJCWuFXOBmZW4bnyfo+nlP4AiYdHlWnGJc+AkRnRCc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 08 Apr 2025 03:22:24 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "qr6337s53x"
+        },
+        {
+          "Name": "label",
+          "Value": "login.html.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-xXJCWuFXOBmZW4bnyfo+nlP4AiYdHlWnGJc+AkRnRCc="
         }
       ]
     },

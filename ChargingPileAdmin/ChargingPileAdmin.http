@@ -1,0 +1,6 @@
+@ChargingPileAdmin_HostAddress = http://localhost:5045
+
+GET {{ChargingPileAdmin_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

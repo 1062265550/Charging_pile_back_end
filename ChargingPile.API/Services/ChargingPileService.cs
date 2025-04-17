@@ -52,7 +52,7 @@ namespace ChargingPile.API.Services
         /// 统一的命令执行方法，用于处理异常和IMEI查询
         /// </summary>
         private async Task<(bool Success, string Message)> ExecuteCommandAsync(
-            string deviceIdentifier, 
+            string deviceIdentifier,
             Func<string, Task<(bool Success, string Message)>> commandFunc)
         {
             try
@@ -63,7 +63,7 @@ namespace ChargingPile.API.Services
                 {
                     return (false, errorMessage ?? "未知错误");
                 }
-                
+
                 _logger.LogInformation("准备执行命令: 设备IMEI={IMEI}", imei);
                 return (true, $"设备 {imei} 命令已发送（模拟）");
             }
@@ -79,22 +79,26 @@ namespace ChargingPile.API.Services
         /// </summary>
         /// <returns>操作结果，包含是否成功和消息</returns>
         public async Task<(bool Success, string Message)> StartChargingAsync(
-            string deviceIdentifier, 
-            byte port, 
-            uint orderId, 
-            byte startMode = 0x00, 
-            uint cardId = 0, 
-            byte chargingMode = 0x00, 
-            uint chargingParam = 0, 
+            string deviceIdentifier,
+            byte port,
+            uint orderId,
+            byte startMode = 0x01,
+            uint cardId = 0,
+            byte chargingMode = 0x01,
+            uint chargingParam = 0,
             decimal availableAmount = 0)
         {
             return await ExecuteCommandAsync(deviceIdentifier, async (imei) => {
                 _logger.LogInformation(
                     "发送远程启动命令: IMEI={IMEI}, 端口={Port}, 订单={OrderId}, 启动方式={StartMode}, 充电方式={ChargingMode}",
                     imei, port, orderId, startMode, chargingMode);
-                    
-                await Task.Delay(10); // 模拟网络延迟
-                return (true, "远程启动充电命令已模拟发送");
+
+                // 将decimal类型的金额转换为uint（以0.01元为单位）
+                uint availableAmountInt = (uint)(availableAmount * 100);
+
+                // 调用TCP服务器的远程启动充电方法
+                return await _tcpServer.StartChargingAsync(
+                    imei, port, orderId, startMode, cardId, chargingMode, chargingParam, availableAmountInt);
             });
         }
 
@@ -106,8 +110,9 @@ namespace ChargingPile.API.Services
         {
             return await ExecuteCommandAsync(deviceIdentifier, async (imei) => {
                 _logger.LogInformation("发送远程停止命令: IMEI={IMEI}, 端口={Port}, 订单={OrderId}", imei, port, orderId);
-                await Task.Delay(10); // 模拟网络延迟
-                return (true, "远程停止充电命令已模拟发送");
+
+                // 调用TCP服务器的远程停止充电方法
+                return await _tcpServer.StopChargingAsync(imei, port, orderId);
             });
         }
 

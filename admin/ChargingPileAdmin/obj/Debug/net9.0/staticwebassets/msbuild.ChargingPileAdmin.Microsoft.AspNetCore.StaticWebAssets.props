@@ -30,8 +30,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>2j1h0mwr6s</Fingerprint>
-      <Integrity>AgZByo4Uj4qdUVh/xE3tkXv+0zDUYiTwAdmF5DtH9X4=</Integrity>
+      <Fingerprint>rels34vpqu</Fingerprint>
+      <Integrity>Y/7U8BMentxh3rF7d8GWZWk1PnIqAc7keltbuL0bK/U=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\charging-stations.html'))</OriginalItemSpec>
@@ -66,8 +66,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>pekrjmh55k</Fingerprint>
-      <Integrity>7wSvMOFOQ2O7atWLHi83aiis3s8frK6etc/rBbXMg3U=</Integrity>
+      <Fingerprint>flhdnenmwt</Fingerprint>
+      <Integrity>rQbMEHRA9fv8fqi5NjAeMclqNIwtKFrtU1qcvGIFJNM=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\components\header.html'))</OriginalItemSpec>
@@ -108,6 +108,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\components\template.html'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\particles.css'))">
+      <SourceType>Package</SourceType>
+      <SourceId>ChargingPileAdmin</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/ChargingPileAdmin</BasePath>
+      <RelativePath>css/particles.css</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>c6gqe5gdmw</Fingerprint>
+      <Integrity>nOmA40RHs0nJEUX8eCh1bbTf30R6vK1ZDQhH0Sd4uHk=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\particles.css'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\sidebar.css'))">
       <SourceType>Package</SourceType>
       <SourceId>ChargingPileAdmin</SourceId>
@@ -138,8 +156,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>72wr0otk0a</Fingerprint>
-      <Integrity>8fSCNYlj/u68D31oEVPsaUs9oNTavFrTwyHGlddDMEE=</Integrity>
+      <Fingerprint>hew5lxmjx2</Fingerprint>
+      <Integrity>t1PvecYlGR+KVqRPSSowK47g8zIL869R1TUx5z5B2DU=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\style.css'))</OriginalItemSpec>
@@ -156,11 +174,29 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>44gc4d4g4u</Fingerprint>
-      <Integrity>lPQFfEFQuAMbu2SqtQvr+/kGLj5jX9XjNC92718Lh5o=</Integrity>
+      <Fingerprint>5pv7dz18dh</Fingerprint>
+      <Integrity>OUWJQ4wyfNtm38udFU3qnDWbi9HLZmdE8sm9eRlM6zI=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\auth.js'))">
+      <SourceType>Package</SourceType>
+      <SourceId>ChargingPileAdmin</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/ChargingPileAdmin</BasePath>
+      <RelativePath>js/auth.js</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>xqtk2pv8fd</Fingerprint>
+      <Integrity>mQmksmxD9Ct+JoB/LV+dLhO302k0Xx+qUeBZPRUOpLY=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\auth.js'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\common.js'))">
       <SourceType>Package</SourceType>
@@ -174,8 +210,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>vam3d2vdes</Fingerprint>
-      <Integrity>WcfgYFyvBJbJlYdEJR78E2ahfNTGBkvnsYvZJF5nCi8=</Integrity>
+      <Fingerprint>72gir1d9fk</Fingerprint>
+      <Integrity>z9A+IhD/Y8JgyY4kp7yqJbcvExPZVQZOF8pmajBw/X8=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\common.js'))</OriginalItemSpec>
@@ -192,8 +228,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>lskj5yhag5</Fingerprint>
-      <Integrity>+5I1oXSEJqKpl7Zl93VeBEBIjSLdA3QAL1nZP4GTPAk=</Integrity>
+      <Fingerprint>ys2ymve6il</Fingerprint>
+      <Integrity>slQkXYbGyxNJhjL1NoF7nh9oodf/SoifR2Lqg6cdnOY=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\config.js'))</OriginalItemSpec>
@@ -210,8 +246,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>px58ahx7e1</Fingerprint>
-      <Integrity>8zHu7EFfc+a7hTI96VGFI47SkJ9J2xkRcG84xMzR5DQ=</Integrity>
+      <Fingerprint>4jbv9j6uoo</Fingerprint>
+      <Integrity>4P669+a4KKPRyYx2p9n5WbsWi6RvC7qbWCrBOPzCJLk=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\dashboard.js'))</OriginalItemSpec>
@@ -282,8 +318,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>1m189spsyb</Fingerprint>
-      <Integrity>KeNbHcRDjrUa/f5N62iIydFBj3xULeWVYzg/MMTuvPY=</Integrity>
+      <Fingerprint>v72kuf0r2p</Fingerprint>
+      <Integrity>O4IVcjcCsDV1vx15bGP5si6qE6xuUEeOezQ+OZUmiE4=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\stations.js'))</OriginalItemSpec>
@@ -323,6 +359,24 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\users.js'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\login.html'))">
+      <SourceType>Package</SourceType>
+      <SourceId>ChargingPileAdmin</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/ChargingPileAdmin</BasePath>
+      <RelativePath>login.html</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>qr6337s53x</Fingerprint>
+      <Integrity>+luSDGDASdiQzREfBQgFnjbM508AZPC9SOhXGFSmF/c=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\login.html'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\orders.html'))">
       <SourceType>Package</SourceType>

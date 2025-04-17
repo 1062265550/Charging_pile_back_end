@@ -25,6 +25,10 @@
       "PackagePath": "staticwebassets\\components\\template.html"
     },
     {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\css\\particles.css",
+      "PackagePath": "staticwebassets\\css\\particles.css"
+    },
+    {
       "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\css\\sidebar.css",
       "PackagePath": "staticwebassets\\css\\sidebar.css"
     },
@@ -35,6 +39,10 @@
     {
       "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\auth.js",
+      "PackagePath": "staticwebassets\\js\\auth.js"
     },
     {
       "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\common.js",
@@ -71,6 +79,10 @@
     {
       "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\js\\users.js",
       "PackagePath": "staticwebassets\\js\\users.js"
+    },
+    {
+      "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\login.html",
+      "PackagePath": "staticwebassets\\login.html"
     },
     {
       "Id": "E:\\project_ai\\Charging_pile_back_end\\admin\\ChargingPileAdmin\\wwwroot\\orders.html",

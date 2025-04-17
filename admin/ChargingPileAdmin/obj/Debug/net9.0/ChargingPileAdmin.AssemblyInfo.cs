@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ChargingPileAdmin")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2d95fc67b4700817a4fc3e2ccf32d5a368a5416d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8f103b0a44bbc6185d7bb0abdff22e15c630f4fa")]
 [assembly: System.Reflection.AssemblyProductAttribute("ChargingPileAdmin")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ChargingPileAdmin")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

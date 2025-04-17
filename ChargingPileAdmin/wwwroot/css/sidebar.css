@@ -1,0 +1,76 @@
+/* 侧边栏样式 */
+.sidebar {
+    background-color: #0d6efd;
+    color: #fff;
+    min-height: calc(100vh - 56px);
+    width: 180px;
+    min-width: 180px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    flex-shrink: 0;
+}
+
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-nav-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-nav-item:last-child {
+    border-bottom: none;
+}
+
+.sidebar-nav-link {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.sidebar-nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.sidebar-nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border-left: 4px solid #fff;
+}
+
+.sidebar-nav-link i {
+    font-size: 16px;
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar-footer {
+    padding: 15px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 20px;
+}
+
+/* 修复侧边栏在flex布局中的表现 */
+#sidebar-container {
+    flex-shrink: 0;
+    width: 180px;
+    padding: 0;
+}
+
+/* 响应式调整 */
+@media (max-width: 991.98px) {
+    .sidebar {
+        display: none;
+    }
+}
