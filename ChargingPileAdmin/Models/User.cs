@@ -30,21 +30,21 @@ namespace ChargingPileAdmin.Models
         /// </summary>
         [Column("nickname")]
         [StringLength(50)]
-        public string Nickname { get; set; }
+        public string? Nickname { get; set; }
 
         /// <summary>
         /// 用户头像URL
         /// </summary>
         [Column("avatar")]
         [StringLength(200)]
-        public string Avatar { get; set; }
+        public string? Avatar { get; set; }
 
         /// <summary>
         /// 用户密码（加密存储）
         /// </summary>
         [Column("password")]
         [StringLength(100)]
-        public string Password { get; set; }
+        public string? Password { get; set; }
 
         /// <summary>
         /// 账户余额
@@ -69,28 +69,28 @@ namespace ChargingPileAdmin.Models
         /// </summary>
         [Column("country")]
         [StringLength(50)]
-        public string Country { get; set; }
+        public string? Country { get; set; }
 
         /// <summary>
         /// 省份
         /// </summary>
         [Column("province")]
         [StringLength(50)]
-        public string Province { get; set; }
+        public string? Province { get; set; }
 
         /// <summary>
         /// 城市
         /// </summary>
         [Column("city")]
         [StringLength(50)]
-        public string City { get; set; }
+        public string? City { get; set; }
 
         /// <summary>
         /// 语言偏好
         /// </summary>
         [Column("language")]
         [StringLength(20)]
-        public string Language { get; set; }
+        public string? Language { get; set; }
 
         /// <summary>
         /// 最后登录时间

@@ -38,13 +38,13 @@ namespace ChargingPileAdmin.Models
         /// </summary>
         [Column("address")]
         [StringLength(200)]
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
         /// <summary>
         /// 充电站地理位置坐标 (SQL Server geography 类型)
         /// </summary>
         [Column("location")]
-        public Point Location { get; set; }
+        public Point? Location { get; set; }
 
         /// <summary>
         /// 获取经纬度字符串，格式为"经度,纬度"
@@ -64,7 +64,7 @@ namespace ChargingPileAdmin.Models
         /// </summary>
         [Column("description")]
         [StringLength(500)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// 最后更新时间

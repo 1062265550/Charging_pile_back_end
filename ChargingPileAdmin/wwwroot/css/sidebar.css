@@ -66,11 +66,21 @@
     flex-shrink: 0;
     width: 180px;
     padding: 0;
+    background-color: #0d6efd;
+}
+
+/* 主内容区域样式，为固定侧边栏留出空间 */
+.main-content-with-sidebar {
+    margin-left: 180px;
 }
 
 /* 响应式调整 */
 @media (max-width: 991.98px) {
     .sidebar {
         display: none;
+    }
+
+    .main-content-with-sidebar {
+        margin-left: 0;
     }
 }

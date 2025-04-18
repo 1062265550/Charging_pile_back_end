@@ -22,13 +22,5 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="8.1.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="add_description_column.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="add_description_to_piles.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
 
 </Project>

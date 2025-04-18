@@ -41,16 +41,23 @@ namespace ChargingPileAdmin.Services
         /// </summary>
         public async Task<ChargingPileStatisticsDto> GetPileStatisticsAsync()
         {
-            var piles = await _context.ChargingPiles.ToListAsync();
-            
+            // 使用投影只选择需要的字段，避免NULL值问题
+            var pilesData = await _context.ChargingPiles
+                .Select(p => new {
+                    p.OnlineStatus,
+                    p.Status,
+                    p.PileType
+                })
+                .ToListAsync();
+
             var result = new ChargingPileStatisticsDto
             {
-                TotalCount = piles.Count,
-                OnlineCount = piles.Count(p => p.OnlineStatus == 1), // 在线
-                OfflineCount = piles.Count(p => p.OnlineStatus == 0), // 离线
-                FaultCount = piles.Count(p => p.Status == 3), // 故障
-                DcFastCount = piles.Count(p => p.PileType == 1), // 直流快充
-                AcSlowCount = piles.Count(p => p.PileType == 2)  // 交流慢充
+                TotalCount = pilesData.Count,
+                OnlineCount = pilesData.Count(p => p.OnlineStatus == 1), // 在线
+                OfflineCount = pilesData.Count(p => p.OnlineStatus == 0), // 离线
+                FaultCount = pilesData.Count(p => p.Status == 3), // 故障
+                DcFastCount = pilesData.Count(p => p.PileType == 1), // 直流快充
+                AcSlowCount = pilesData.Count(p => p.PileType == 2)  // 交流慢充
             };
 
             return result;
@@ -61,17 +68,23 @@ namespace ChargingPileAdmin.Services
         /// </summary>
         public async Task<ChargingPortStatisticsDto> GetPortStatisticsAsync()
         {
-            var ports = await _context.ChargingPorts.ToListAsync();
-            
+            // 使用投影只选择需要的字段，避免NULL值问题
+            var portsData = await _context.ChargingPorts
+                .Select(p => new {
+                    p.Status,
+                    p.PortType
+                })
+                .ToListAsync();
+
             var result = new ChargingPortStatisticsDto
             {
-                TotalCount = ports.Count,
-                IdleCount = ports.Count(p => p.Status == 1), // 空闲
-                InUseCount = ports.Count(p => p.Status == 2), // 使用中
-                FaultCount = ports.Count(p => p.Status == 3), // 故障
-                GbCount = ports.Count(p => p.PortType == 1), // 国标
-                EuCount = ports.Count(p => p.PortType == 2), // 欧标
-                UsCount = ports.Count(p => p.PortType == 3)  // 美标
+                TotalCount = portsData.Count,
+                IdleCount = portsData.Count(p => p.Status == 1), // 空闲
+                InUseCount = portsData.Count(p => p.Status == 2), // 使用中
+                FaultCount = portsData.Count(p => p.Status == 3), // 故障
+                GbCount = portsData.Count(p => p.PortType == 1), // 国标
+                EuCount = portsData.Count(p => p.PortType == 2), // 欧标
+                UsCount = portsData.Count(p => p.PortType == 3)  // 美标
             };
 
             return result;
@@ -82,27 +95,34 @@ namespace ChargingPileAdmin.Services
         /// </summary>
         public async Task<UserStatisticsDto> GetUserStatisticsAsync()
         {
-            var users = await _context.Users.ToListAsync();
             var now = DateTime.Now;
             var sevenDaysAgo = now.AddDays(-7);
             var thirtyDaysAgo = now.AddDays(-30);
 
+            // 使用投影只选择需要的字段，避免NULL值问题
+            var usersData = await _context.Users
+                .Select(u => new {
+                    u.Gender,
+                    u.UpdateTime
+                })
+                .ToListAsync();
+
             // 获取活跃用户（30天内有订单的用户）
             var activeUserIds = await _context.Orders
-                .Where(o => o.StartTime > thirtyDaysAgo)
+                .Where(o => o.StartTime != null && o.StartTime > thirtyDaysAgo)
                 .Select(o => o.UserId)
                 .Distinct()
                 .ToListAsync();
 
             var result = new UserStatisticsDto
             {
-                TotalCount = users.Count,
-                NewUsersLast7Days = users.Count(u => u.UpdateTime > sevenDaysAgo),
-                NewUsersLast30Days = users.Count(u => u.UpdateTime > thirtyDaysAgo),
+                TotalCount = usersData.Count,
+                NewUsersLast7Days = usersData.Count(u => u.UpdateTime != null && u.UpdateTime > sevenDaysAgo),
+                NewUsersLast30Days = usersData.Count(u => u.UpdateTime != null && u.UpdateTime > thirtyDaysAgo),
                 ActiveUsers = activeUserIds.Count,
-                MaleCount = users.Count(u => u.Gender == 1), // 男
-                FemaleCount = users.Count(u => u.Gender == 2), // 女
-                UnknownGenderCount = users.Count(u => u.Gender == 0 || u.Gender == null) // 未知
+                MaleCount = usersData.Count(u => u.Gender == 1), // 男
+                FemaleCount = usersData.Count(u => u.Gender == 2), // 女
+                UnknownGenderCount = usersData.Count(u => u.Gender == 0 || u.Gender == null) // 未知
             };
 
             return result;
@@ -113,26 +133,36 @@ namespace ChargingPileAdmin.Services
         /// </summary>
         public async Task<StatOrderDto> GetOrderStatisticsAsync()
         {
-            var orders = await _context.Orders.ToListAsync();
             var now = DateTime.Now;
             var today = now.Date;
             var sevenDaysAgo = now.AddDays(-7);
             var thirtyDaysAgo = now.AddDays(-30);
 
+            // 使用投影只选择需要的字段，避免NULL值问题
+            var ordersData = await _context.Orders
+                .Select(o => new {
+                    o.Status,
+                    o.StartTime,
+                    o.PowerConsumption,
+                    o.ChargingTime,
+                    o.TotalAmount
+                })
+                .ToListAsync();
+
             var result = new StatOrderDto
             {
-                TotalCount = orders.Count,
-                TodayCount = orders.Count(o => o.StartTime?.Date == today),
-                Last7DaysCount = orders.Count(o => o.StartTime > sevenDaysAgo),
-                Last30DaysCount = orders.Count(o => o.StartTime > thirtyDaysAgo),
-                CompletedCount = orders.Count(o => o.Status == 2), // 已完成
-                ChargingCount = orders.Count(o => o.Status == 1), // 充电中
-                PendingPaymentCount = orders.Count(o => o.Status == 0), // 待支付
-                CancelledCount = orders.Count(o => o.Status == 3), // 已取消
-                AbnormalCount = orders.Count(o => o.Status == 4), // 异常
-                TotalPowerConsumption = Convert.ToDouble(orders.Where(o => o.Status == 2).Sum(o => o.PowerConsumption) ?? 0),
-                TotalChargingDuration = Convert.ToInt64(orders.Where(o => o.Status == 2).Sum(o => o.ChargingTime) ?? 0),
-                TotalAmount = orders.Where(o => o.Status == 2).Sum(o => o.TotalAmount) ?? 0
+                TotalCount = ordersData.Count,
+                TodayCount = ordersData.Count(o => o.StartTime != null && o.StartTime.Value.Date == today),
+                Last7DaysCount = ordersData.Count(o => o.StartTime != null && o.StartTime > sevenDaysAgo),
+                Last30DaysCount = ordersData.Count(o => o.StartTime != null && o.StartTime > thirtyDaysAgo),
+                CompletedCount = ordersData.Count(o => o.Status == 2), // 已完成
+                ChargingCount = ordersData.Count(o => o.Status == 1), // 充电中
+                PendingPaymentCount = ordersData.Count(o => o.Status == 0), // 待支付
+                CancelledCount = ordersData.Count(o => o.Status == 3), // 已取消
+                AbnormalCount = ordersData.Count(o => o.Status == 4), // 异常
+                TotalPowerConsumption = Convert.ToDouble(ordersData.Where(o => o.Status == 2).Sum(o => o.PowerConsumption) ?? 0),
+                TotalChargingDuration = Convert.ToInt64(ordersData.Where(o => o.Status == 2).Sum(o => o.ChargingTime) ?? 0),
+                TotalAmount = ordersData.Where(o => o.Status == 2).Sum(o => o.TotalAmount) ?? 0
             };
 
             return result;

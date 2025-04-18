@@ -1,0 +1,17 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Your rule content
+
+- You can @ files here
+- You can use markdown but dont have to
+
+ 这个充电桩管理平台的项目中，所有前端使用的资源已经在当前项目的文件夹中下载好了，直接使用本地的 
+ 这个充电桩项目是部署到另外一台windows系统的服务器上的，使用的也是服务器上的数据库
+ 服务器上的数据库对应的数据库和表包括数据都已经创建好了不需要再重新搭建
+  服务器上数据库的用户名：newUser  密码：q@159753
+
+  请始终使用中文进行回答

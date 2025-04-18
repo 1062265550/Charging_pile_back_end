@@ -86,25 +86,25 @@ else
         {
             context.Response.StatusCode = 500;
             context.Response.ContentType = "application/json";
-            
+
             var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
             var exception = exceptionHandlerPathFeature?.Error;
-            
+
             // 创建标准错误响应对象
-            var errorResponse = new 
+            var errorResponse = new
             {
                 status = 500,
                 message = "服务器发生错误",
                 error = exception?.Message ?? "未知错误",
                 path = context.Request.Path
             };
-            
+
             // 序列化为JSON并返回
-            var jsonResponse = JsonSerializer.Serialize(errorResponse, new JsonSerializerOptions 
-            { 
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase 
+            var jsonResponse = JsonSerializer.Serialize(errorResponse, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
-            
+
             await context.Response.WriteAsync(jsonResponse);
         });
     });
@@ -128,41 +128,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// 启动时执行数据库脚本，自动修复数据库缺少的列
-try
-{
-    // 获取连接字符串
-    string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    
-    // 读取SQL脚本内容
-    var sqlPilesScript = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "add_description_to_piles.sql"));
-    var sqlStationsScript = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "add_description_column.sql"));
-    
-    // 执行SQL脚本
-    using (var connection = new SqlConnection(connectionString))
-    {
-        connection.Open();
-        
-        // 执行充电站描述列脚本
-        using (var command = new SqlCommand(sqlStationsScript, connection))
-        {
-            command.ExecuteNonQuery();
-        }
-        
-        // 执行充电桩描述列脚本
-        using (var command = new SqlCommand(sqlPilesScript, connection))
-        {
-            command.ExecuteNonQuery();
-        }
-        
-        connection.Close();
-    }
-    
-    Console.WriteLine("数据库列修复脚本执行成功！");
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"执行数据库修复脚本时出错: {ex.Message}");
-}
+
 
 app.Run();

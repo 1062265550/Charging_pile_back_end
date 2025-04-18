@@ -12,8 +12,41 @@ document.addEventListener('DOMContentLoaded', function() {
     loadComponents().then(() => {
         // 组件加载完成后，设置当前页面的菜单高亮
         highlightCurrentPage();
+
+        // 确保侧边栏容器的背景色能够延伸到整个页面
+        ensureSidebarBackground();
     });
 });
+
+/**
+ * 确保侧边栏容器的背景色能够延伸到整个页面
+ */
+function ensureSidebarBackground() {
+    const sidebarContainer = document.getElementById('sidebar-container');
+    if (sidebarContainer) {
+        // 设置侧边栏容器的最小高度为页面高度
+        const updateSidebarHeight = () => {
+            const pageHeight = Math.max(
+                document.body.scrollHeight,
+                document.body.offsetHeight,
+                document.documentElement.clientHeight,
+                document.documentElement.scrollHeight,
+                document.documentElement.offsetHeight
+            );
+            sidebarContainer.style.minHeight = pageHeight + 'px';
+        };
+
+        // 初始调用
+        updateSidebarHeight();
+
+        // 在窗口调整大小时重新计算
+        window.addEventListener('resize', updateSidebarHeight);
+
+        // 在页面内容变化时重新计算
+        const observer = new MutationObserver(updateSidebarHeight);
+        observer.observe(document.body, { childList: true, subtree: true });
+    }
+}
 
 /**
  * 检查用户是否已登录，如果未登录则重定向到登录页面

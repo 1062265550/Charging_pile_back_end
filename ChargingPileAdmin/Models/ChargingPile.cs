@@ -55,14 +55,14 @@ namespace ChargingPileAdmin.Models
         /// </summary>
         [Column("manufacturer")]
         [StringLength(100)]
-        public string Manufacturer { get; set; }
+        public string? Manufacturer { get; set; }
 
         /// <summary>
         /// 设备IMEI号
         /// </summary>
         [Column("imei")]
         [StringLength(20)]
-        public string IMEI { get; set; }
+        public string? IMEI { get; set; }
 
         /// <summary>
         /// 总端口数
@@ -105,42 +105,42 @@ namespace ChargingPileAdmin.Models
         /// </summary>
         [Column("protocol_version")]
         [StringLength(50)]
-        public string ProtocolVersion { get; set; }
+        public string? ProtocolVersion { get; set; }
 
         /// <summary>
         /// 软件版本
         /// </summary>
         [Column("software_version")]
         [StringLength(50)]
-        public string SoftwareVersion { get; set; }
+        public string? SoftwareVersion { get; set; }
 
         /// <summary>
         /// 硬件版本
         /// </summary>
         [Column("hardware_version")]
         [StringLength(50)]
-        public string HardwareVersion { get; set; }
+        public string? HardwareVersion { get; set; }
 
         /// <summary>
         /// CCID号
         /// </summary>
         [Column("ccid")]
         [StringLength(50)]
-        public string CCID { get; set; }
+        public string? CCID { get; set; }
 
         /// <summary>
         /// 额定电压
         /// </summary>
         [Column("voltage")]
         [StringLength(20)]
-        public string Voltage { get; set; }
+        public string? Voltage { get; set; }
 
         /// <summary>
         /// 额定电流
         /// </summary>
         [Column("ampere_value")]
         [StringLength(20)]
-        public string AmpereValue { get; set; }
+        public string? AmpereValue { get; set; }
 
         /// <summary>
         /// 在线状态：0-离线，1-在线
@@ -183,7 +183,7 @@ namespace ChargingPileAdmin.Models
         /// </summary>
         [Column("description")]
         [StringLength(500)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// 最后更新时间
