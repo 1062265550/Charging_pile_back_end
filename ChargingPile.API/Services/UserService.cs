@@ -485,14 +485,9 @@ namespace ChargingPile.API.Services
                     }
                     else
                     {
-                        // 如果原始用户对象中也没有 OpenId，则生成一个默认的
-                        updatedUser.OpenId = $"user_{updatedUser.Id}";
-                        _logger.LogInformation($"生成默认 OpenId: {MaskSensitiveInfo(updatedUser.OpenId)}");
-
-                        // 更新数据库中的 OpenId
-                        await _dbConnection.ExecuteAsync(
-                            "UPDATE users SET open_id = @OpenId WHERE id = @Id",
-                            new { Id = updatedUser.Id, OpenId = updatedUser.OpenId });
+                        // 如果原始用户对象中也没有 OpenId，则记录警告但不生成默认的
+                        _logger.LogWarning($"用户ID {updatedUser.Id} 的OpenID为空，请确保用户通过微信授权登录获取真实的OpenID");
+                        // 不设置默认的OpenID，保持为空，以便下次微信登录时更新为真实的OpenID
                     }
                 }
 
@@ -522,8 +517,8 @@ namespace ChargingPile.API.Services
                 string openId = user.OpenId ?? "";
                 if (string.IsNullOrEmpty(openId))
                 {
-                    _logger.LogWarning($"用户 OpenId 为空，使用用户ID作为替代: UserId={user.Id}");
-                    openId = $"user_{user.Id}";
+                    _logger.LogWarning($"用户 OpenId 为空，这可能导致微信支付失败: UserId={user.Id}");
+                    // 不再生成默认的OpenID，保持为空字符串
                 }
 
                 // 生成JWT令牌
@@ -696,6 +691,52 @@ namespace ChargingPile.API.Services
         }
 
         /// <summary>
+        /// 更新用户的真实OpenID
+        /// </summary>
+        /// <param name="userId">用户ID</param>
+        /// <param name="realOpenId">真实的OpenID</param>
+        /// <returns>是否更新成功</returns>
+        public async Task<bool> UpdateUserRealOpenIdAsync(int userId, string realOpenId)
+        {
+            if (string.IsNullOrEmpty(realOpenId))
+            {
+                _logger.LogWarning($"尝试更新用户 {userId} 的OpenID为空值");
+                return false;
+            }
+
+            if (!realOpenId.StartsWith("o") && !realOpenId.StartsWith("wx"))
+            {
+                _logger.LogWarning($"尝试更新用户 {userId} 的OpenID为无效值: {MaskSensitiveInfo(realOpenId)}");
+                return false;
+            }
+
+            try
+            {
+                _logger.LogInformation($"尝试更新用户 {userId} 的OpenID为: {MaskSensitiveInfo(realOpenId)}");
+
+                var result = await _dbConnection.ExecuteAsync(
+                    "UPDATE users SET open_id = @OpenId, update_time = @UpdateTime WHERE id = @UserId",
+                    new { UserId = userId, OpenId = realOpenId, UpdateTime = DateTime.Now });
+
+                if (result > 0)
+                {
+                    _logger.LogInformation($"成功更新用户 {userId} 的OpenID");
+                    return true;
+                }
+                else
+                {
+                    _logger.LogWarning($"更新用户 {userId} 的OpenID失败，可能用户不存在");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"更新用户OpenID异常: {ex.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
         /// 微信小程序登录
         /// </summary>
         /// <param name="request">登录请求</param>
@@ -707,10 +748,38 @@ namespace ChargingPile.API.Services
                 // 1. 调用微信接口获取OpenId
                 var wechatResponse = await GetWechatOpenIdAsync(request.Code ?? throw new InvalidOperationException("登录Code不能为空"));
 
+                // 记录真实的OpenID，便于调试
+                _logger.LogInformation($"从微信获取的真实OpenID: {MaskSensitiveInfo(wechatResponse.Openid)}");
+
                 // 2. 查询用户是否存在
                 var user = await _dbConnection.QueryFirstOrDefaultAsync<UserEntity>(
                     "SELECT * FROM users WHERE open_id = @OpenId",
                     new { OpenId = wechatResponse.Openid });
+
+                // 如果没有找到用户，尝试查找使用user_格式的用户
+                if (user == null)
+                {
+                    // 尝试查找可能存在的使用无效OpenID的用户
+                    var usersWithInvalidOpenId = await _dbConnection.QueryAsync<UserEntity>(
+                        "SELECT * FROM users WHERE open_id LIKE 'user_%' OR open_id IS NULL OR open_id = ''");
+
+                    if (usersWithInvalidOpenId.Any())
+                    {
+                        _logger.LogInformation($"找到 {usersWithInvalidOpenId.Count()} 个使用无效OpenID的用户");
+
+                        // 如果只有一个用户，直接更新其OpenID
+                        if (usersWithInvalidOpenId.Count() == 1)
+                        {
+                            var userToUpdate = usersWithInvalidOpenId.First();
+                            _logger.LogInformation($"将更新用户ID {userToUpdate.Id} 的OpenID为真实的OpenID");
+
+                            await UpdateUserRealOpenIdAsync(userToUpdate.Id, wechatResponse.Openid);
+                            user = await _dbConnection.QueryFirstOrDefaultAsync<UserEntity>(
+                                "SELECT * FROM users WHERE id = @UserId",
+                                new { UserId = userToUpdate.Id });
+                        }
+                    }
+                }
 
                 // 3. 处理用户信息
                 if (user == null)
@@ -722,6 +791,14 @@ namespace ChargingPile.API.Services
                 {
                     // 更新现有用户信息
                     user = await UpdateUserInfoAsync(user, request.UserInfo);
+
+                    // 确保用户使用真实的OpenID
+                    if (user.OpenId != wechatResponse.Openid)
+                    {
+                        _logger.LogWarning($"用户 {user.Id} 的OpenID与微信返回的不一致，将更新为真实的OpenID");
+                        await UpdateUserRealOpenIdAsync(user.Id, wechatResponse.Openid);
+                        user.OpenId = wechatResponse.Openid;
+                    }
                 }
 
                 // 4. 生成登录响应

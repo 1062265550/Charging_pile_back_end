@@ -1,10 +1,8 @@
 {
     "mcpServers": {
       "neon": {
-        "command": "cmd",
+        "command": "npx",
         "args": [
-          "/c",
-          "npx",
           "-y",
           "@neondatabase/mcp-server-neon",
          "start",
@@ -12,55 +10,32 @@
         ]
       },
       "BrowserTools": {
-        "command": "cmd",
+        "command": "npx",
         "args": [
-          "/c",
-          "npx",
           "-y",
           "@agentdeskai/browser-tools-mcp@1.2.0"
         ]
       },
-     "exa": {
-  "command": "cmd",
-  "args": [
-    "/c",
-    "npx",
-    "-y",
-    "exa-mcp-server"
-  ],
-  "env": {
-    "EXA_API_KEY": "30765301-dbc4-4a80-b7a6-fc22a3118b1c"
-  }
-},
-      
+
       "claude-code": {
       "command": "node",
       "args": ["E:\\MCP\\claude-code-mcp\\dist\\index.js"],
       "env": {}
     },
 
-    "sequential-thinking": {
-      "command": "cmd",
-      "args": [
-        "/c",
-        "npx",
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ]
-    },
-
-
-    "brave-search": {
+    
+    "perplexity-search": {
       "command": "npx",
       "args": [
         "-y",
         "@smithery/cli@latest",
         "run",
-        "@smithery-ai/brave-search",
+        "@arjunkmrm/perplexity-search",
         "--config",
-        "{\"braveApiKey\":\"BSASKeyuHJ2Dkz1ncQA_dpmmPKlWzwZ\"}"
+        "\"{\\\"perplexityApiKey\\\":\\\"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\\\"}\""
       ]
     }
-   
-    }
+    
+  
   }
+}

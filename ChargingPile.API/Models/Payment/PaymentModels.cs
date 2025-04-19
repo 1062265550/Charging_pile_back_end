@@ -62,6 +62,11 @@ namespace ChargingPile.API.Models.Payment
         /// 支付二维码URL，如果需要扫码支付
         /// </summary>
         public string QrCodeUrl { get; set; }
+
+        /// <summary>
+        /// JSAPI支付参数，如果需要小程序支付
+        /// </summary>
+        public WechatPayJsApiParameters JsApiParameters { get; set; }
     }
 
     /// <summary>
@@ -180,6 +185,21 @@ namespace ChargingPile.API.Models.Payment
         /// 微信支付通知URL
         /// </summary>
         public string NotifyUrl { get; set; }
+
+        /// <summary>
+        /// 微信充值通知URL
+        /// </summary>
+        public string RechargeNotifyUrl { get; set; }
+
+        /// <summary>
+        /// 证书路径
+        /// </summary>
+        public string CertPath { get; set; }
+
+        /// <summary>
+        /// 证书密码
+        /// </summary>
+        public string CertPassword { get; set; }
     }
 
     /// <summary>

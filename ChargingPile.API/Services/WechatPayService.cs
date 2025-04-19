@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -22,6 +24,7 @@ namespace ChargingPile.API.Services
         private readonly IConfiguration _configuration;
         private readonly ILogger<WechatPayService> _logger;
         private readonly WechatPayConfig _wechatPayConfig;
+        private readonly X509Certificate2 _certificate;
 
         /// <summary>
         /// 构造函数
@@ -41,12 +44,74 @@ namespace ChargingPile.API.Services
                 AppId = _configuration["WechatMiniProgram:AppId"],
                 MchId = _configuration["WechatPay:MchId"] ?? "1900000109", // 使用测试商户号
                 ApiKey = _configuration["WechatPay:ApiKey"] ?? "8934e7d15453e97507ef794cf7b0519d", // 使用测试密钥
-                NotifyUrl = _configuration["WechatPay:NotifyUrl"] ?? "https://api.example.com/api/payment/wechat/notify"
+                NotifyUrl = _configuration["WechatPay:NotifyUrl"] ?? "https://api.example.com/api/payment/wechat/notify",
+                RechargeNotifyUrl = _configuration["WechatPay:RechargeNotifyUrl"] ?? "https://api.example.com/api/payment/wechat/recharge/notify",
+                CertPath = _configuration["WechatPay:CertPath"],
+                CertPassword = _configuration["WechatPay:CertPassword"]
             };
 
             if (string.IsNullOrEmpty(_wechatPayConfig.AppId))
             {
                 throw new InvalidOperationException("微信小程序AppId未配置");
+            }
+
+            // 加载证书
+            try
+            {
+                if (!string.IsNullOrEmpty(_wechatPayConfig.CertPath) && !string.IsNullOrEmpty(_wechatPayConfig.CertPassword))
+                {
+                    // 尝试多种路径加载证书
+                    string certPath = null;
+                    bool certLoaded = false;
+
+                    // 定义可能的证书路径
+                    var projectRootPath = Path.Combine(Directory.GetCurrentDirectory(), _wechatPayConfig.CertPath);
+                    var baseDirectoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _wechatPayConfig.CertPath);
+                    var absolutePath = _wechatPayConfig.CertPath;
+
+                    // 1. 先尝试从项目根目录加载
+                    if (File.Exists(projectRootPath))
+                    {
+                        certPath = projectRootPath;
+                        _certificate = new X509Certificate2(certPath, _wechatPayConfig.CertPassword);
+                        _logger.LogInformation("从项目根目录加载微信支付证书成功: {0}", certPath);
+                        certLoaded = true;
+                    }
+
+                    // 2. 如果从项目根目录加载失败，尝试从应用程序基目录加载
+                    if (!certLoaded && File.Exists(baseDirectoryPath))
+                    {
+                        certPath = baseDirectoryPath;
+                        _certificate = new X509Certificate2(certPath, _wechatPayConfig.CertPassword);
+                        _logger.LogInformation("从应用程序基目录加载微信支付证书成功: {0}", certPath);
+                        certLoaded = true;
+                    }
+
+                    // 3. 如果上述方法都失败，尝试使用绝对路径
+                    if (!certLoaded && File.Exists(absolutePath))
+                    {
+                        certPath = absolutePath;
+                        _certificate = new X509Certificate2(certPath, _wechatPayConfig.CertPassword);
+                        _logger.LogInformation("使用绝对路径加载微信支付证书成功: {0}", certPath);
+                        certLoaded = true;
+                    }
+
+                    // 如果所有方法都失败，记录错误
+                    if (!certLoaded)
+                    {
+                        _logger.LogError("微信支付证书加载失败: 无法找到证书文件");
+                        _logger.LogError("尝试过的路径: {0}, {1}, {2}",
+                            projectRootPath, baseDirectoryPath, absolutePath);
+                    }
+                }
+                else
+                {
+                    _logger.LogWarning("微信支付证书路径或密码未配置");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "微信支付证书加载失败: {0}", ex.Message);
             }
         }
 
@@ -66,21 +131,50 @@ namespace ChargingPile.API.Services
             string openId,
             string clientIp)
         {
+            // 检查证书是否已加载
+            if (_certificate == null && !string.IsNullOrEmpty(_wechatPayConfig.CertPath))
+            {
+                _logger.LogWarning("微信支付证书未加载，可能影响支付功能");
+            }
+
             try
             {
+                // 记录支付请求信息
+                _logger.LogInformation("微信支付请求参数: 商户号={0}, AppId={1}, 回调URL={2}",
+                    _wechatPayConfig.MchId, _wechatPayConfig.AppId, _wechatPayConfig.NotifyUrl);
+
                 Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(_logger, "创建微信支付订单: 订单号={0}, 金额={1}, 用户OpenId={2}",
                     orderNo, amount, openId);
 
                 // 构建统一下单请求
+                // 检查OpenID是否有效（微信OpenID通常以o开头）
+                bool useJsApi = !string.IsNullOrEmpty(openId) &&
+                               (openId.StartsWith("o") || openId.StartsWith("wx")) &&
+                               !openId.StartsWith("user_");
+
+                if (!useJsApi && !string.IsNullOrEmpty(openId))
+                {
+                    _logger.LogWarning($"检测到无效的OpenID格式: {openId}，将使用NATIVE支付模式");
+                }
+                else if (string.IsNullOrEmpty(openId))
+                {
+                    _logger.LogWarning($"未提供OpenID，将使用NATIVE支付模式");
+                }
+
                 var request = new WechatPayUnifiedOrderRequest
                 {
                     OutTradeNo = orderNo,
                     Body = body,
                     TotalFee = (int)(amount * 100), // 转换为分
                     SpbillCreateIp = clientIp,
-                    TradeType = "JSAPI",
-                    OpenId = openId
+                    TradeType = useJsApi ? "JSAPI" : "NATIVE", // 根据OpenID有效性决定使用JSAPI或NATIVE
+                    OpenId = useJsApi ? openId : null // 只在JSAPI模式下设置OpenId
                 };
+
+                // 记录使用的交易类型和OpenID
+                _logger.LogInformation("使用交易类型: {0}，用户OpenID: {1}",
+                    request.TradeType, openId);
+
 
                 // 调用微信支付统一下单接口
                 var response = await UnifiedOrderAsync(request);
@@ -125,9 +219,30 @@ namespace ChargingPile.API.Services
             };
 
             // 如果是JSAPI支付，需要传入openid
-            if (request.TradeType == "JSAPI" && !string.IsNullOrEmpty(request.OpenId))
+            if (request.TradeType == "JSAPI")
             {
-                parameters.Add("openid", request.OpenId);
+                if (!string.IsNullOrEmpty(request.OpenId) &&
+                    (request.OpenId.StartsWith("o") || request.OpenId.StartsWith("wx")) &&
+                    !request.OpenId.StartsWith("user_"))
+                {
+                    parameters.Add("openid", request.OpenId);
+                    _logger.LogInformation("添加OpenID参数: {0}", request.OpenId);
+                }
+                else
+                {
+                    _logger.LogWarning("检测到无效的OpenID: {0}，将自动切换为NATIVE模式", request.OpenId ?? "空");
+                    parameters["trade_type"] = "NATIVE";
+                    // 如果已经添加了openid参数，则移除它
+                    if (parameters.ContainsKey("openid"))
+                    {
+                        parameters.Remove("openid");
+                        _logger.LogInformation("移除无效的OpenID参数");
+                    }
+                }
+            }
+            else
+            {
+                _logger.LogInformation("不添加OpenID参数，交易类型: {0}", request.TradeType);
             }
 
             // 生成签名
@@ -138,6 +253,9 @@ namespace ChargingPile.API.Services
                 parameters.Select(p => new XElement(p.Key, p.Value))
             );
 
+            // 记录请求XML
+            _logger.LogDebug("微信支付统一下单请求XML: {0}", requestXml.ToString());
+
             // 发送请求
             var client = _httpClientFactory.CreateClient();
             var content = new StringContent(requestXml.ToString(), Encoding.UTF8, "application/xml");
@@ -145,6 +263,8 @@ namespace ChargingPile.API.Services
 
             // 解析响应
             var responseContent = await response.Content.ReadAsStringAsync();
+            _logger.LogDebug("微信支付统一下单响应: {0}", responseContent);
+
             var responseXml = XDocument.Parse(responseContent);
 
             // 构建响应对象

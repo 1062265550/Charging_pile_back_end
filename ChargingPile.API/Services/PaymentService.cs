@@ -145,9 +145,41 @@ namespace ChargingPile.API.Services
                 var userSql = "SELECT open_id FROM users WHERE id = @UserId";
                 var openId = await _dbConnection.ExecuteScalarAsync<string>(userSql, new { UserId = userId });
 
+                _logger.LogInformation("从数据库获取的用户OpenID: {OpenId}", openId);
+
                 if (string.IsNullOrEmpty(openId))
                 {
-                    throw new InvalidOperationException("用户OpenId不存在");
+                    _logger.LogWarning("用户OpenId不存在，将使用NATIVE支付模式");
+                }
+
+                // 确保OpenID不是以user_开头的格式
+                if (!string.IsNullOrEmpty(openId) && openId.StartsWith("user_"))
+                {
+                    _logger.LogWarning("检测到无效的OpenID格式: {OpenId}，尝试从数据库获取真实OpenID", openId);
+
+                    // 尝试获取真实的OpenID（如果存在）
+                    var realOpenIdSql = "SELECT open_id FROM users WHERE id = @UserId AND open_id NOT LIKE 'user_%' AND open_id LIKE 'o%'";
+                    var realOpenId = await _dbConnection.ExecuteScalarAsync<string>(realOpenIdSql, new { UserId = userId });
+
+                    if (!string.IsNullOrEmpty(realOpenId))
+                    {
+                        _logger.LogInformation("找到真实的OpenID: {OpenId}", realOpenId);
+                        openId = realOpenId;
+                    }
+                    else
+                    {
+                        _logger.LogWarning("无法找到真实的OpenID，将使用NATIVE支付模式");
+                    }
+                }
+
+                // 检查OpenID是否有效（微信OpenID通常以o开头）
+                bool isValidOpenId = !string.IsNullOrEmpty(openId) &&
+                                    (openId.StartsWith("o") || openId.StartsWith("wx")) &&
+                                    !openId.StartsWith("user_");
+
+                if (!isValidOpenId)
+                {
+                    _logger.LogWarning("用户 {UserId} 没有有效的OpenID，将使用NATIVE支付模式", userId);
                 }
 
                 // 创建微信支付订单
@@ -175,10 +207,23 @@ namespace ChargingPile.API.Services
                     UpdateTime = DateTime.Now
                 });
 
-                // 设置支付链接和二维码URL
+                // 设置支付链接和参数
                 response.PaymentStatus = 1; // 支付中
                 response.PaymentUrl = $"/api/payment/wechat/pay?paymentId={response.PaymentId}";
                 response.QrCodeUrl = qrCodeUrl;
+                response.JsApiParameters = jsApiParameters; // 添加JSAPI参数
+
+                // 记录支付信息
+                if (jsApiParameters != null)
+                {
+                    _logger.LogInformation("生成微信JSAPI支付参数: {0}",
+                        System.Text.Json.JsonSerializer.Serialize(jsApiParameters));
+                }
+
+                if (!string.IsNullOrEmpty(qrCodeUrl))
+                {
+                    _logger.LogInformation("生成微信扫码支付URL: {0}", qrCodeUrl);
+                }
 
                 // 保存JSAPI参数
                 var saveJsApiSql = @"

@@ -188,6 +188,38 @@ namespace ChargingPile.API.Controllers
         }
 
         /// <summary>
+        /// 更新用户的真实OpenID
+        /// </summary>
+        /// <param name="userId">用户ID</param>
+        /// <param name="openId">真实的OpenID</param>
+        /// <returns>更新结果</returns>
+        [HttpPut("update-openid")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<ApiResponse<object>>> UpdateUserOpenId([FromQuery] int userId, [FromQuery] string openId)
+        {
+            try
+            {
+                _logger.LogInformation($"尝试更新用户 {userId} 的OpenID");
+
+                var result = await _userService.UpdateUserRealOpenIdAsync(userId, openId);
+
+                if (result)
+                {
+                    return Ok(ApiResponse<object>.Success(null, $"用户 {userId} 的OpenID更新成功"));
+                }
+                else
+                {
+                    return BadRequest(ApiResponse<object>.Fail($"用户 {userId} 的OpenID更新失败"));
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"更新用户OpenID异常: {ex.Message}");
+                return BadRequest(ApiResponse<object>.Fail($"更新用户OpenID失败: {ex.Message}"));
+            }
+        }
+
+        /// <summary>
         /// 更新用户基本信息
         /// </summary>
         /// <param name="rawRequest">原始更新请求</param>

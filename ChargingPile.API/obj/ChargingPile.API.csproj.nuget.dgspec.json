@@ -1,32 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "E:\\project_ai\\Charging_pile_back_end\\ChargingPile.API\\ChargingPile.API.csproj": {}
+    "/Users/tom/project/Charging_pile_back_end/ChargingPile.API/ChargingPile.API.csproj": {}
   },
   "projects": {
-    "E:\\project_ai\\Charging_pile_back_end\\ChargingPile.API\\ChargingPile.API.csproj": {
+    "/Users/tom/project/Charging_pile_back_end/ChargingPile.API/ChargingPile.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\project_ai\\Charging_pile_back_end\\ChargingPile.API\\ChargingPile.API.csproj",
+        "projectUniqueName": "/Users/tom/project/Charging_pile_back_end/ChargingPile.API/ChargingPile.API.csproj",
         "projectName": "ChargingPile.API",
-        "projectPath": "E:\\project_ai\\Charging_pile_back_end\\ChargingPile.API\\ChargingPile.API.csproj",
-        "packagesPath": "C:\\Users\\18272\\.nuget\\packages\\",
-        "outputPath": "E:\\project_ai\\Charging_pile_back_end\\ChargingPile.API\\obj\\",
+        "projectPath": "/Users/tom/project/Charging_pile_back_end/ChargingPile.API/ChargingPile.API.csproj",
+        "packagesPath": "/Users/tom/.nuget/packages/",
+        "outputPath": "/Users/tom/project/Charging_pile_back_end/ChargingPile.API/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "E:\\vscodeTest\\tool\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\18272\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/tom/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -138,6 +131,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+              "version": "[8.0.15, 8.0.15]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[8.0.15, 8.0.15]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.win-x64",
+              "version": "[8.0.15, 8.0.15]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -146,7 +153,12 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.408/PortableRuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
         }
       }
     }

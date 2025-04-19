@@ -99,14 +99,39 @@ namespace ChargingPile.API.Controllers
                         string orderNo = GenerateOrderNo();
                         string orderId = Guid.NewGuid().ToString();
 
+                        // 根据充电模式设置订单金额
+                        decimal orderAmount = 0;
+                        if (request.ChargingMode == 2) // 按金额充电
+                        {
+                            orderAmount = request.ChargingParameter;
+                        }
+                        else if (request.ChargingMode == 3) // 按时间充电
+                        {
+                            // 这里可以根据时间计算预估金额，或者使用最小金额
+                            orderAmount = Math.Max(0.01m, request.ChargingParameter * 0.01m); // 假设每分钟0.01元
+                        }
+                        else if (request.ChargingMode == 4) // 按电量充电
+                        {
+                            // 这里可以根据电量计算预估金额，或者使用最小金额
+                            orderAmount = Math.Max(0.01m, request.ChargingParameter * 0.5m); // 假设每度电0.5元
+                        }
+                        else
+                        {
+                            // 其他充电模式，设置一个最小金额
+                            orderAmount = 0.01m; // 最小1分钱
+                        }
+
+                        _logger.LogInformation("订单金额设置: 充电模式={0}, 充电参数={1}, 订单金额={2}",
+                            request.ChargingMode, request.ChargingParameter, orderAmount);
+
                         // 创建订单
                         var sql = @"
                             INSERT INTO orders (
-                                id, order_no, user_id, pile_id, port_id, amount,
+                                id, order_no, user_id, pile_id, port_id, amount, total_amount,
                                 start_time, power_consumption, charging_time, power,
                                 status, payment_status, charging_mode, update_time, payment_method
                             ) VALUES (
-                                @Id, @OrderNo, @UserId, @PileId, @PortId, 0,
+                                @Id, @OrderNo, @UserId, @PileId, @PortId, @Amount, @TotalAmount,
                                 @StartTime, 0, 0, 0,
                                 0, 0, @ChargingMode, @UpdateTime, @PaymentMethod
                             )";
@@ -118,6 +143,8 @@ namespace ChargingPile.API.Controllers
                             UserId = userId,
                             PileId = request.PileId,
                             PortId = request.PortId,
+                            Amount = orderAmount,
+                            TotalAmount = orderAmount, // 设置总金额等于订单金额
                             StartTime = DateTime.Now,
                             ChargingMode = request.ChargingMode,
                             UpdateTime = DateTime.Now,
@@ -156,7 +183,7 @@ namespace ChargingPile.API.Controllers
                             Status = 0, // 0表示创建
                             PaymentStatus = 0, // 0表示未支付
                             PaymentMethod = request.PaymentMethod,
-                            Amount = 0,
+                            Amount = orderAmount,
                             StartTime = DateTime.Now,
                             PaymentUrl = GeneratePaymentUrl(orderId, request.PaymentMethod)
                         };
@@ -400,6 +427,7 @@ namespace ChargingPile.API.Controllers
                                 charging_time = @ChargingTime,
                                 power_consumption = @PowerConsumption,
                                 amount = @Amount,
+                                total_amount = @TotalAmount, -- 更新总金额
                                 stop_reason = 3, -- 3表示手动停止
                                 update_time = @UpdateTime
                             WHERE id = @Id";
@@ -411,6 +439,7 @@ namespace ChargingPile.API.Controllers
                             ChargingTime = chargingTime,
                             PowerConsumption = powerConsumption,
                             Amount = amount,
+                            TotalAmount = amount, // 设置总金额等于订单金额
                             UpdateTime = DateTime.Now
                         }, transaction);
 
